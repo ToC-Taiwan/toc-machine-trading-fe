@@ -103,3 +103,112 @@ dart pub global activate --overwrite flutterfire_cli
 ```sh
 flutterfire configure
 ```
+
+## Bundle ID
+
+### Android
+
+- modify in `android/app/build.gradle`
+
+```diff
+android {
+-    namespace "com.example.toc_machine_trading_fe"
++    namespace "com.tocandraw.trade_agent_v2"
+     compileSdkVersion flutter.compileSdkVersion
+     ndkVersion flutter.ndkVersion
+
+defaultConfig {
+-    applicationId "com.example.toc_machine_trading_fe"
++    applicationId "com.tocandraw.trade_agent_v2"
+     // You can update the following values to match your application needs.
+     // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
+     minSdkVersion flutter.minSdkVersion
+```
+
+- modify in `android/app/src/main/kotlin/com/example/toc_machine_trading_fe/MainActivity.kt`
+
+```diff
+- package com.example.toc_machine_trading_fe
++ package com.tocandraw.trade_agent_v2
+```
+
+### iOS
+
+- Review Xcode project settings
+
+```sh
+open ios/Runner.xcworkspace
+```
+
+- To view your app settings, select the Runner target in the Xcode navigator.
+
+**Bundle Identifier:The App ID you registered on App Store Connect.**
+
+#### Updating the app deployment version
+
+- If you changed Deployment Target in your Xcode project, open ios/Flutter/AppframeworkInfo.plist in your Flutter app and update the MinimumOSVersion value to match.
+
+## Build
+
+### Android with Multidex
+
+- modifiy in `android/app/build.gradle`
+
+```diff
++ def keystoreProperties = new Properties()
++ def keystorePropertiesFile = rootProject.file('key.properties')
++ if (keystorePropertiesFile.exists()) {
++     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
++ }
++
+android {
+    namespace "com.tocandraw.trade_agent_v2"
+-     compileSdkVersion flutter.compileSdkVersion
++     compileSdkVersion 34
+    ndkVersion flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+        applicationId "com.tocandraw.trade_agent_v2"
+-         minSdkVersion flutter.minSdkVersion
+-         targetSdkVersion flutter.targetSdkVersion
++         minSdkVersion 28
++         targetSdkVersion 34
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
++         multiDexEnabled true
+    }
+
++     signingConfigs {
++         release {
++             keyAlias keystoreProperties['keyAlias']
++             keyPassword keystoreProperties['keyPassword']
++             storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
++             storePassword keystoreProperties['storePassword']
++         }
++     }
+
+    buildTypes {
+        release {
+-             signingConfig signingConfigs.debug
++             signingConfig signingConfigs.release
+        }
+    }
+}
+
+- dependencies {}
++ dependencies {
++     implementation 'com.google.android.material:material:1.11.0'
++     implementation 'androidx.multidex:multidex:2.0.1'
++ }
+```
