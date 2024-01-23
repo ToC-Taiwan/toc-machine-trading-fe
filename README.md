@@ -43,7 +43,47 @@ flutter_launcher_icons:
 ```
 
 ```sh
-./scripts/generate_app_icon.sh
+dart run flutter_launcher_icons
+```
+
+## Add Splash Screen
+
+- add `flutter_native_splash: ^2.3.9` in `pubspec.yaml` dev_dependencies
+- add `flutter_native_splash` part like below
+
+```yaml
+flutter_native_splash:
+  background_image: "assets/background.png"
+```
+
+```sh
+dart run flutter_native_splash:create
+```
+
+```sh
+dart run flutter_native_splash:create
+Building package executable... (1.3s)
+Built flutter_native_splash:create.
+[Android] Updating launch background(s) with splash image path...
+[Android]  - android/app/src/main/res/drawable/launch_background.xml
+[Android]  - android/app/src/main/res/drawable-v21/launch_background.xml
+[Android] Updating styles...
+[Android]  - android/app/src/main/res/values-v31/styles.xml
+[Android] No android/app/src/main/res/values-v31/styles.xml found in your Android project
+[Android] Creating android/app/src/main/res/values-v31/styles.xml and adding it to your Android project
+[Android]  - android/app/src/main/res/values-night-v31/styles.xml
+[Android] No android/app/src/main/res/values-night-v31/styles.xml found in your Android project
+[Android] Creating android/app/src/main/res/values-night-v31/styles.xml and adding it to your Android project
+[Android]  - android/app/src/main/res/values/styles.xml
+[Android]  - android/app/src/main/res/values-night/styles.xml
+[iOS] Updating ios/Runner/Info.plist for status bar hidden/visible
+[Web] Creating background images
+[Web] Creating CSS
+[Web] Updating index.html
+
+✅ Native splash complete.
+Now go finish building something awesome! 💪 You rock! 🤘🤩
+Like the package? Please give it a 👍 here: https://pub.dev/packages/flutter_native_splash
 ```
 
 ## Add localization
