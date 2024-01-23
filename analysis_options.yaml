@@ -2,7 +2,7 @@ include: package:flutter_lints/flutter.yaml
 
 analyzer:
   exclude:
-    - lib/pb
+    - lib/core/pb
     - lib/firebase_options.dart
 
 linter:

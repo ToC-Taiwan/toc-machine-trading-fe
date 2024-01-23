@@ -44,4 +44,4 @@ app.*.map.json
 
 .vscode
 version.dart
-need_translate.txt
+l10n/need_translate.txt

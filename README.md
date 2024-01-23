@@ -56,7 +56,19 @@ flutter:
   generate: true
 ```
 
-- add `l10n.yaml` in root directory
+- add `l10n.yaml` and make dir `l10n` in root directory
+
+```sh
+.
+├── l10n
+│   ├── app_en.arb
+│   ├── app_ja.arb
+│   ├── app_ko.arb
+│   ├── app_zh.arb
+│   ├── app_zh_Hans_CN.arb
+│   └── app_zh_Hant_TW.arb
+├── l10n.yaml
+```
 
 ```sh
 touch l10n.yaml
@@ -68,18 +80,6 @@ template-arb-file: app_en.arb
 output-localization-file: app_localizations.dart
 preferred-supported-locales: ["en", "ja", "ko", "zh_Hans_CN", "zh_Hant_TW"]
 untranslated-messages-file: need_translate.txt
-```
-
-- add `l10n` directory in `lib` like below
-
-```sh
-.
-├── app_en.arb
-├── app_ja.arb
-├── app_ko.arb
-├── app_zh.arb
-├── app_zh_Hans_CN.arb
-└── app_zh_Hant_TW.arb
 ```
 
 - run script

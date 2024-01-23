@@ -1,4 +1,4 @@
-exclude: "lib/pb|ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md"
+exclude: "lib/core/pb|ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md"
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
