@@ -7,19 +7,26 @@ environment:
   sdk: ">=3.2.5 <4.0.0"
 
 dependencies:
+  another_flushbar: ^1.12.30
   cronet_http: ^1.0.0
   cupertino_http: ^1.2.0
+  email_validator: ^2.1.16
   firebase_core: ^2.24.2
   firebase_messaging: ^14.7.10
+  fixnum: ^1.1.0
   flutter:
     sdk: flutter
+  flutter_slidable: ^3.0.1
+  flutter_spinkit: ^5.2.0
   google_mobile_ads: ^4.0.0
   http: ^1.1.0
   intl: ^0.19.0
   path: ^1.8.3
   path_provider: ^2.1.1
+  permission_handler: ^11.1.0
   protobuf: ^3.1.0
   sqflite: ^2.3.0
+  url_launcher: ^6.1.14
   wakelock: ^0.6.2
   web_socket_channel: ^2.4.0
 
