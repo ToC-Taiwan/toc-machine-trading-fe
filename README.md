@@ -87,3 +87,19 @@ untranslated-messages-file: need_translate.txt
 ```sh
 ./scripts/intl.sh
 ```
+
+## FlutterFire
+
+- **Before run this, make sure android and ios bundle ID are wright**
+
+```sh
+npm install -g firebase-tools
+```
+
+```sh
+dart pub global activate --overwrite flutterfire_cli
+```
+
+```sh
+flutterfire configure
+```
