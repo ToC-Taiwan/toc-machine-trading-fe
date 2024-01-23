@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "517489539432",
+    "project_id": "trade-agent-87e47",
+    "storage_bucket": "trade-agent-87e47.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:517489539432:android:ac887292510c7d9986bedd",
+        "android_client_info": {
+          "package_name": "com.tocandraw.trade_agent_v2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "517489539432-7cu1ij4johr2mi35aq5d380qn0psjkvo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1ouiRaBNYa5jH2ghHgrTft6XWc28Ama8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "517489539432-7cu1ij4johr2mi35aq5d380qn0psjkvo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "517489539432-edegvea4146m0ct5ct79h77kru4k9gir.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tocandraw.tradeAgent",
+                "app_store_id": "1606575193"
+              }
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-1617900048851450~2690685861"
+    }
+  ],
+  "configuration_version": "1"
+}
