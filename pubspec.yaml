@@ -1,19 +1,29 @@
 name: toc_machine_trading_fe
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.2.5 <4.0.0'
+  sdk: ">=3.2.5 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  protobuf: ^3.1.0
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
 
 flutter:
   uses-material-design: true
+  generate: true
+
+flutter_launcher_icons:
+  android: true
+  image_path: assets/app_icon.png
+  ios: true
+  remove_alpha_ios: true
