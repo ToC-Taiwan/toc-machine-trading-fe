@@ -1,5 +1,5 @@
 arb-dir: l10n
 template-arb-file: app_en.arb
 output-localization-file: app_localizations.dart
-preferred-supported-locales: ["en", "ja", "ko", "zh_Hans_CN", "zh_Hant_TW"]
+preferred-supported-locales: ["en", "ja", "ko", "zh_CN", "zh_TW"]
 untranslated-messages-file: l10n/need_translate.txt
