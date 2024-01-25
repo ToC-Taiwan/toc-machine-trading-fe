@@ -15,7 +15,7 @@ class _TargestPageState extends State<TargestPage> {
     return Scaffold(
       appBar: topAppBar(
         context,
-        title: AppLocalizations.of(context)!.targets,
+        AppLocalizations.of(context)!.targets,
       ),
     );
   }

@@ -15,7 +15,7 @@ class _NotificationPageState extends State<NotificationPage> {
     return Scaffold(
       appBar: topAppBar(
         context,
-        title: AppLocalizations.of(context)!.notification,
+        AppLocalizations.of(context)!.notification,
       ),
     );
   }

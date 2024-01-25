@@ -15,7 +15,8 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       appBar: topAppBar(
         context,
-        title: AppLocalizations.of(context)!.register,
+        AppLocalizations.of(context)!.register,
+        automaticallyImplyLeading: true,
       ),
     );
   }

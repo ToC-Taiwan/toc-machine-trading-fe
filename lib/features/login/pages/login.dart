@@ -190,10 +190,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                               (_) {
                                                 checkNotification().then((_) {
                                                   Navigator.of(context).pushAndRemoveUntil(
-                                                    PageRouteBuilder(
-                                                      pageBuilder: (context, animation1, animation2) => const HomePage(),
-                                                      transitionDuration: Duration.zero,
-                                                      reverseTransitionDuration: Duration.zero,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => const HomePage(),
                                                     ),
                                                     (route) => false,
                                                   );
@@ -237,21 +235,12 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                     onPressed: logining
                                         ? null
                                         : () {
-                                            Navigator.of(context).push(PageRouteBuilder(
-                                              pageBuilder: (context, animation, secondaryAnimation) => const RegisterPage(),
-                                              transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                                const begin = Offset(0, 1);
-                                                const end = Offset.zero;
-                                                const curve = Curves.ease;
-
-                                                final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-                                                return SlideTransition(
-                                                  position: animation.drive(tween),
-                                                  child: child,
-                                                );
-                                              },
-                                            ));
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                fullscreenDialog: true,
+                                                builder: (context) => const RegisterPage(),
+                                              ),
+                                            );
                                           },
                                     child: logining
                                         ? const SpinKitWave(

@@ -15,7 +15,7 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
     return Scaffold(
       appBar: topAppBar(
         context,
-        title: AppLocalizations.of(context)!.realtime,
+        AppLocalizations.of(context)!.realtime,
       ),
     );
   }
