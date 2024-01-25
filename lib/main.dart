@@ -40,14 +40,15 @@ class MainApp extends StatelessWidget {
       initialData: LocaleBloc.currentLocale,
       builder: (context, snapshot) {
         return MaterialApp(
+          theme: ThemeData(useMaterial3: true),
           debugShowCheckedModeBanner: false,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           locale: snapshot.data,
-          initialRoute: LoginPage.routeName,
           routes: {
-            LoginPage.routeName: (context) => const LoginPage(),
+            LoginPage.routeName: (context) => LoginPage(screenHeight: MediaQuery.of(context).size.height),
           },
+          initialRoute: LoginPage.routeName,
         );
       },
     );

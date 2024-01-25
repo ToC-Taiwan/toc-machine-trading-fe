@@ -112,5 +112,6 @@
   "user_not_found": "ユーザーが見つかりません",
   "password_not_match": "パスワードが一致しません",
   "email_not_verified": "メールが確認されていません",
-  "email_already_exists": "メールアドレスはすでに存在します"
+  "email_already_exists": "メールアドレスはすでに存在します",
+  "realtime": "リアルタイム"
 }

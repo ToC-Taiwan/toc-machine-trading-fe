@@ -19,7 +19,7 @@ const String backendPickWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/stream/
 const String backendPickWSURLPrefixV2 = '$wsProtocol://$backendHost/tmt/v1/stream/ws/pick-stock/v2';
 const String backendFutureWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/stream/ws/future';
 
-class API {
+abstract class API {
   static final client = httpClient();
 
   static String _apiToken = '';

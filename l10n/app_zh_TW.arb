@@ -112,5 +112,6 @@
   "user_not_found": "無此使用者",
   "password_not_match": "密碼錯誤",
   "email_not_verified": "Email 尚未驗證",
-  "email_already_exists": "Email 已存在"
+  "email_already_exists": "Email 已存在",
+  "realtime": "即時"
 }

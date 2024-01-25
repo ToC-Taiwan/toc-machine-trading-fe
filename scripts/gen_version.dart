@@ -14,8 +14,7 @@ void main() {
 
   if (version.isNotEmpty) {
     final dartFileContent = "const String appVersion = '$version';";
-
-    final dartFile = File('lib/version.dart');
+    final dartFile = File('lib/features/login/repo/version.dart');
     dartFile.writeAsStringSync(dartFileContent);
   } else {
     throw 'Version not found in pubspec.yaml';

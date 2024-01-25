@@ -1,19 +1,26 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DB {
+abstract class DB {
+  static const tableName = 'settings';
+
   static Database? db;
 
   static Future<void> initialize() async {
-    final libDic = Platform.isAndroid ? await getApplicationSupportDirectory() : await getLibraryDirectory();
+    final storageFolder = Platform.isIOS ? await getLibraryDirectory() : await getApplicationSupportDirectory();
     db = await openDatabase(
-      join(libDic.path, 'tmt_sqlite.db'),
+      join(storageFolder.path, 'tmt.db'),
       onCreate: (db, version) async {
-        await db.execute(sqlCreateSettings);
+        await db.execute(
+          '''
+          CREATE TABLE IF NOT EXISTS "$tableName"(
+          key TEXT PRIMARY KEY,
+          value TEXT)
+          ''',
+        );
       },
       version: 1,
     );
@@ -23,9 +30,3 @@ class DB {
     return db!;
   }
 }
-
-const String sqlCreateSettings = '''
-      CREATE TABLE IF NOT EXISTS "settings"(
-      key TEXT PRIMARY KEY,
-      value TEXT)
-      ''';

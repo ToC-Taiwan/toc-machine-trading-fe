@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+class NotificationPage extends StatefulWidget {
+  const NotificationPage({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<NotificationPage> createState() => _NotificationPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: topAppBar(
         context,
-        title: AppLocalizations.of(context)!.register,
+        title: AppLocalizations.of(context)!.notification,
       ),
     );
   }

@@ -112,5 +112,6 @@
   "user_not_found": "User not found",
   "password_not_match": "Password not match",
   "email_not_verified": "Email not verified",
-  "email_already_exists": "Email already exists"
+  "email_already_exists": "Email already exists",
+  "realtime": "Realtime"
 }
