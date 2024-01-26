@@ -34,9 +34,7 @@ class _HomePageState extends State<HomePage> {
     FCM.postInit(_showNotification);
     sendToken();
     AppLifecycleListener(
-      onResume: () {
-        FCM.manualRefresh();
-      },
+      onResume: FCM.manualRefresh,
     );
   }
 

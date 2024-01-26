@@ -26,7 +26,7 @@ class _SettingsPageState extends State<SettingsPage> {
     super.initState();
     checkPushIsPermantlyDenied();
     AppLifecycleListener(
-      onResume: () => checkPushIsPermantlyDenied(),
+      onResume: checkPushIsPermantlyDenied,
     );
   }
 

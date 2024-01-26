@@ -20,6 +20,9 @@ class _NotificationPageState extends State<NotificationPage> {
     super.initState();
     notifications = FCM.getNotifications();
     registerUpdate();
+    AppLifecycleListener(
+      onResume: refreshData,
+    );
   }
 
   void registerUpdate() {
