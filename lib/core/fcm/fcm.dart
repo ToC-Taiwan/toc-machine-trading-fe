@@ -245,4 +245,8 @@ abstract class FCM {
     );
     return maps.isNotEmpty;
   }
+
+  static Future<void> manualRefresh() async {
+    _counterController.sink.add(await anyNotificationsUnread());
+  }
 }

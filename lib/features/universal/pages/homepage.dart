@@ -33,6 +33,11 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     FCM.postInit(_showNotification);
     sendToken();
+    AppLifecycleListener(
+      onResume: () {
+        FCM.manualRefresh();
+      },
+    );
   }
 
   void sendToken() async {
