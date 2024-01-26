@@ -115,6 +115,7 @@ abstract class FCM {
   static set allowPush(bool value) {
     _allowPush = value;
     if (value) {
+      triggerUpdate();
       turnOnDBAllowPush();
     } else {
       turnOffDBAllowPush();
@@ -213,7 +214,7 @@ abstract class FCM {
         'read': 1,
       },
     );
-    _counterController.sink.add(await anyNotificationsUnread());
+    triggerUpdate();
   }
 
   static Future<void> markNotificationAsRead(int id) async {
@@ -225,7 +226,7 @@ abstract class FCM {
       where: 'id = ?',
       whereArgs: [id],
     );
-    _counterController.sink.add(await anyNotificationsUnread());
+    triggerUpdate();
   }
 
   static Future<void> deleteNotification(int id) async {
@@ -234,7 +235,7 @@ abstract class FCM {
       where: 'id = ?',
       whereArgs: [id],
     );
-    _counterController.sink.add(await anyNotificationsUnread());
+    triggerUpdate();
   }
 
   static Future<bool> anyNotificationsUnread() async {
@@ -246,7 +247,7 @@ abstract class FCM {
     return maps.isNotEmpty;
   }
 
-  static Future<void> manualRefresh() async {
+  static Future<void> triggerUpdate() async {
     _counterController.sink.add(await anyNotificationsUnread());
   }
 }
