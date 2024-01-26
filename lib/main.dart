@@ -4,20 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toc_machine_trading_fe/core/database/database.dart';
+import 'package:toc_machine_trading_fe/core/fcm/fcm.dart';
 import 'package:toc_machine_trading_fe/core/locale/locale.dart';
 import 'package:toc_machine_trading_fe/features/login/pages/login.dart';
 import 'package:toc_machine_trading_fe/firebase_options.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await FCM.initializeDB();
+  await FCM.insertNotification(message);
 }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DB.initialize();
+  await FCM.initializeDB();
   await LocaleBloc.initialize();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -26,6 +27,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FCM.registerBackgroundCallback();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(const MainApp());
 }

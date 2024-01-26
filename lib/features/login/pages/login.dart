@@ -10,7 +10,6 @@ import 'package:toc_machine_trading_fe/core/fcm/fcm.dart';
 import 'package:toc_machine_trading_fe/features/login/pages/register.dart';
 import 'package:toc_machine_trading_fe/features/login/repo/repo.dart';
 import 'package:toc_machine_trading_fe/features/universal/pages/homepage.dart';
-import 'package:toc_machine_trading_fe/features/universal/widgets/langauge.dart';
 
 class LoginPage extends StatefulWidget {
   static const routeName = '/';
@@ -83,11 +82,6 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
             fit: BoxFit.cover,
           ),
           Scaffold(
-            floatingActionButton: Padding(
-              padding: const EdgeInsets.only(top: 10, right: 10),
-              child: newDropdownButton2(),
-            ),
-            floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
             backgroundColor: Colors.transparent,
             resizeToAvoidBottomInset: false,
             body: AutofillGroup(
@@ -189,12 +183,14 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                             API.login(username, password).then(
                                               (_) {
                                                 checkNotification().then((_) {
-                                                  Navigator.of(context).pushAndRemoveUntil(
-                                                    MaterialPageRoute(
-                                                      builder: (context) => const HomePage(),
-                                                    ),
-                                                    (route) => false,
-                                                  );
+                                                  FCM.anyNotificationsUnread().then((value) {
+                                                    Navigator.of(context).pushAndRemoveUntil(
+                                                      MaterialPageRoute(
+                                                        builder: (context) => HomePage(notificationIsUnread: value),
+                                                      ),
+                                                      (route) => false,
+                                                    );
+                                                  });
                                                 });
                                               },
                                             ).catchError((e) {

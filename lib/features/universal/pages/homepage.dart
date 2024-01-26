@@ -4,11 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';
 import 'package:toc_machine_trading_fe/core/fcm/fcm.dart';
+import 'package:toc_machine_trading_fe/features/balance/pages/balance.dart';
+import 'package:toc_machine_trading_fe/features/notification/pages/notification.dart';
 import 'package:toc_machine_trading_fe/features/realtime/pages/category.dart';
 import 'package:toc_machine_trading_fe/features/targets/pages/targets.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({required this.notificationIsUnread, super.key});
+
+  final bool notificationIsUnread;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -18,6 +22,8 @@ class _HomePageState extends State<HomePage> {
   List<Widget> pages = [
     const TargestPage(),
     const RealTimeCategoryPage(),
+    const BalancePage(),
+    const NotificationPage(),
   ];
 
   int currentPageIndex = 0;
@@ -34,23 +40,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _showNotification(RemoteMessage msg) async {
-    if (!FCM.allowPush) {
+    if (!FCM.allowPush || msg.notification == null || currentPageIndex == 3) {
       return;
     }
 
     await Flushbar(
       onTap: (flushbar) {
-        int newIndex = 0;
-        if (msg.data['page_route'] == 'target') {
-          newIndex = 0;
-        } else if (msg.data['page_route'] == 'realtime') {
-          newIndex = 1;
-        } else if (msg.data['page_route'] == 'notification') {
-          newIndex = 2;
-        }
         flushbar.dismiss();
         setState(() {
-          currentPageIndex = newIndex;
+          currentPageIndex = 3;
         });
       },
       margin: const EdgeInsets.all(8),
@@ -102,7 +100,6 @@ class _HomePageState extends State<HomePage> {
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         animationDuration: const Duration(milliseconds: 250),
         backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
         indicatorColor: Colors.blueGrey,
         elevation: 0,
         height: 50,
@@ -115,17 +112,39 @@ class _HomePageState extends State<HomePage> {
         destinations: <Widget>[
           NavigationDestination(
             icon: Icon(
-              Icons.assignment_outlined,
+              Icons.account_balance_outlined,
               color: currentPageIndex != 0 ? null : Colors.white,
             ),
             label: AppLocalizations.of(context)!.targets,
           ),
           NavigationDestination(
             icon: Icon(
-              Icons.account_balance_outlined,
+              Icons.dashboard_customize,
               color: currentPageIndex != 1 ? null : Colors.white,
             ),
             label: AppLocalizations.of(context)!.realtime,
+          ),
+          NavigationDestination(
+            icon: Icon(
+              Icons.money,
+              color: currentPageIndex != 2 ? null : Colors.white,
+            ),
+            label: AppLocalizations.of(context)!.balance,
+          ),
+          NavigationDestination(
+            icon: StreamBuilder<bool>(
+                stream: FCM.notificationCountStream,
+                initialData: widget.notificationIsUnread,
+                builder: (context, snapshot) {
+                  return Badge(
+                    isLabelVisible: snapshot.data!,
+                    child: Icon(
+                      Icons.notifications_outlined,
+                      color: currentPageIndex != 3 ? null : Colors.white,
+                    ),
+                  );
+                }),
+            label: AppLocalizations.of(context)!.notification,
           ),
         ],
       ),

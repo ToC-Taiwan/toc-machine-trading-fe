@@ -16,7 +16,10 @@ abstract class LocaleBloc {
   static Future<void> initialize() async {
     final storageFolder = Platform.isIOS ? await getLibraryDirectory() : await getApplicationSupportDirectory();
     db = await openDatabase(
-      join(storageFolder.path, 'tmt_lang.db'),
+      join(
+        storageFolder.path,
+        'tmt_lang.db',
+      ),
       onCreate: (db, version) async {
         await db.execute(
           '''

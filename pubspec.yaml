@@ -10,7 +10,6 @@ dependencies:
   another_flushbar: ^1.12.30
   cronet_http: ^1.0.0
   cupertino_http: ^1.2.0
-  dropdown_button2: ^2.3.9
   email_validator: ^2.1.16
   firebase_core: ^2.24.2
   firebase_messaging: ^14.7.10
