@@ -104,4 +104,25 @@ abstract class LocaleBloc {
   static void dispose() {
     _localeController.close();
   }
+
+  static List<String> get supportedLocales => [
+        const Locale.fromSubtags(languageCode: 'en').toString(),
+        const Locale.fromSubtags(languageCode: 'ja').toString(),
+        const Locale.fromSubtags(languageCode: 'ko').toString(),
+        const Locale.fromSubtags(languageCode: 'zh', countryCode: 'TW').toString(),
+        const Locale.fromSubtags(languageCode: 'zh', countryCode: 'CN').toString(),
+      ];
+
+  static String localeName(String name) {
+    if (name == 'ja') {
+      return '日本語';
+    } else if (name == 'ko') {
+      return '한국어';
+    } else if (name == 'zh_TW') {
+      return '正體中文';
+    } else if (name == 'zh_CN') {
+      return '简体中文';
+    }
+    return 'English';
+  }
 }
