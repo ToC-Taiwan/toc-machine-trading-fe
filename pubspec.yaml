@@ -1,7 +1,7 @@
 name: toc_machine_trading_fe
 description: "Status of trade agent, let user query analyzed stocks."
 publish_to: "none"
-version: 4.2.2+40047
+version: 4.2.3+40048
 
 environment:
   sdk: ">=3.2.5 <4.0.0"
@@ -29,7 +29,7 @@ dependencies:
   permission_handler: ^11.1.0
   protobuf: ^3.1.0
   sqflite: ^2.3.0
-  url_launcher: ^6.1.14
+  url_launcher: ^6.2.4
   wakelock: ^0.6.2
   web_socket_channel: ^2.4.0
 

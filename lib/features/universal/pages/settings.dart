@@ -6,6 +6,7 @@ import 'package:toc_machine_trading_fe/core/fcm/fcm.dart';
 import 'package:toc_machine_trading_fe/core/locale/locale.dart';
 import 'package:toc_machine_trading_fe/features/login/repo/repo.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -15,6 +16,8 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  final Uri _url = Uri.parse('https://tocandraw.com/amp');
+
   ExpansionTileController? controllerA = ExpansionTileController();
   ExpansionTileController? controllerB = ExpansionTileController();
 
@@ -48,6 +51,12 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
+  Future<void> _launchUrl() async {
+    if (!await launchUrl(_url)) {
+      throw Exception('Could not launch $_url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,6 +71,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ExpansionTile(
             maintainState: true,
             controller: controllerA,
+            iconColor: Colors.blueGrey,
             childrenPadding: const EdgeInsets.only(left: 50),
             onExpansionChanged: (value) async {
               if (value) {
@@ -135,6 +145,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 style: const TextStyle(fontSize: 16, color: Colors.grey),
               ),
             ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.settings_accessibility_outlined),
+            title: Text(AppLocalizations.of(context)!.about_me),
+            onTap: _launchUrl,
           ),
         ],
       ),
