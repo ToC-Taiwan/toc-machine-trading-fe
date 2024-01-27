@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -114,14 +114,15 @@ abstract class LocaleBloc {
       ];
 
   static String localeName(String name) {
-    if (name == 'ja') {
-      return '日本語';
-    } else if (name == 'ko') {
-      return '한국어';
-    } else if (name == 'zh_TW') {
-      return '正體中文';
-    } else if (name == 'zh_CN') {
-      return '简体中文';
+    switch (name) {
+      case 'ja':
+        return '日本語';
+      case 'ko':
+        return '한국어';
+      case 'zh_TW':
+        return '正體中文';
+      case 'zh_CN':
+        return '简体中文';
     }
     return 'English';
   }

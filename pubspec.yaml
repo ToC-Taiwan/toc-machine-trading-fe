@@ -1,7 +1,7 @@
 name: toc_machine_trading_fe
 description: "Status of trade agent, let user query analyzed stocks."
 publish_to: "none"
-version: 4.2.3+40048
+version: 4.2.4+40049
 
 environment:
   sdk: ">=3.2.5 <4.0.0"
@@ -10,6 +10,7 @@ dependencies:
   another_flushbar: ^1.12.30
   cronet_http: ^1.0.0
   cupertino_http: ^1.2.0
+  date_format: ^2.0.7
   email_validator: ^2.1.16
   firebase_core: ^2.24.2
   firebase_messaging: ^14.7.10
@@ -26,9 +27,11 @@ dependencies:
   intl: ^0.18.1
   path: ^1.8.3
   path_provider: ^2.1.1
+  percent_indicator: ^4.0.1
   permission_handler: ^11.1.0
   protobuf: ^3.1.0
   sqflite: ^2.3.0
+  syncfusion_flutter_charts: ^24.1.47+2
   url_launcher: ^6.2.4
   wakelock: ^0.6.2
   web_socket_channel: ^2.4.0
@@ -43,6 +46,18 @@ dev_dependencies:
 flutter:
   assets:
     - assets/background.png
+  fonts:
+    - family: NotoSansMono
+      fonts:
+        - asset: assets/fonts/noto_sans_moto/NotoSansMono-Black.ttf
+        - asset: assets/fonts/noto_sans_moto/NotoSansMono-Bold.ttf
+        - asset: assets/fonts/noto_sans_moto/NotoSansMono-ExtraBold.ttf
+        - asset: assets/fonts/noto_sans_moto/NotoSansMono-ExtraLight.ttf
+        - asset: assets/fonts/noto_sans_moto/NotoSansMono-Light.ttf
+        - asset: assets/fonts/noto_sans_moto/NotoSansMono-Medium.ttf
+        - asset: assets/fonts/noto_sans_moto/NotoSansMono-Regular.ttf
+        - asset: assets/fonts/noto_sans_moto/NotoSansMono-SemiBold.ttf
+        - asset: assets/fonts/noto_sans_moto/NotoSansMono-Thin.ttf
   generate: true
   uses-material-design: true
 
