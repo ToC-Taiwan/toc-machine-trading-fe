@@ -113,5 +113,8 @@
   "password_not_match": "パスワードが一致しません",
   "email_not_verified": "メールが確認されていません",
   "email_already_exists": "メールアドレスはすでに存在します",
-  "realtime": "リアルタイム"
+  "realtime": "リアルタイム",
+  "news": "ニュース",
+  "no_notifications": "通知はありません。",
+  "user": "ユーザー"
 }

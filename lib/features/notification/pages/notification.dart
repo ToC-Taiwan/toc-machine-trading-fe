@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:toc_machine_trading_fe/core/fcm/fcm.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
@@ -112,8 +111,11 @@ class _NotificationPageState extends State<NotificationPage> {
                     },
                   );
                 }
-                return const Center(
-                  child: SpinKitWave(color: Colors.blueGrey, size: 35.0),
+                return Center(
+                  child: Text(
+                    AppLocalizations.of(context)!.no_notifications,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
                 );
               },
             ),

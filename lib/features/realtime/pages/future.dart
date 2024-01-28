@@ -39,173 +39,6 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
     initialWS();
   }
 
-  void initialWS() async {
-    _channel = IOWebSocketChannel.connect(
-      Uri.parse(backendFutureWSURLPrefix),
-      pingInterval: const Duration(seconds: 1),
-      headers: {
-        "Authorization": API.authKey,
-      },
-    );
-    await _channel!.ready;
-    _channel!.stream.listen(
-      (message) {
-        if (!mounted) {
-          return;
-        }
-
-        final msg = pb.WSMessage.fromBuffer(message as List<int>);
-        switch (msg.type) {
-          case pb.WSType.TYPE_FUTURE_TICK:
-            setState(() {
-              futureTickArr.insert(0, msg.futureTick);
-              if (futureTickArr.length > 4) {
-                futureTickArr.removeLast();
-              }
-            });
-            _updateTradeRate(msg.futureTick);
-            return;
-
-          case pb.WSType.TYPE_TRADE_INDEX:
-            setState(() {
-              tradeIndex = msg.tradeIndex;
-            });
-            return;
-
-          case pb.WSType.TYPE_KBAR_ARR:
-            int maxVolume = 0;
-            for (final kbar in msg.historyKbar.arr) {
-              if (kbar.volume > maxVolume) {
-                maxVolume = kbar.volume.toInt();
-              }
-            }
-            setState(() {
-              kbarArr = msg.historyKbar.arr;
-              kbarMaxVolume = maxVolume;
-            });
-            return;
-
-          case pb.WSType.TYPE_FUTURE_DETAIL:
-            delieveryDate = msg.futureDetail.deliveryDate;
-            return;
-
-          case pb.WSType.TYPE_ASSIST_STATUS:
-            return;
-          case pb.WSType.TYPE_ERR_MESSAGE:
-            return;
-          case pb.WSType.TYPE_FUTURE_ORDER:
-            return;
-          case pb.WSType.TYPE_FUTURE_POSITION:
-            return;
-        }
-      },
-      onDone: () {
-        if (mounted) {
-          Future.delayed(const Duration(milliseconds: 1000)).then((value) {
-            _channel!.sink.close();
-            initialWS();
-          });
-        }
-      },
-      onError: (error) {},
-    );
-  }
-
-  void _updateTradeRate(pb.WSFutureTick tick) {
-    rateFutureTickArr.insert(0, tick);
-    if (rateFutureTickArr.length == 1) {
-      return;
-    }
-    double outCount = 0;
-    double inCount = 0;
-    double rate = 0;
-    double duration = 0;
-    for (int i = rateFutureTickArr.length - 1; i > 0; i--) {
-      if (DateTime.now().difference(DateTime.parse(rateFutureTickArr[i].tickTime)).inSeconds > 15) {
-        rateFutureTickArr.removeAt(i);
-        continue;
-      }
-      if (duration == 0) {
-        duration = DateTime.parse(rateFutureTickArr.first.tickTime).difference(DateTime.parse(rateFutureTickArr[i].tickTime)).inSeconds.toDouble();
-        if (duration == 0) {
-          return;
-        }
-      }
-      if (rateFutureTickArr[i].tickType == 1) {
-        outCount += rateFutureTickArr[i].volume.toDouble();
-      } else {
-        inCount += rateFutureTickArr[i].volume.toDouble();
-      }
-    }
-
-    rate = (outCount + inCount) / duration;
-    setState(() {
-      tradeRate = rate;
-      outInRatio = outCount / (outCount + inCount);
-    });
-  }
-
-  Row _buildIndex(String name, num priceChg, int breakCount) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 2,
-          child: numberText(name, color: Colors.blueGrey),
-        ),
-        Expanded(
-          flex: 3,
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: numberText(
-              priceChg.toStringAsFixed(2),
-              color: priceChg > 0 ? Colors.redAccent : Colors.greenAccent,
-            ),
-          ),
-        ),
-        Expanded(
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: numberText(
-              '!${breakCount.toString()}',
-              color: priceChg > 0 ? Colors.redAccent : Colors.greenAccent,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Container _buildTickRow(pb.WSFutureTick tick) {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 1.5,
-      ),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: tick.tickType == 1 ? Colors.red : Colors.green,
-          width: 1.1,
-        ),
-        borderRadius: BorderRadius.circular(3),
-      ),
-      child: ListTile(
-        leading: numberText(
-          '${tick.volume}',
-          color: tick.tickType == 1 ? Colors.red : Colors.green,
-          bold: true,
-        ),
-        title: numberText(
-          tick.close.toStringAsFixed(0),
-          color: tick.tickType == 1 ? Colors.red : Colors.green,
-          bold: true,
-        ),
-        trailing: numberText(
-          df.formatDate(DateTime.parse(tick.tickTime), [df.HH, ':', df.nn, ':', df.ss]),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -225,6 +58,7 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 4,
                       child: CircularPercentIndicator(
                         radius: 55.0,
                         lineWidth: 10.0,
@@ -235,8 +69,9 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
                       ),
                     ),
                     Expanded(
+                      flex: 5,
                       child: Padding(
-                        padding: const EdgeInsets.only(right: 5),
+                        padding: const EdgeInsets.only(right: 10),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -354,6 +189,173 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  void initialWS() async {
+    _channel = IOWebSocketChannel.connect(
+      Uri.parse(backendFutureWSURLPrefix),
+      pingInterval: const Duration(seconds: 1),
+      headers: {
+        "Authorization": API.authKey,
+      },
+    );
+    await _channel!.ready;
+    _channel!.stream.listen(
+      (message) {
+        if (!mounted) {
+          return;
+        }
+
+        final msg = pb.WSMessage.fromBuffer(message as List<int>);
+        switch (msg.type) {
+          case pb.WSType.TYPE_FUTURE_TICK:
+            setState(() {
+              futureTickArr.insert(0, msg.futureTick);
+              if (futureTickArr.length > 4) {
+                futureTickArr.removeLast();
+              }
+            });
+            _updateTradeRate(msg.futureTick);
+            return;
+
+          case pb.WSType.TYPE_TRADE_INDEX:
+            setState(() {
+              tradeIndex = msg.tradeIndex;
+            });
+            return;
+
+          case pb.WSType.TYPE_KBAR_ARR:
+            int maxVolume = 0;
+            for (final kbar in msg.historyKbar.arr) {
+              if (kbar.volume > maxVolume) {
+                maxVolume = kbar.volume.toInt();
+              }
+            }
+            setState(() {
+              kbarArr = msg.historyKbar.arr;
+              kbarMaxVolume = maxVolume;
+            });
+            return;
+
+          case pb.WSType.TYPE_FUTURE_DETAIL:
+            delieveryDate = msg.futureDetail.deliveryDate;
+            return;
+
+          case pb.WSType.TYPE_ASSIST_STATUS:
+            return;
+          case pb.WSType.TYPE_ERR_MESSAGE:
+            return;
+          case pb.WSType.TYPE_FUTURE_ORDER:
+            return;
+          case pb.WSType.TYPE_FUTURE_POSITION:
+            return;
+        }
+      },
+      onDone: () {
+        if (mounted) {
+          Future.delayed(const Duration(milliseconds: 1000)).then((value) {
+            _channel!.sink.close();
+            initialWS();
+          });
+        }
+      },
+      onError: (error) {},
+    );
+  }
+
+  void _updateTradeRate(pb.WSFutureTick tick) {
+    rateFutureTickArr.insert(0, tick);
+    if (rateFutureTickArr.length == 1) {
+      return;
+    }
+    double outCount = 0;
+    double inCount = 0;
+    double rate = 0;
+    double duration = 0;
+    for (int i = rateFutureTickArr.length - 1; i >= 0; i--) {
+      if (DateTime.now().difference(DateTime.parse(rateFutureTickArr[i].tickTime)).inSeconds > 15) {
+        rateFutureTickArr.removeAt(i);
+        continue;
+      }
+      if (duration == 0) {
+        duration = DateTime.parse(rateFutureTickArr.first.tickTime).difference(DateTime.parse(rateFutureTickArr[i].tickTime)).inSeconds.toDouble();
+        if (duration == 0) {
+          return;
+        }
+      }
+      if (rateFutureTickArr[i].tickType == 1) {
+        outCount += rateFutureTickArr[i].volume.toDouble();
+      } else {
+        inCount += rateFutureTickArr[i].volume.toDouble();
+      }
+    }
+
+    rate = (outCount + inCount) / duration;
+    setState(() {
+      tradeRate = rate;
+      outInRatio = outCount / (outCount + inCount);
+    });
+  }
+
+  Row _buildIndex(String name, num priceChg, int breakCount) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 2,
+          child: numberText(name, color: Colors.blueGrey),
+        ),
+        Expanded(
+          flex: 3,
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: numberText(
+              priceChg.toStringAsFixed(2),
+              color: priceChg > 0 ? Colors.redAccent : Colors.greenAccent,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: numberText(
+              '!${breakCount.toString()}',
+              color: priceChg > 0 ? Colors.redAccent : Colors.greenAccent,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Container _buildTickRow(pb.WSFutureTick tick) {
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 1.5,
+      ),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: tick.tickType == 1 ? Colors.red : Colors.green,
+          width: 1.1,
+        ),
+        borderRadius: BorderRadius.circular(3),
+      ),
+      child: ListTile(
+        leading: numberText(
+          '${tick.volume}',
+          color: tick.tickType == 1 ? Colors.red : Colors.green,
+          bold: true,
+        ),
+        title: numberText(
+          tick.close.toStringAsFixed(0),
+          color: tick.tickType == 1 ? Colors.red : Colors.green,
+          bold: true,
+        ),
+        trailing: numberText(
+          df.formatDate(DateTime.parse(tick.tickTime), [df.HH, ':', df.nn, ':', df.ss]),
         ),
       ),
     );

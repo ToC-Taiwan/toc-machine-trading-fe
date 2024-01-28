@@ -113,5 +113,8 @@
   "password_not_match": "비밀번호가 일치하지 않습니다",
   "email_not_verified": "이메일이 확인되지 않았습니다",
   "email_already_exists": "이메일이 이미 존재합니다",
-  "realtime": "실시간"
+  "realtime": "실시간",
+  "news": "뉴스",
+  "no_notifications": "알림이 없습니다.",
+  "user": "사용자"
 }

@@ -5,9 +5,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';
 import 'package:toc_machine_trading_fe/core/fcm/fcm.dart';
 import 'package:toc_machine_trading_fe/features/balance/pages/balance.dart';
+import 'package:toc_machine_trading_fe/features/news/pages/news.dart';
 import 'package:toc_machine_trading_fe/features/notification/pages/notification.dart';
 import 'package:toc_machine_trading_fe/features/realtime/pages/category.dart';
-import 'package:toc_machine_trading_fe/features/targets/pages/targets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({required this.notificationIsUnread, super.key});
@@ -20,7 +20,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Widget> pages = [
-    const TargestPage(),
+    const NewsPage(),
     const RealTimeCategoryPage(),
     const BalancePage(),
     const NotificationPage(),

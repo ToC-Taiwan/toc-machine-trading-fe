@@ -41,9 +41,9 @@ AppBar topAppBar(
     centerTitle: automaticallyImplyLeading,
     title: Text(
       title,
-      style: const TextStyle(
-        fontWeight: FontWeight.bold,
-      ),
+      style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
     ),
     automaticallyImplyLeading: automaticallyImplyLeading,
     actions: finalActions,

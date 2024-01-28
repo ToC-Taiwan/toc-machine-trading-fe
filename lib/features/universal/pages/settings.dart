@@ -20,6 +20,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   ExpansionTileController? controllerA = ExpansionTileController();
   ExpansionTileController? controllerB = ExpansionTileController();
+  ExpansionTileController? controllerC = ExpansionTileController();
 
   bool _pushNotification = false;
   bool _pushNotificationPermamentlyDenied = false;
@@ -71,11 +72,26 @@ class _SettingsPageState extends State<SettingsPage> {
           ExpansionTile(
             maintainState: true,
             controller: controllerA,
+            onExpansionChanged: (value) {
+              if (value) {
+                controllerB!.collapse();
+                controllerC!.collapse();
+              }
+            },
+            iconColor: Colors.blueGrey,
+            childrenPadding: const EdgeInsets.only(left: 50),
+            leading: const Icon(Icons.account_circle_outlined),
+            title: Text(AppLocalizations.of(context)!.user),
+          ),
+          ExpansionTile(
+            maintainState: true,
+            controller: controllerB,
             iconColor: Colors.blueGrey,
             childrenPadding: const EdgeInsets.only(left: 50),
             onExpansionChanged: (value) async {
               if (value) {
-                controllerB!.collapse();
+                controllerA!.collapse();
+                controllerC!.collapse();
                 if (_pushNotificationPermamentlyDenied) {
                   return;
                 }
@@ -89,6 +105,7 @@ class _SettingsPageState extends State<SettingsPage> {
             children: [
               SwitchListTile(
                 value: _pushNotification,
+                activeColor: Colors.blueGrey,
                 onChanged: _pushNotificationPermamentlyDenied
                     ? null
                     : (bool? value) async {
@@ -112,10 +129,11 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           ExpansionTile(
             maintainState: true,
-            controller: controllerB,
+            controller: controllerC,
             onExpansionChanged: (value) {
               if (value) {
                 controllerA!.collapse();
+                controllerB!.collapse();
               }
             },
             iconColor: Colors.blueGrey,

@@ -113,5 +113,8 @@
   "password_not_match": "密碼錯誤",
   "email_not_verified": "Email 尚未驗證",
   "email_already_exists": "Email 已存在",
-  "realtime": "即時"
+  "realtime": "即時",
+  "news": "新聞",
+  "no_notifications": "您目前沒有通知。",
+  "user": "使用者"
 }

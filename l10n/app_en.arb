@@ -113,5 +113,8 @@
   "password_not_match": "Password not match",
   "email_not_verified": "Email not verified",
   "email_already_exists": "Email already exists",
-  "realtime": "Realtime"
+  "realtime": "Realtime",
+  "news": "News",
+  "no_notifications": "You have no notifications.",
+  "user": "User"
 }
