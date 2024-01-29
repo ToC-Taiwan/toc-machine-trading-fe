@@ -41,7 +41,7 @@ class _NotificationPageState extends State<NotificationPage> {
     });
   }
 
-  void checkAllowNotification() async {
+  Future<void> checkAllowNotification() async {
     if (!mounted) {
       return;
     }

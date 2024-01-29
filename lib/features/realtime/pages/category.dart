@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toc_machine_trading_fe/features/realtime/pages/future.dart';
+import 'package:toc_machine_trading_fe/features/realtime/pages/pick_stock.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
 
 class RealTimeCategoryPage extends StatefulWidget {
@@ -25,12 +26,12 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
             GridView.count(
               shrinkWrap: true,
               childAspectRatio: 1.5,
-              crossAxisCount: 2,
+              crossAxisCount: 3,
               children: [
                 Card(
                   elevation: 3,
                   shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(40)),
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
                   ),
                   child: InkWell(
                     onTap: () {
@@ -43,12 +44,10 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                         ),
                       );
                     },
-                    child: const Center(
+                    child: Center(
                       child: Text(
                         'MXF',
-                        style: TextStyle(
-                          fontSize: 26,
-                        ),
+                        style: Theme.of(context).textTheme.bodyLarge!,
                       ),
                     ),
                   ),
@@ -56,16 +55,21 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                 Card(
                   elevation: 3,
                   shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(40)),
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
                   ),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          fullscreenDialog: true,
+                          builder: (context) => const PickStockPage(),
+                        ),
+                      );
+                    },
                     child: Center(
                       child: Text(
                         AppLocalizations.of(context)!.pick_stock,
-                        style: const TextStyle(
-                          fontSize: 26,
-                        ),
+                        style: Theme.of(context).textTheme.bodyLarge!,
                       ),
                     ),
                   ),

@@ -87,7 +87,7 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
                 ),
               ),
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: futureTickArr.isEmpty
                     ? Container()
                     : Row(
@@ -95,7 +95,7 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
                           Expanded(
                             child: Center(
                               child: numberText(
-                                futureTickArr[0].close.toStringAsFixed(0),
+                                futureTickArr[0].close.abs().toStringAsFixed(0),
                                 fontSize: 55,
                                 bold: true,
                               ),
@@ -194,7 +194,7 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
     );
   }
 
-  void initialWS() async {
+  Future<void> initialWS() async {
     _channel = IOWebSocketChannel.connect(
       Uri.parse(backendFutureWSURLPrefix),
       pingInterval: const Duration(seconds: 1),
@@ -213,6 +213,12 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
         switch (msg.type) {
           case pb.WSType.TYPE_FUTURE_TICK:
             setState(() {
+              if (futureTickArr.isNotEmpty && futureTickArr.first.tickType == msg.futureTick.tickType && futureTickArr.first.close == msg.futureTick.close) {
+                futureTickArr.first.comboCount++;
+                futureTickArr.first.volume += msg.futureTick.volume;
+                futureTickArr.first.tickTime = msg.futureTick.tickTime;
+                return;
+              }
               futureTickArr.insert(0, msg.futureTick);
               if (futureTickArr.length > 4) {
                 futureTickArr.removeLast();
@@ -321,8 +327,12 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
           child: Align(
             alignment: Alignment.centerRight,
             child: numberText(
-              '!${breakCount.toString()}',
-              color: priceChg > 0 ? Colors.redAccent : Colors.greenAccent,
+              '!${breakCount.abs().toString()}',
+              color: breakCount == 0
+                  ? Colors.grey
+                  : breakCount > 0
+                      ? Colors.redAccent
+                      : Colors.greenAccent,
             ),
           ),
         ),
@@ -334,26 +344,23 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
     return Container(
       margin: const EdgeInsets.symmetric(
         horizontal: 10,
-        vertical: 1.5,
+        vertical: 3,
       ),
       decoration: BoxDecoration(
         border: Border.all(
           color: tick.tickType == 1 ? Colors.red : Colors.green,
-          width: 1.1,
+          width: tick.comboCount > 0 ? 1.6 : 1.1,
         ),
-        borderRadius: BorderRadius.circular(3),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: ListTile(
         leading: numberText(
           '${tick.volume}',
           color: tick.tickType == 1 ? Colors.red : Colors.green,
           bold: true,
+          fontSize: tick.comboCount > 0 ? 24 : 16,
         ),
-        title: numberText(
-          tick.close.toStringAsFixed(0),
-          color: tick.tickType == 1 ? Colors.red : Colors.green,
-          bold: true,
-        ),
+        title: numberText(tick.close.toStringAsFixed(0), color: tick.tickType == 1 ? Colors.red : Colors.green, bold: true, fontSize: 18),
         trailing: numberText(
           df.formatDate(DateTime.parse(tick.tickTime), [df.HH, ':', df.nn, ':', df.ss]),
         ),

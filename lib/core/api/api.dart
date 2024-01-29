@@ -5,6 +5,8 @@ import 'package:cronet_http/cronet_http.dart';
 import 'package:cupertino_http/cupertino_http.dart';
 import 'package:http/http.dart';
 import 'package:http/io_client.dart';
+import 'package:toc_machine_trading_fe/features/realtime/entity/snapshot.dart';
+import 'package:toc_machine_trading_fe/features/realtime/entity/stock.dart';
 
 const String protocol = 'https';
 const String wsProtocol = 'wss';
@@ -159,6 +161,60 @@ abstract class API {
     if (response.statusCode != 200) {
       final result = jsonDecode(response.body) as Map<String, dynamic>;
       throw result['code'] as int;
+    }
+  }
+
+  static Future<List<Stock>> fetchStockDetail(List<String> codeList) async {
+    if (codeList.isEmpty) {
+      throw 'code is empty';
+    }
+
+    var putBody = {
+      'stock_list': codeList,
+    };
+    final response = await client.put(
+      Uri.parse('$backendURLPrefix/basic/stock'),
+      headers: {
+        "Authorization": _apiToken,
+      },
+      body: jsonEncode(putBody),
+    );
+    final result = jsonDecode(response.body) as Map<String, dynamic>;
+    if (response.statusCode == 200) {
+      final data = <Stock>[];
+      for (final i in result["stock_detail"]) {
+        data.add(Stock.fromJson(i as Map<String, dynamic>));
+      }
+      if (data.isEmpty) {
+        throw 'no data';
+      }
+      return data;
+    } else {
+      throw result['code'] as int;
+    }
+  }
+
+  static Future<Map<String, SnapShot>> fetchSnapshots(List<String> codeList) async {
+    var putBody = {
+      'stock_list': codeList,
+    };
+
+    final response = await client.put(
+      Uri.parse('$backendURLPrefix/stream/snapshot'),
+      headers: {
+        "Authorization": _apiToken,
+      },
+      body: jsonEncode(putBody),
+    );
+    final result = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      Map<String, SnapShot> data = {};
+      for (final i in result as List<dynamic>) {
+        data[i['stock_num'] as String] = SnapShot.fromJson(i as Map<String, dynamic>);
+      }
+      return data;
+    } else {
+      throw (result as Map<String, dynamic>)['code'] as int;
     }
   }
 }

@@ -34,7 +34,7 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  void checkPushIsPermantlyDenied() async {
+  Future<void> checkPushIsPermantlyDenied() async {
     if (!mounted) {
       return;
     }

@@ -116,5 +116,7 @@
   "realtime": "实时",
   "news": "新闻",
   "no_notifications": "您目前没有通知。",
-  "user": "用户"
+  "user": "用户",
+  "stock_already_exists": "该股票已存在",
+  "not_found": "找不到"
 }

@@ -116,5 +116,7 @@
   "realtime": "リアルタイム",
   "news": "ニュース",
   "no_notifications": "通知はありません。",
-  "user": "ユーザー"
+  "user": "ユーザー",
+  "stock_already_exists": "その株式はすでに存在します",
+  "not_found": "見つかりません (みつかりません)"
 }

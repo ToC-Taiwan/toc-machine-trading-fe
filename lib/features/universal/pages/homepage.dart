@@ -38,11 +38,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void sendToken() async {
+  Future<void> sendToken() async {
     await API.sendToken(FCM.allowPush, FCM.getToken);
   }
 
-  void _showNotification(RemoteMessage msg) async {
+  Future<void> _showNotification(RemoteMessage msg) async {
     if (!FCM.allowPush || msg.notification == null || currentPageIndex == 3) {
       return;
     }

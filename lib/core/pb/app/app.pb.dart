@@ -697,6 +697,7 @@ class WSFutureTick extends $pb.GeneratedMessage {
     $fixnum.Int64? chgType,
     $core.double? priceChg,
     $core.double? pctChg,
+    $fixnum.Int64? comboCount,
   }) {
     final $result = create();
     if (code != null) {
@@ -753,6 +754,9 @@ class WSFutureTick extends $pb.GeneratedMessage {
     if (pctChg != null) {
       $result.pctChg = pctChg;
     }
+    if (comboCount != null) {
+      $result.comboCount = comboCount;
+    }
     return $result;
   }
   WSFutureTick._() : super();
@@ -778,6 +782,7 @@ class WSFutureTick extends $pb.GeneratedMessage {
     ..aInt64(16, _omitFieldNames ? '' : 'chgType')
     ..a<$core.double>(17, _omitFieldNames ? '' : 'priceChg', $pb.PbFieldType.OD)
     ..a<$core.double>(18, _omitFieldNames ? '' : 'pctChg', $pb.PbFieldType.OD)
+    ..aInt64(19, _omitFieldNames ? '' : 'comboCount')
     ..hasRequiredFields = false
   ;
 
@@ -963,6 +968,15 @@ class WSFutureTick extends $pb.GeneratedMessage {
   $core.bool hasPctChg() => $_has(17);
   @$pb.TagNumber(18)
   void clearPctChg() => clearField(18);
+
+  @$pb.TagNumber(19)
+  $fixnum.Int64 get comboCount => $_getI64(18);
+  @$pb.TagNumber(19)
+  set comboCount($fixnum.Int64 v) { $_setInt64(18, v); }
+  @$pb.TagNumber(19)
+  $core.bool hasComboCount() => $_has(18);
+  @$pb.TagNumber(19)
+  void clearComboCount() => clearField(19);
 }
 
 class WSTradeIndex extends $pb.GeneratedMessage {

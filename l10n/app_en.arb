@@ -116,5 +116,7 @@
   "realtime": "Realtime",
   "news": "News",
   "no_notifications": "You have no notifications.",
-  "user": "User"
+  "user": "User",
+  "stock_already_exists": "Stock already exists",
+  "not_found": "Not Found"
 }

@@ -93,7 +93,7 @@ abstract class FCM {
     allowPush = await getDBAllowPush;
   }
 
-  static void postInit(void Function(RemoteMessage)? onData) async {
+  static Future<void> postInit(void Function(RemoteMessage)? onData) async {
     if (_abort) {
       return;
     }

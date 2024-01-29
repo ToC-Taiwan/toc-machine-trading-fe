@@ -178,6 +178,7 @@ const WSFutureTick$json = {
     {'1': 'chg_type', '3': 16, '4': 1, '5': 3, '10': 'chgType'},
     {'1': 'price_chg', '3': 17, '4': 1, '5': 1, '10': 'priceChg'},
     {'1': 'pct_chg', '3': 18, '4': 1, '5': 1, '10': 'pctChg'},
+    {'1': 'combo_count', '3': 19, '4': 1, '5': 3, '10': 'comboCount'},
   ],
 };
 
@@ -192,7 +193,8 @@ final $typed_data.Uint8List wSFutureTickDescriptor = $convert.base64Decode(
     'dG90YWxfYW1vdW50GAwgASgBUgt0b3RhbEFtb3VudBIWCgZ2b2x1bWUYDSABKANSBnZvbHVtZR'
     'IhCgx0b3RhbF92b2x1bWUYDiABKANSC3RvdGFsVm9sdW1lEhsKCXRpY2tfdHlwZRgPIAEoA1II'
     'dGlja1R5cGUSGQoIY2hnX3R5cGUYECABKANSB2NoZ1R5cGUSGwoJcHJpY2VfY2hnGBEgASgBUg'
-    'hwcmljZUNoZxIXCgdwY3RfY2hnGBIgASgBUgZwY3RDaGc=');
+    'hwcmljZUNoZxIXCgdwY3RfY2hnGBIgASgBUgZwY3RDaGcSHwoLY29tYm9fY291bnQYEyABKANS'
+    'CmNvbWJvQ291bnQ=');
 
 @$core.Deprecated('Use wSTradeIndexDescriptor instead')
 const WSTradeIndex$json = {

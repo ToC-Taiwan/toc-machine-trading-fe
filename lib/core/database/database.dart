@@ -5,8 +5,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 abstract class DB {
-  static const tableName = 'settings';
-
+  static const String tableNameSettings = 'settings';
+  static const String tableNamePickStock = 'pick_stock';
   static Database? db;
 
   static Future<void> initialize() async {
@@ -19,9 +19,16 @@ abstract class DB {
       onCreate: (db, version) async {
         await db.execute(
           '''
-          CREATE TABLE IF NOT EXISTS "$tableName"(
+          CREATE TABLE IF NOT EXISTS "$tableNameSettings"(
           key TEXT PRIMARY KEY,
           value TEXT)
+          ''',
+        );
+        await db.execute(
+          '''
+          CREATE TABLE IF NOT EXISTS "$tableNamePickStock"(
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          stock_num TEXT)
           ''',
         );
       },
