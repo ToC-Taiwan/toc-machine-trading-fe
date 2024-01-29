@@ -153,7 +153,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                         passwordIsObscure = !passwordIsObscure;
                                       });
                                     },
-                                    icon: const Icon(Icons.visibility),
+                                    icon: passwordIsObscure ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off),
                                   ),
                                 ),
                               ),
@@ -234,7 +234,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                             Navigator.of(context).push(
                                               MaterialPageRoute(
                                                 fullscreenDialog: true,
-                                                builder: (context) => const RegisterPage(),
+                                                builder: (context) => RegisterPage(screenHeight: widget.screenHeight),
                                               ),
                                             );
                                           },

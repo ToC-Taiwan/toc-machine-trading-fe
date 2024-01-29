@@ -4,6 +4,8 @@ import 'package:toc_machine_trading_fe/features/universal/pages/settings.dart';
 AppBar topAppBar(
   BuildContext context,
   String title, {
+  Color? titleColor,
+  Color? backgroundColor,
   bool automaticallyImplyLeading = false,
   bool disableActions = false,
   List<Widget>? actions,
@@ -43,9 +45,11 @@ AppBar topAppBar(
       title,
       style: Theme.of(context).textTheme.headlineMedium!.copyWith(
             fontWeight: FontWeight.bold,
+            color: titleColor,
           ),
     ),
     automaticallyImplyLeading: automaticallyImplyLeading,
     actions: finalActions,
+    backgroundColor: backgroundColor,
   );
 }
