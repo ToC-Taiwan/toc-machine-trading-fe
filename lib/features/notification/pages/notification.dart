@@ -27,14 +27,18 @@ class _NotificationPageState extends State<NotificationPage> {
     );
   }
 
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   void registerUpdate() {
     newNotification.listen((_) => refreshData());
   }
 
   void refreshData() {
-    if (!mounted) {
-      return;
-    }
     checkAllowNotification();
     setState(() {
       notifications = FCM.getNotifications();
@@ -42,10 +46,6 @@ class _NotificationPageState extends State<NotificationPage> {
   }
 
   Future<void> checkAllowNotification() async {
-    if (!mounted) {
-      return;
-    }
-
     if (await Permission.notification.status.isPermanentlyDenied || !FCM.allowPush) {
       setState(() {
         _disAllowNotification = true;

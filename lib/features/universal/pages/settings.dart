@@ -34,11 +34,14 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Future<void> checkPushIsPermantlyDenied() async {
-    if (!mounted) {
-      return;
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
     }
+  }
 
+  Future<void> checkPushIsPermantlyDenied() async {
     if (await Permission.notification.status.isPermanentlyDenied) {
       FCM.allowPush = false;
       await API.sendToken(false, FCM.getToken);

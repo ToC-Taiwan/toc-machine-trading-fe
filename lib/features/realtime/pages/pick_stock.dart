@@ -38,6 +38,13 @@ class _PickStockPageState extends State<PickStockPage> {
   }
 
   @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   void dispose() {
     _channel!.sink.close();
     super.dispose();
@@ -215,9 +222,6 @@ class _PickStockPageState extends State<PickStockPage> {
     await _channel!.ready;
     _channel!.stream.listen(
       (message) {
-        if (!mounted) {
-          return;
-        }
         final msg = pb.StockRealTimeTickMessage.fromBuffer(message as List<int>);
         realTimeData.then((value) {
           if (value == null) {
@@ -231,14 +235,7 @@ class _PickStockPageState extends State<PickStockPage> {
           });
         });
       },
-      onDone: () {
-        if (mounted) {
-          Future.delayed(const Duration(milliseconds: 1000)).then((value) {
-            _channel!.sink.close();
-            initialWS();
-          });
-        }
-      },
+      onDone: () {},
       onError: (error) {},
     );
   }

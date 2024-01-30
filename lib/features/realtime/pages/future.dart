@@ -40,6 +40,13 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
   }
 
   @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: topAppBar(
@@ -205,10 +212,6 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
     await _channel!.ready;
     _channel!.stream.listen(
       (message) {
-        if (!mounted) {
-          return;
-        }
-
         final msg = pb.WSMessage.fromBuffer(message as List<int>);
         switch (msg.type) {
           case pb.WSType.TYPE_FUTURE_TICK:
@@ -260,14 +263,7 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
             return;
         }
       },
-      onDone: () {
-        if (mounted) {
-          Future.delayed(const Duration(milliseconds: 1000)).then((value) {
-            _channel!.sink.close();
-            initialWS();
-          });
-        }
-      },
+      onDone: () {},
       onError: (error) {},
     );
   }

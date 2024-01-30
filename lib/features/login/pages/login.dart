@@ -36,6 +36,14 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
 
   bool passwordIsObscure = true;
   bool logining = false;
+  bool reloginCheck = false;
+
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
 
   @override
   void initState() {
@@ -66,6 +74,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments;
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -84,181 +93,204 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
           Scaffold(
             backgroundColor: Colors.transparent,
             resizeToAvoidBottomInset: false,
-            body: AutofillGroup(
-              child: Form(
-                key: _formkey,
-                child: AnimatedBuilder(
-                  animation: _animation,
-                  builder: (context, child) {
-                    return Transform.translate(
-                      offset: const Offset(0, 0),
-                      child: Padding(
-                        padding: EdgeInsets.only(top: _animation.value),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(left: 30, right: 30, bottom: 10),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: TextFormField(
-                                autofillHints: const [AutofillHints.username],
-                                enableSuggestions: false,
-                                autocorrect: false,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return AppLocalizations.of(context)!.username_cannot_be_empty;
-                                  }
-                                  username = value;
-                                  return null;
-                                },
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                decoration: InputDecoration(
-                                  hintText: AppLocalizations.of(context)!.username,
-                                  border: InputBorder.none,
-                                  contentPadding: const EdgeInsets.all(10),
-                                  hintStyle: const TextStyle(color: Colors.blueGrey),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(left: 30, right: 30, bottom: 10),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: TextFormField(
-                                autofillHints: const [AutofillHints.password],
-                                enableSuggestions: false,
-                                autocorrect: false,
-                                obscureText: passwordIsObscure,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return AppLocalizations.of(context)!.password_cannot_be_empty;
-                                  }
-                                  password = value;
-                                  return null;
-                                },
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                decoration: InputDecoration(
-                                  hintText: AppLocalizations.of(context)!.password,
-                                  border: InputBorder.none,
-                                  contentPadding: const EdgeInsets.all(10),
-                                  hintStyle: const TextStyle(color: Colors.blueGrey),
-                                  suffixIcon: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        passwordIsObscure = !passwordIsObscure;
-                                      });
-                                    },
-                                    icon: passwordIsObscure ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 115,
-                                  margin: const EdgeInsets.only(left: 10, right: 5, bottom: 10),
-                                  decoration: BoxDecoration(
-                                    color: Colors.blueGrey,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: TextButton(
-                                    onPressed: logining
-                                        ? null
-                                        : () {
-                                            if (!_formkey.currentState!.validate()) {
-                                              return;
-                                            }
-                                            setState(() {
-                                              logining = true;
-                                            });
-                                            FocusScopeNode currentFocus = FocusScope.of(context);
-                                            currentFocus.unfocus();
-                                            API.login(username, password).then(
-                                              (_) {
-                                                checkNotification().then((_) {
-                                                  FCM.anyNotificationsUnread().then((value) {
-                                                    Navigator.of(context).pushAndRemoveUntil(
-                                                      MaterialPageRoute(
-                                                        builder: (context) => HomePage(notificationIsUnread: value),
-                                                      ),
-                                                      (route) => false,
-                                                    );
-                                                  });
-                                                });
-                                              },
-                                            ).catchError((e) {
-                                              setState(() {
-                                                logining = false;
-                                              });
-                                              ScaffoldMessenger.of(context).showSnackBar(
-                                                SnackBar(
-                                                  content: Text(
-                                                    ErrorCode.toMsg(context, e as int),
-                                                    style: const TextStyle(
-                                                      color: Colors.red,
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            });
-                                          },
-                                    child: logining
-                                        ? const SpinKitWave(
-                                            color: Colors.white60,
-                                            size: 20,
-                                          )
-                                        : Text(
-                                            AppLocalizations.of(context)!.login,
-                                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                                          ),
-                                  ),
-                                ),
-                                Container(
-                                  width: 115,
-                                  margin: const EdgeInsets.only(right: 10, left: 5, bottom: 10),
-                                  decoration: BoxDecoration(
-                                    color: Colors.blueGrey,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: TextButton(
-                                    onPressed: logining
-                                        ? null
-                                        : () {
-                                            Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                fullscreenDialog: true,
-                                                builder: (context) => RegisterPage(screenHeight: widget.screenHeight),
-                                              ),
-                                            );
-                                          },
-                                    child: logining
-                                        ? const SpinKitWave(
-                                            color: Colors.white60,
-                                            size: 20,
-                                          )
-                                        : Text(
-                                            AppLocalizations.of(context)!.register,
-                                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                                          ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+            body: (args != null && args is bool && args && !reloginCheck)
+                ? AlertDialog(
+                    title: Text(AppLocalizations.of(context)!.warning),
+                    content: Text(AppLocalizations.of(context)!.please_login_again),
+                    actions: [
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            reloginCheck = true;
+                          });
+                          // Navigator.pushNamedAndRemoveUntil(
+                          //   context,
+                          //   LoginPage.routeName,
+                          //   (route) => false,
+                          // );
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.ok,
+                          style: const TextStyle(color: Colors.black),
                         ),
                       ),
-                    );
-                  },
-                ),
-              ),
-            ),
+                    ],
+                  )
+                : AutofillGroup(
+                    child: Form(
+                      key: _formkey,
+                      child: AnimatedBuilder(
+                        animation: _animation,
+                        builder: (context, child) {
+                          return Transform.translate(
+                            offset: const Offset(0, 0),
+                            child: Padding(
+                              padding: EdgeInsets.only(top: _animation.value),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 30, right: 30, bottom: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: TextFormField(
+                                      autofillHints: const [AutofillHints.username],
+                                      enableSuggestions: false,
+                                      autocorrect: false,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return AppLocalizations.of(context)!.username_cannot_be_empty;
+                                        }
+                                        username = value;
+                                        return null;
+                                      },
+                                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                                      decoration: InputDecoration(
+                                        hintText: AppLocalizations.of(context)!.username,
+                                        border: InputBorder.none,
+                                        contentPadding: const EdgeInsets.all(10),
+                                        hintStyle: const TextStyle(color: Colors.blueGrey),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 30, right: 30, bottom: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: TextFormField(
+                                      autofillHints: const [AutofillHints.password],
+                                      enableSuggestions: false,
+                                      autocorrect: false,
+                                      obscureText: passwordIsObscure,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return AppLocalizations.of(context)!.password_cannot_be_empty;
+                                        }
+                                        password = value;
+                                        return null;
+                                      },
+                                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                                      decoration: InputDecoration(
+                                        hintText: AppLocalizations.of(context)!.password,
+                                        border: InputBorder.none,
+                                        contentPadding: const EdgeInsets.all(10),
+                                        hintStyle: const TextStyle(color: Colors.blueGrey),
+                                        suffixIcon: IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              passwordIsObscure = !passwordIsObscure;
+                                            });
+                                          },
+                                          icon: passwordIsObscure ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        width: 115,
+                                        margin: const EdgeInsets.only(left: 10, right: 5, bottom: 10),
+                                        decoration: BoxDecoration(
+                                          color: Colors.blueGrey,
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: TextButton(
+                                          onPressed: logining
+                                              ? null
+                                              : () {
+                                                  if (!_formkey.currentState!.validate()) {
+                                                    return;
+                                                  }
+                                                  setState(() {
+                                                    logining = true;
+                                                  });
+                                                  FocusScopeNode currentFocus = FocusScope.of(context);
+                                                  currentFocus.unfocus();
+                                                  API.login(username, password).then(
+                                                    (_) {
+                                                      checkNotification().then((_) {
+                                                        FCM.anyNotificationsUnread().then((value) {
+                                                          Navigator.of(context).pushAndRemoveUntil(
+                                                            MaterialPageRoute(
+                                                              builder: (context) => HomePage(notificationIsUnread: value),
+                                                            ),
+                                                            (route) => false,
+                                                          );
+                                                        });
+                                                      });
+                                                    },
+                                                  ).catchError((e) {
+                                                    setState(() {
+                                                      logining = false;
+                                                    });
+                                                    ScaffoldMessenger.of(context).showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                          ErrorCode.toMsg(context, e as int),
+                                                          style: const TextStyle(
+                                                            color: Colors.red,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  });
+                                                },
+                                          child: logining
+                                              ? const SpinKitWave(
+                                                  color: Colors.white60,
+                                                  size: 20,
+                                                )
+                                              : Text(
+                                                  AppLocalizations.of(context)!.login,
+                                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                                                ),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 115,
+                                        margin: const EdgeInsets.only(right: 10, left: 5, bottom: 10),
+                                        decoration: BoxDecoration(
+                                          color: Colors.blueGrey,
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: TextButton(
+                                          onPressed: logining
+                                              ? null
+                                              : () {
+                                                  Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                      fullscreenDialog: true,
+                                                      builder: (context) => RegisterPage(screenHeight: widget.screenHeight),
+                                                    ),
+                                                  );
+                                                },
+                                          child: logining
+                                              ? const SpinKitWave(
+                                                  color: Colors.white60,
+                                                  size: 20,
+                                                )
+                                              : Text(
+                                                  AppLocalizations.of(context)!.register,
+                                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                                                ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
           ),
           SizedBox(
             child: Padding(

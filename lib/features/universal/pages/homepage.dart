@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';
 import 'package:toc_machine_trading_fe/core/fcm/fcm.dart';
 import 'package:toc_machine_trading_fe/features/balance/pages/balance.dart';
+import 'package:toc_machine_trading_fe/features/login/pages/login.dart';
 import 'package:toc_machine_trading_fe/features/news/pages/news.dart';
 import 'package:toc_machine_trading_fe/features/notification/pages/notification.dart';
 import 'package:toc_machine_trading_fe/features/realtime/pages/category.dart';
@@ -27,6 +28,7 @@ class _HomePageState extends State<HomePage> {
   ];
 
   int currentPageIndex = 0;
+  DateTime _lastFreshTime = DateTime.now();
 
   @override
   void initState() {
@@ -34,8 +36,18 @@ class _HomePageState extends State<HomePage> {
     FCM.postInit(_showNotification);
     sendToken();
     AppLifecycleListener(
-      onResume: FCM.triggerUpdate,
+      onResume: refreshTokenAndNotification,
     );
+  }
+
+  void refreshTokenAndNotification() {
+    if (DateTime.now().difference(_lastFreshTime).inSeconds > 300) {
+      API.refreshToken().catchError((_) {
+        Navigator.pushNamedAndRemoveUntil(context, LoginPage.routeName, (route) => false, arguments: true);
+      });
+      _lastFreshTime = DateTime.now();
+    }
+    FCM.triggerUpdate();
   }
 
   Future<void> sendToken() async {
@@ -107,6 +119,7 @@ class _HomePageState extends State<HomePage> {
         elevation: 0,
         height: 50,
         onDestinationSelected: (int index) {
+          refreshTokenAndNotification();
           setState(() {
             currentPageIndex = index;
           });
