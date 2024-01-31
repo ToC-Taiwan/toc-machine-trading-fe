@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage> {
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         animationDuration: const Duration(milliseconds: 250),
         backgroundColor: Colors.white,
-        indicatorColor: Colors.blueGrey,
+        indicatorColor: Colors.deepOrange[200],
         elevation: 0,
         height: 50,
         onDestinationSelected: (int index) {
