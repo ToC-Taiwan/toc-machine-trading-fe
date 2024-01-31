@@ -118,5 +118,6 @@
   "no_notifications": "You have no notifications.",
   "user": "User",
   "stock_already_exists": "Stock already exists",
-  "not_found": "Not Found"
+  "not_found": "Not Found",
+  "mxf": "MXF"
 }
