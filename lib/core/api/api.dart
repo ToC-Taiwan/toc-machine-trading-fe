@@ -17,9 +17,12 @@ const String backendHost = 'tocraw.com';
 // const String backendHost = 'localhost:26670';
 
 const String backendURLPrefix = '$protocol://$backendHost/tmt/v1';
+
 const String backendPickWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/stream/ws/pick-stock';
 const String backendPickWSURLPrefixV2 = '$wsProtocol://$backendHost/tmt/v1/stream/ws/pick-stock/v2';
+
 const String backendFutureWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/stream/ws/future';
+const String backendTargetWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/targets/ws';
 
 abstract class API {
   static final client = httpClient();

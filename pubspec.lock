@@ -674,6 +674,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "24.1.47"
+  syncfusion_flutter_treemap:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_treemap
+      sha256: db06a8d096c704ad77f6d517f0efb2e818bbe2c59892b8db0160b39ee3296861
+      url: "https://pub.dev"
+    source: hosted
+    version: "24.1.47"
   synchronized:
     dependency: transitive
     description:

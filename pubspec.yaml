@@ -1,7 +1,7 @@
 name: toc_machine_trading_fe
 description: "Status of trade agent, let user query analyzed stocks."
 publish_to: "none"
-version: 4.2.12+40057
+version: 4.2.13+40058
 
 environment:
   sdk: ">=3.2.5 <4.0.0"
@@ -32,6 +32,7 @@ dependencies:
   protobuf: ^3.1.0
   sqflite: ^2.3.0
   syncfusion_flutter_charts: ^24.1.47+2
+  syncfusion_flutter_treemap: ^24.1.47
   table_calendar: ^3.0.9
   url_launcher: ^6.2.4
   wakelock: ^0.6.2
