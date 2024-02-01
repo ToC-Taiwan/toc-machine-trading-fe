@@ -12,8 +12,9 @@ import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
 import 'package:web_socket_channel/io.dart';
 
 class KbarPage extends StatefulWidget {
-  const KbarPage({required this.code, super.key});
+  const KbarPage({required this.code, required this.name, super.key});
   final String code;
+  final String name;
   @override
   State<KbarPage> createState() => _KbarPageState();
 }
@@ -50,7 +51,7 @@ class _KbarPageState extends State<KbarPage> {
       backgroundColor: const Color(0xff18191d),
       appBar: topAppBar(
         context,
-        widget.code,
+        '${widget.name}(${widget.code})',
         automaticallyImplyLeading: true,
         disableActions: true,
         backgroundColor: const Color(0xff18191d),

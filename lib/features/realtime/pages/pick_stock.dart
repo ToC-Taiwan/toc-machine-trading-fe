@@ -202,7 +202,10 @@ class _PickStockPageState extends State<PickStockPage> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             fullscreenDialog: true,
-                            builder: (context) => KbarPage(code: snapshot.data![index].code),
+                            builder: (context) => KbarPage(
+                              code: snapshot.data![index].code,
+                              name: stockDetailMap[snapshot.data![index].code]!.name!,
+                            ),
                           ),
                         );
                       },

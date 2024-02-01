@@ -4,9 +4,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:syncfusion_flutter_treemap/treemap.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';
 import 'package:toc_machine_trading_fe/core/pb/forwarder/realtime.pb.dart' as pb;
+import 'package:toc_machine_trading_fe/features/order/pages/order.dart';
 import 'package:toc_machine_trading_fe/features/realtime/pages/future.dart';
 import 'package:toc_machine_trading_fe/features/realtime/pages/pick_stock.dart';
 import 'package:toc_machine_trading_fe/features/realtime/repo/pick_stock.dart';
+import 'package:toc_machine_trading_fe/features/target_combo/pages/target_combo.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
 import 'package:web_socket_channel/io.dart';
 
@@ -19,7 +21,8 @@ class RealTimeCategoryPage extends StatefulWidget {
 
 class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
   late IOWebSocketChannel? _channel;
-  List<pb.StockVolumeRankMessage>? _dataSource;
+
+  Future<List<pb.StockVolumeRankMessage>?> _dataSource = Future.value([]);
   bool _expanded = true;
 
   @override
@@ -50,29 +53,33 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
       ),
       body: Stack(
         children: [
-          LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-              return SizedBox(
-                height: constraints.maxHeight * (_expanded ? 0.8 : 0.9) + 10,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    _dataSource != null && _dataSource!.isNotEmpty
-                        ? Expanded(
+          FutureBuilder<List<pb.StockVolumeRankMessage>?>(
+            future: _dataSource,
+            builder: (context, snapshot) {
+              return LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                    return SizedBox(
+                      height: constraints.maxHeight * (_expanded ? 0.8 : 0.9) + 10,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
                             child: SfTreemap(
                               colorMappers: const [
                                 TreemapColorMapper.range(from: -9999, to: -0.01, color: Colors.greenAccent),
+                                TreemapColorMapper.range(from: 0, to: 0, color: Colors.blueGrey),
                                 TreemapColorMapper.range(from: 0.01, to: 9999, color: Colors.redAccent),
                               ],
-                              dataCount: _dataSource!.length,
+                              dataCount: snapshot.data!.length,
                               weightValueMapper: (int index) {
-                                return _dataSource![index].totalAmount.toDouble();
+                                return snapshot.data![index].totalAmount.toDouble();
                               },
                               onSelectionChanged: (value) async {
                                 ScaffoldMessenger.of(context).clearSnackBars();
-                                bool pickExist = await PickStockRepo.exist(_dataSource![value.indices[0]].code);
+                                bool pickExist = await PickStockRepo.exist(snapshot.data![value.indices[0]].code);
                                 if (!pickExist) {
-                                  await PickStockRepo.insert(_dataSource![value.indices[0]].code);
+                                  await PickStockRepo.insert(snapshot.data![value.indices[0]].code);
                                   showAddResultSnackBar();
                                 }
                               },
@@ -80,12 +87,12 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                                 TreemapLevel(
                                   groupMapper: (int index) {
                                     if (index < 9) {
-                                      return '${_dataSource![index].code} ${_dataSource![index].name}(${_dataSource![index].changePrice})';
+                                      return '${snapshot.data![index].code} (${snapshot.data![index].changePrice == 0 ? '' : snapshot.data![index].changePrice > 0 ? '+' : '-'}${snapshot.data![index].changePrice.abs()})';
                                     }
-                                    return _dataSource![index].code;
+                                    return snapshot.data![index].code;
                                   },
                                   colorValueMapper: (tile) {
-                                    return _dataSource![tile.indices[0]].changePrice;
+                                    return snapshot.data![tile.indices[0]].changePrice;
                                   },
                                   padding: const EdgeInsets.all(1.5),
                                   labelBuilder: (BuildContext context, TreemapTile tile) {
@@ -93,7 +100,17 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                                       padding: const EdgeInsets.all(4.0),
                                       child: Text(
                                         tile.group,
-                                        style: Theme.of(context).textTheme.titleSmall,
+                                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          shadows: [
+                                            const Shadow(
+                                              color: Colors.black,
+                                              offset: Offset(0, 1),
+                                              blurRadius: 3,
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     );
                                   },
@@ -101,13 +118,14 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                               ],
                             ),
                           )
-                        : const Expanded(
-                            child: Center(
-                              child: SpinKitWave(color: Colors.blueGrey, size: 35.0),
-                            ),
-                          ),
-                  ],
-                ),
+                        ],
+                      ),
+                    );
+                  }
+                  return const Center(
+                    child: SpinKitWave(color: Colors.blueGrey, size: 35.0),
+                  );
+                },
               );
             },
           ),
@@ -148,8 +166,16 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                           MaterialPageRoute(fullscreenDialog: true, builder: (context) => const PickStockPage()),
                         );
                       }),
-                      _buildCustomButtom(AppLocalizations.of(context)!.target_combo, Colors.yellow[600], Icons.add_home_work_outlined),
-                      _buildCustomButtom(AppLocalizations.of(context)!.order, Colors.green[600], Icons.shopping_cart),
+                      _buildCustomButtom(AppLocalizations.of(context)!.target_combo, Colors.yellow[600], Icons.add_home_work_outlined, onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(fullscreenDialog: false, builder: (context) => const TargetComboPage()),
+                        );
+                      }),
+                      _buildCustomButtom(AppLocalizations.of(context)!.order, Colors.green[600], Icons.shopping_cart, onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(fullscreenDialog: false, builder: (context) => const OrderPage()),
+                        );
+                      }),
                     ],
                   );
                 },
@@ -189,9 +215,9 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
         msg.data.sort((a, b) => b.totalAmount.compareTo(a.totalAmount));
         setState(() {
           if (msg.data.length > 14) {
-            _dataSource = msg.data.sublist(0, 14);
+            _dataSource = Future.value(msg.data.sublist(0, 14));
           } else {
-            _dataSource = msg.data;
+            _dataSource = Future.value(msg.data);
           }
         });
       },
