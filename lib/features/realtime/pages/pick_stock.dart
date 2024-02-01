@@ -7,6 +7,7 @@ import 'package:toc_machine_trading_fe/core/pb/app/app.pb.dart' as pb;
 import 'package:toc_machine_trading_fe/core/pb/forwarder/mq.pb.dart' as pb;
 import 'package:toc_machine_trading_fe/features/realtime/entity/snapshot.dart';
 import 'package:toc_machine_trading_fe/features/realtime/entity/stock.dart';
+import 'package:toc_machine_trading_fe/features/realtime/pages/kbar.dart';
 import 'package:toc_machine_trading_fe/features/realtime/repo/pick_stock.dart';
 import 'package:toc_machine_trading_fe/features/universal/utils/utils.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
@@ -157,6 +158,14 @@ class _PickStockPageState extends State<PickStockPage> {
                     ],
                   ),
                   child: ListTile(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            fullscreenDialog: true,
+                            builder: (context) => KbarPage(code: snapshot.data![index].code),
+                          ),
+                        );
+                      },
                       dense: true,
                       leading: numberText(
                         snapshot.data![index].code,

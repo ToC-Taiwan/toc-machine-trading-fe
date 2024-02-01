@@ -51,5 +51,6 @@ AppBar topAppBar(
     automaticallyImplyLeading: automaticallyImplyLeading,
     actions: finalActions,
     backgroundColor: backgroundColor,
+    iconTheme: automaticallyImplyLeading && titleColor != null ? const IconThemeData(color: Colors.white) : null,
   );
 }

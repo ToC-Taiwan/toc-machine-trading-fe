@@ -12,9 +12,7 @@ import 'package:web_socket_channel/io.dart';
 
 class FutureRealTimePage extends StatefulWidget {
   const FutureRealTimePage({required this.code, super.key});
-
   final String code;
-
   @override
   State<FutureRealTimePage> createState() => _FutureRealTimePageState();
 }

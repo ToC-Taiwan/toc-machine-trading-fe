@@ -35,6 +35,12 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
   }
 
   @override
+  void dispose() {
+    _channel!.sink.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: topAppBar(
@@ -43,57 +49,59 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
       ),
       body: Stack(
         children: [
-          LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
-            return SizedBox(
-              height: constraints.maxHeight * (_expanded ? 0.8 : 0.9),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  _dataSource != null
-                      ? Expanded(
-                          child: SfTreemap(
-                            colorMappers: const [
-                              TreemapColorMapper.range(from: -9999, to: -0.01, color: Colors.greenAccent),
-                              TreemapColorMapper.range(from: 0.01, to: 9999, color: Colors.redAccent),
-                            ],
-                            dataCount: _dataSource!.length,
-                            weightValueMapper: (int index) {
-                              return _dataSource![index].totalAmount.toDouble();
-                            },
-                            levels: [
-                              TreemapLevel(
-                                groupMapper: (int index) {
-                                  if (index < 9) {
-                                    return '${_dataSource![index].name}(${_dataSource![index].changePrice})';
-                                  }
-                                  return _dataSource![index].name;
-                                },
-                                colorValueMapper: (tile) {
-                                  return _dataSource![tile.indices[0]].changePrice;
-                                },
-                                padding: const EdgeInsets.all(1.5),
-                                labelBuilder: (BuildContext context, TreemapTile tile) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Text(
-                                      tile.group,
-                                      style: const TextStyle(color: Colors.black87),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
+          LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return SizedBox(
+                height: constraints.maxHeight * (_expanded ? 0.8 : 0.9) + 10,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    _dataSource != null && _dataSource!.isNotEmpty
+                        ? Expanded(
+                            child: SfTreemap(
+                              colorMappers: const [
+                                TreemapColorMapper.range(from: -9999, to: -0.01, color: Colors.greenAccent),
+                                TreemapColorMapper.range(from: 0.01, to: 9999, color: Colors.redAccent),
+                              ],
+                              dataCount: _dataSource!.length,
+                              weightValueMapper: (int index) {
+                                return _dataSource![index].totalAmount.toDouble();
+                              },
+                              levels: [
+                                TreemapLevel(
+                                  groupMapper: (int index) {
+                                    if (index < 9) {
+                                      return '${_dataSource![index].name}(${_dataSource![index].changePrice})';
+                                    }
+                                    return _dataSource![index].name;
+                                  },
+                                  colorValueMapper: (tile) {
+                                    return _dataSource![tile.indices[0]].changePrice;
+                                  },
+                                  padding: const EdgeInsets.all(1.5),
+                                  labelBuilder: (BuildContext context, TreemapTile tile) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Text(
+                                        tile.group,
+                                        style: const TextStyle(color: Colors.black87),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          )
+                        : const Expanded(
+                            child: Center(
+                              child: SpinKitWave(color: Colors.blueGrey, size: 35.0),
+                            ),
                           ),
-                        )
-                      : const Expanded(
-                          child: Center(
-                            child: SpinKitWave(color: Colors.blueGrey, size: 35.0),
-                          ),
-                        ),
-                ],
-              ),
-            );
-          }),
+                  ],
+                ),
+              );
+            },
+          ),
           DraggableScrollableSheet(
             maxChildSize: 0.2,
             minChildSize: 0.1,

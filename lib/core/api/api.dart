@@ -23,6 +23,7 @@ const String backendPickWSURLPrefixV2 = '$wsProtocol://$backendHost/tmt/v1/strea
 
 const String backendFutureWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/stream/ws/future';
 const String backendTargetWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/targets/ws';
+const String backendHistoryWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/history/ws';
 
 abstract class API {
   static final client = httpClient();
