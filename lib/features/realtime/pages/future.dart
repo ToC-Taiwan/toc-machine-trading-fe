@@ -38,6 +38,13 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
   }
 
   @override
+  void dispose() {
+    _channel!.sink.close();
+    Wakelock.disable();
+    super.dispose();
+  }
+
+  @override
   void setState(VoidCallback fn) {
     if (mounted) {
       super.setState(fn);

@@ -12,6 +12,7 @@ import 'package:toc_machine_trading_fe/features/realtime/repo/pick_stock.dart';
 import 'package:toc_machine_trading_fe/features/universal/utils/utils.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/text.dart';
+import 'package:wakelock/wakelock.dart';
 import 'package:web_socket_channel/io.dart';
 
 class PickStockPage extends StatefulWidget {
@@ -34,6 +35,7 @@ class _PickStockPageState extends State<PickStockPage> {
   @override
   void initState() {
     super.initState();
+    Wakelock.enable();
     realTimeData = fillStockList();
     initialWS();
   }
@@ -48,6 +50,7 @@ class _PickStockPageState extends State<PickStockPage> {
   @override
   void dispose() {
     _channel!.sink.close();
+    Wakelock.disable();
     super.dispose();
   }
 
