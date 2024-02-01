@@ -63,6 +63,43 @@ class _PickStockPageState extends State<PickStockPage> {
         automaticallyImplyLeading: true,
         actions: [
           IconButton(
+            icon: const Icon(Icons.delete_forever_rounded),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text(
+                    AppLocalizations.of(context)!.delete_all_pick_stock,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  content: Text(AppLocalizations.of(context)!.delete_all_pick_stock_confirm),
+                  actions: <Widget>[
+                    ElevatedButton(
+                      child: Text(
+                        AppLocalizations.of(context)!.cancel,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        removeAllStock().then((value) {
+                          Navigator.pop(context);
+                        });
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.ok,
+                        style: const TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
               showDialog(
@@ -304,6 +341,21 @@ class _PickStockPageState extends State<PickStockPage> {
     stockOrder.remove(stockNum);
 
     _channel!.sink.add(pb.PickRealMap(pickMap: {stockNum: pb.PickListType.TYPE_REMOVE}).writeToBuffer());
+    setState(() {
+      realTimeData = fillStockList();
+    });
+  }
+
+  Future<void> removeAllStock() async {
+    await PickStockRepo.deleteAll();
+    stockOrder.clear();
+
+    List<String> dbStock = await PickStockRepo.getAllPickStock();
+    Map<String, pb.PickListType> pickMap = {};
+    for (final stockNum in dbStock) {
+      pickMap[stockNum] = pb.PickListType.TYPE_REMOVE;
+    }
+    _channel!.sink.add(pb.PickRealMap(pickMap: pickMap).writeToBuffer());
     setState(() {
       realTimeData = fillStockList();
     });

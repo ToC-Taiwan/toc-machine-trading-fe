@@ -119,5 +119,7 @@
   "user": "User",
   "stock_already_exists": "Stock already exists",
   "not_found": "Not Found",
-  "mxf": "MXF"
+  "mxf": "MXF",
+  "order": "Order",
+  "target_combo": "Target Combo"
 }

@@ -17,6 +17,15 @@ abstract class PickStockRepo {
     return list;
   }
 
+  static Future<bool> exist(String stockNum) async {
+    final List<Map<String, dynamic>> maps = await database.query(
+      tableName,
+      where: 'stock_num = ?',
+      whereArgs: [stockNum],
+    );
+    return maps.isNotEmpty;
+  }
+
   static Future<void> insert(String stockNum) async {
     await database.insert(
       tableName,
@@ -33,5 +42,9 @@ abstract class PickStockRepo {
       where: 'stock_num = ?',
       whereArgs: [num],
     );
+  }
+
+  static Future<void> deleteAll() async {
+    await database.delete(tableName);
   }
 }

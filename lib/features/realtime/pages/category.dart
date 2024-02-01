@@ -6,6 +6,7 @@ import 'package:toc_machine_trading_fe/core/api/api.dart';
 import 'package:toc_machine_trading_fe/core/pb/forwarder/realtime.pb.dart' as pb;
 import 'package:toc_machine_trading_fe/features/realtime/pages/future.dart';
 import 'package:toc_machine_trading_fe/features/realtime/pages/pick_stock.dart';
+import 'package:toc_machine_trading_fe/features/realtime/repo/pick_stock.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
 import 'package:web_socket_channel/io.dart';
 
@@ -67,13 +68,21 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                               weightValueMapper: (int index) {
                                 return _dataSource![index].totalAmount.toDouble();
                               },
+                              onSelectionChanged: (value) async {
+                                ScaffoldMessenger.of(context).clearSnackBars();
+                                bool pickExist = await PickStockRepo.exist(_dataSource![value.indices[0]].code);
+                                if (!pickExist) {
+                                  await PickStockRepo.insert(_dataSource![value.indices[0]].code);
+                                  showAddResultSnackBar();
+                                }
+                              },
                               levels: [
                                 TreemapLevel(
                                   groupMapper: (int index) {
                                     if (index < 9) {
-                                      return '${_dataSource![index].name}(${_dataSource![index].changePrice})';
+                                      return '${_dataSource![index].code} ${_dataSource![index].name}(${_dataSource![index].changePrice})';
                                     }
-                                    return _dataSource![index].name;
+                                    return _dataSource![index].code;
                                   },
                                   colorValueMapper: (tile) {
                                     return _dataSource![tile.indices[0]].changePrice;
@@ -84,7 +93,7 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                                       padding: const EdgeInsets.all(4.0),
                                       child: Text(
                                         tile.group,
-                                        style: const TextStyle(color: Colors.black87),
+                                        style: Theme.of(context).textTheme.titleSmall,
                                       ),
                                     );
                                   },
@@ -139,8 +148,8 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                           MaterialPageRoute(fullscreenDialog: true, builder: (context) => const PickStockPage()),
                         );
                       }),
-                      _buildCustomButtom('-', Colors.yellow[600], Icons.shopping_cart),
-                      _buildCustomButtom('-', Colors.green[600], Icons.add_home_work_outlined),
+                      _buildCustomButtom(AppLocalizations.of(context)!.target_combo, Colors.yellow[600], Icons.add_home_work_outlined),
+                      _buildCustomButtom(AppLocalizations.of(context)!.order, Colors.green[600], Icons.shopping_cart),
                     ],
                   );
                 },
@@ -148,6 +157,19 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
             },
           ),
         ],
+      ),
+    );
+  }
+
+  void showAddResultSnackBar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          AppLocalizations.of(context)!.pick_stock,
+          style: const TextStyle(
+            color: Colors.green,
+          ),
+        ),
       ),
     );
   }
@@ -178,32 +200,34 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
     );
   }
 
-  Column _buildCustomButtom(String label, Color? color, IconData icon, {void Function()? onTap}) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        ClipOval(
-          child: Container(
-            color: color,
-            height: 55,
-            width: 55,
-            child: InkWell(
-              onTap: onTap,
-              child: Icon(
-                icon,
-                color: Colors.white,
+  Widget _buildCustomButtom(String label, Color? color, IconData icon, {void Function()? onTap}) {
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ClipOval(
+            child: Container(
+              color: color,
+              height: 55,
+              width: 55,
+              child: InkWell(
+                onTap: onTap,
+                child: Icon(
+                  icon,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 5),
-          child: Text(
-            label,
-            style: Theme.of(context).textTheme.labelLarge,
+          Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: Text(
+              label,
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -221,7 +245,6 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
         ),
       ),
       Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: items ?? [],
       ),
     ];

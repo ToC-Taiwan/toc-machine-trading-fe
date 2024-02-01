@@ -15,7 +15,7 @@ class SnapShot {
   int? amount;
   int? amountSum;
   int? yesterdayVolume;
-  double? volumeRatio;
+  num? volumeRatio;
 
   SnapShot(
       {this.stockNum,
