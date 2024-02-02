@@ -23,8 +23,9 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
   late IOWebSocketChannel? _channel;
 
   Future<List<pb.StockVolumeRankMessage>?> _dataSource = Future.value([]);
+  List<pb.StockVolumeRankMessage> _data = [];
   bool _expanded = true;
-  bool _visible = false;
+  bool _hasNewData = false;
 
   @override
   void initState() {
@@ -51,6 +52,32 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
       appBar: topAppBar(
         context,
         AppLocalizations.of(context)!.realtime,
+        actions: [
+          _hasNewData
+              ? IconButton(
+                  icon: const Icon(
+                    Icons.refresh,
+                    color: Colors.red,
+                    shadows: [
+                      Shadow(
+                        color: Colors.yellow,
+                        offset: Offset(0, 1),
+                        blurRadius: 3,
+                      ),
+                    ],
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _dataSource = Future.value([]);
+                      Future.delayed(const Duration(milliseconds: 300), () {
+                        _dataSource = Future.value(_data);
+                      });
+                      _hasNewData = false;
+                    });
+                  },
+                )
+              : const SizedBox.shrink(),
+        ],
       ),
       body: Stack(
         children: [
@@ -66,61 +93,57 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Expanded(
-                            child: AnimatedOpacity(
-                              opacity: _visible ? 1.0 : 0.0,
-                              duration: const Duration(milliseconds: 500),
-                              child: SfTreemap(
-                                colorMappers: const [
-                                  TreemapColorMapper.range(from: -9999, to: -0.01, color: Colors.greenAccent),
-                                  TreemapColorMapper.range(from: 0, to: 0, color: Colors.blueGrey),
-                                  TreemapColorMapper.range(from: 0.01, to: 9999, color: Colors.redAccent),
-                                ],
-                                dataCount: snapshot.data!.length,
-                                weightValueMapper: (int index) {
-                                  return snapshot.data![index].totalAmount.toDouble();
-                                },
-                                onSelectionChanged: (value) async {
-                                  ScaffoldMessenger.of(context).clearSnackBars();
-                                  bool pickExist = await PickStockRepo.exist(snapshot.data![value.indices[0]].code);
-                                  if (!pickExist) {
-                                    await PickStockRepo.insert(snapshot.data![value.indices[0]].code);
-                                    showAddResultSnackBar();
-                                  }
-                                },
-                                levels: [
-                                  TreemapLevel(
-                                    groupMapper: (int index) {
-                                      if (index < 9) {
-                                        return '${snapshot.data![index].code} (${snapshot.data![index].changePrice == 0 ? '' : snapshot.data![index].changePrice > 0 ? '+' : '-'}${snapshot.data![index].changePrice.abs()})';
-                                      }
-                                      return snapshot.data![index].code;
-                                    },
-                                    colorValueMapper: (tile) {
-                                      return snapshot.data![tile.indices[0]].changePrice;
-                                    },
-                                    padding: const EdgeInsets.all(1.5),
-                                    labelBuilder: (BuildContext context, TreemapTile tile) {
-                                      return Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Text(
-                                          tile.group,
-                                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            shadows: [
-                                              const Shadow(
-                                                color: Colors.black,
-                                                offset: Offset(0, 1),
-                                                blurRadius: 3,
-                                              ),
-                                            ],
-                                          ),
+                            child: SfTreemap(
+                              colorMappers: const [
+                                TreemapColorMapper.range(from: -9999, to: -0.01, color: Colors.greenAccent),
+                                TreemapColorMapper.range(from: 0, to: 0, color: Colors.blueGrey),
+                                TreemapColorMapper.range(from: 0.01, to: 9999, color: Colors.redAccent),
+                              ],
+                              dataCount: snapshot.data!.length,
+                              weightValueMapper: (int index) {
+                                return snapshot.data![index].totalAmount.toDouble();
+                              },
+                              onSelectionChanged: (value) async {
+                                ScaffoldMessenger.of(context).clearSnackBars();
+                                bool pickExist = await PickStockRepo.exist(snapshot.data![value.indices[0]].code);
+                                if (!pickExist) {
+                                  await PickStockRepo.insert(snapshot.data![value.indices[0]].code);
+                                  showAddResultSnackBar();
+                                }
+                              },
+                              levels: [
+                                TreemapLevel(
+                                  groupMapper: (int index) {
+                                    if (index < 9) {
+                                      return '${snapshot.data![index].name} (${snapshot.data![index].changePrice == 0 ? '' : snapshot.data![index].changePrice > 0 ? '+' : '-'}${snapshot.data![index].changePrice.abs()})';
+                                    }
+                                    return snapshot.data![index].code;
+                                  },
+                                  colorValueMapper: (tile) {
+                                    return snapshot.data![tile.indices[0]].changePrice;
+                                  },
+                                  padding: const EdgeInsets.all(1.5),
+                                  labelBuilder: (BuildContext context, TreemapTile tile) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Text(
+                                        tile.group,
+                                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          shadows: [
+                                            const Shadow(
+                                              color: Colors.black,
+                                              offset: Offset(0, 1),
+                                              blurRadius: 3,
+                                            ),
+                                          ],
                                         ),
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
                             ),
                           )
                         ],
@@ -219,35 +242,33 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
         final msg = pb.StockVolumeRankResponse.fromBuffer(message as List<int>);
         msg.data.sort((a, b) => b.totalAmount.compareTo(a.totalAmount));
         bool changed = false;
-        _dataSource.then((value) {
-          if (value == null) {
-            changed = true;
-          } else if (value.isEmpty) {
-            changed = true;
-          }
-          for (var i = 0; i < value!.length; i++) {
-            if (value[i].code != msg.data[i].code || value[i].totalAmount != msg.data[i].totalAmount) {
+        if (_data.isEmpty) {
+          changed = true;
+        } else {
+          for (var i = 0; i < _data.length; i++) {
+            if (_data[i].code != msg.data[i].code || _data[i].totalAmount != msg.data[i].totalAmount) {
               changed = true;
               break;
             }
           }
-          if (!changed) return;
-          setState(() {
-            _visible = false;
-          });
-          Future.delayed(const Duration(milliseconds: 500), () {
-            value.clear();
-            Future.delayed(const Duration(milliseconds: 250), () {
-              if (msg.data.length > 14) {
-                _dataSource = Future.value(msg.data.sublist(0, 14));
-              } else {
-                _dataSource = Future.value(msg.data);
-              }
-              setState(() {
-                _visible = true;
-              });
+        }
+        if (!changed) return;
+
+        if (msg.data.length > 14) {
+          _data = msg.data.sublist(0, 14);
+        } else {
+          _data = msg.data;
+        }
+        _dataSource.then((value) {
+          if (value!.isNotEmpty) {
+            setState(() {
+              _hasNewData = true;
             });
-          });
+          } else {
+            setState(() {
+              _dataSource = Future.value(_data);
+            });
+          }
         });
       },
       onDone: () {},
