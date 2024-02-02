@@ -28,4 +28,10 @@ brew install cocoapods
 # Install CocoaPods dependencies.
 cd ios && pod install # run `pod install` in the `ios` directory.
 
+# Generate the version file.
+dart ./scripts/gen_version.dart
+
+# Generate the l10n file.
+flutter gen-l10n
+
 exit 0
