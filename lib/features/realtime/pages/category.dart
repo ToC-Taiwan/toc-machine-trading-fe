@@ -24,6 +24,7 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
 
   Future<List<pb.StockVolumeRankMessage>?> _dataSource = Future.value([]);
   bool _expanded = true;
+  bool _visible = false;
 
   @override
   void initState() {
@@ -56,76 +57,80 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
           FutureBuilder<List<pb.StockVolumeRankMessage>?>(
             future: _dataSource,
             builder: (context, snapshot) {
-              return LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-                  if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+              if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                return LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints) {
                     return SizedBox(
                       height: constraints.maxHeight * (_expanded ? 0.8 : 0.9) + 10,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Expanded(
-                            child: SfTreemap(
-                              colorMappers: const [
-                                TreemapColorMapper.range(from: -9999, to: -0.01, color: Colors.greenAccent),
-                                TreemapColorMapper.range(from: 0, to: 0, color: Colors.blueGrey),
-                                TreemapColorMapper.range(from: 0.01, to: 9999, color: Colors.redAccent),
-                              ],
-                              dataCount: snapshot.data!.length,
-                              weightValueMapper: (int index) {
-                                return snapshot.data![index].totalAmount.toDouble();
-                              },
-                              onSelectionChanged: (value) async {
-                                ScaffoldMessenger.of(context).clearSnackBars();
-                                bool pickExist = await PickStockRepo.exist(snapshot.data![value.indices[0]].code);
-                                if (!pickExist) {
-                                  await PickStockRepo.insert(snapshot.data![value.indices[0]].code);
-                                  showAddResultSnackBar();
-                                }
-                              },
-                              levels: [
-                                TreemapLevel(
-                                  groupMapper: (int index) {
-                                    if (index < 9) {
-                                      return '${snapshot.data![index].code} (${snapshot.data![index].changePrice == 0 ? '' : snapshot.data![index].changePrice > 0 ? '+' : '-'}${snapshot.data![index].changePrice.abs()})';
-                                    }
-                                    return snapshot.data![index].code;
-                                  },
-                                  colorValueMapper: (tile) {
-                                    return snapshot.data![tile.indices[0]].changePrice;
-                                  },
-                                  padding: const EdgeInsets.all(1.5),
-                                  labelBuilder: (BuildContext context, TreemapTile tile) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Text(
-                                        tile.group,
-                                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          shadows: [
-                                            const Shadow(
-                                              color: Colors.black,
-                                              offset: Offset(0, 1),
-                                              blurRadius: 3,
-                                            ),
-                                          ],
+                            child: AnimatedOpacity(
+                              opacity: _visible ? 1.0 : 0.0,
+                              duration: const Duration(milliseconds: 500),
+                              child: SfTreemap(
+                                colorMappers: const [
+                                  TreemapColorMapper.range(from: -9999, to: -0.01, color: Colors.greenAccent),
+                                  TreemapColorMapper.range(from: 0, to: 0, color: Colors.blueGrey),
+                                  TreemapColorMapper.range(from: 0.01, to: 9999, color: Colors.redAccent),
+                                ],
+                                dataCount: snapshot.data!.length,
+                                weightValueMapper: (int index) {
+                                  return snapshot.data![index].totalAmount.toDouble();
+                                },
+                                onSelectionChanged: (value) async {
+                                  ScaffoldMessenger.of(context).clearSnackBars();
+                                  bool pickExist = await PickStockRepo.exist(snapshot.data![value.indices[0]].code);
+                                  if (!pickExist) {
+                                    await PickStockRepo.insert(snapshot.data![value.indices[0]].code);
+                                    showAddResultSnackBar();
+                                  }
+                                },
+                                levels: [
+                                  TreemapLevel(
+                                    groupMapper: (int index) {
+                                      if (index < 9) {
+                                        return '${snapshot.data![index].code} (${snapshot.data![index].changePrice == 0 ? '' : snapshot.data![index].changePrice > 0 ? '+' : '-'}${snapshot.data![index].changePrice.abs()})';
+                                      }
+                                      return snapshot.data![index].code;
+                                    },
+                                    colorValueMapper: (tile) {
+                                      return snapshot.data![tile.indices[0]].changePrice;
+                                    },
+                                    padding: const EdgeInsets.all(1.5),
+                                    labelBuilder: (BuildContext context, TreemapTile tile) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          tile.group,
+                                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            shadows: [
+                                              const Shadow(
+                                                color: Colors.black,
+                                                offset: Offset(0, 1),
+                                                blurRadius: 3,
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ],
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
                           )
                         ],
                       ),
                     );
-                  }
-                  return const Center(
-                    child: SpinKitWave(color: Colors.blueGrey, size: 35.0),
-                  );
-                },
+                  },
+                );
+              }
+              return const Center(
+                child: SpinKitWave(color: Colors.blueGrey, size: 35.0),
               );
             },
           ),
@@ -213,12 +218,36 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
       (message) {
         final msg = pb.StockVolumeRankResponse.fromBuffer(message as List<int>);
         msg.data.sort((a, b) => b.totalAmount.compareTo(a.totalAmount));
-        setState(() {
-          if (msg.data.length > 14) {
-            _dataSource = Future.value(msg.data.sublist(0, 14));
-          } else {
-            _dataSource = Future.value(msg.data);
+        bool changed = false;
+        _dataSource.then((value) {
+          if (value == null) {
+            changed = true;
+          } else if (value.isEmpty) {
+            changed = true;
           }
+          for (var i = 0; i < value!.length; i++) {
+            if (value[i].code != msg.data[i].code || value[i].totalAmount != msg.data[i].totalAmount) {
+              changed = true;
+              break;
+            }
+          }
+          if (!changed) return;
+          setState(() {
+            _visible = false;
+          });
+          Future.delayed(const Duration(milliseconds: 500), () {
+            value.clear();
+            Future.delayed(const Duration(milliseconds: 250), () {
+              if (msg.data.length > 14) {
+                _dataSource = Future.value(msg.data.sublist(0, 14));
+              } else {
+                _dataSource = Future.value(msg.data);
+              }
+              setState(() {
+                _visible = true;
+              });
+            });
+          });
         });
       },
       onDone: () {},

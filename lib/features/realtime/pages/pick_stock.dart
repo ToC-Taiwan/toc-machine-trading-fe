@@ -231,7 +231,7 @@ class _PickStockPageState extends State<PickStockPage> {
                               child: Align(
                                 alignment: Alignment.centerRight,
                                 child: stockPriceText(
-                                  snapshot.data![index].close.toStringAsFixed(2),
+                                  priceChgText(snapshot.data![index].close),
                                   snapshot.data![index].chgType.toInt(),
                                 ),
                               ),
@@ -240,7 +240,7 @@ class _PickStockPageState extends State<PickStockPage> {
                               child: Align(
                                 alignment: Alignment.centerRight,
                                 child: stockPriceText(
-                                  '${snapshot.data![index].priceChg == 0 ? '' : snapshot.data![index].priceChg > 0 ? '+' : '-'} ${snapshot.data![index].priceChg.abs().toStringAsFixed(2)}',
+                                  '${snapshot.data![index].priceChg == 0 ? '' : snapshot.data![index].priceChg > 0 ? '+' : '-'} ${priceChgText(snapshot.data![index].priceChg.abs())}',
                                   snapshot.data![index].chgType.toInt(),
                                 ),
                               ),
@@ -421,7 +421,27 @@ class _PickStockPageState extends State<PickStockPage> {
       color: color,
       bold: true,
       backgroundColor: backgroundColor,
-      fontSize: 16,
     );
+  }
+
+  String priceChgText(double priceChg) {
+    if (priceChg >= 0.01 && priceChg < 5) {
+      return priceChg.toStringAsFixed(2);
+    } else if (priceChg >= 5 && priceChg < 10) {
+      return priceChg.toStringAsFixed(2);
+    } else if (priceChg >= 10 && priceChg < 50) {
+      return priceChg.toStringAsFixed(2);
+    } else if (priceChg >= 50 && priceChg < 100) {
+      return priceChg.toStringAsFixed(1);
+    } else if (priceChg >= 100 && priceChg < 150) {
+      return priceChg.toStringAsFixed(1);
+    } else if (priceChg >= 150 && priceChg < 500) {
+      return priceChg.toStringAsFixed(0);
+    } else if (priceChg >= 500 && priceChg < 1000) {
+      return priceChg.toStringAsFixed(0);
+    } else if (priceChg >= 1000) {
+      return priceChg.toStringAsFixed(0);
+    }
+    return '0';
   }
 }
