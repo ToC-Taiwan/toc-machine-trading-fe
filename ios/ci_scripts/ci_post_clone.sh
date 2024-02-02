@@ -1,5 +1,10 @@
 #!/bin/sh
 
+#  ci_post_clone.sh
+#  Runner
+#
+#  Created by Tim Hsu on 2024/2/3.
+#
 # Fail this script if any subcommand fails.
 set -e
 
