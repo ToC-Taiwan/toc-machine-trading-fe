@@ -1,43 +1,127 @@
-import 'dart:collection';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:table_calendar/table_calendar.dart';
-
-class Event {
-  final String title;
-
-  const Event(this.title);
-
-  @override
-  String toString() => title;
+enum BalanceType {
+  stock,
+  future,
 }
 
-final kToday = DateTime.now();
-final kFirstDay = DateTime(kToday.year - 1, kToday.month, kToday.day);
-final kLastDay = DateTime(kToday.year + 1, kToday.month, kToday.day);
-
-final kEvents = LinkedHashMap<DateTime, List<Event>>(
-  equals: isSameDay,
-  hashCode: getHashCode,
-)..addAll(_kEventSource);
-
-int getHashCode(DateTime key) {
-  return key.day * 1000000 + key.month * 10000 + key.year;
-}
-
-final _kEventSource = {
-  for (var item in List.generate(50, (index) => index))
-    DateTime.utc(kFirstDay.year, kFirstDay.month, item * 5): List.generate(item % 4 + 1, (index) => Event('Event $item | ${index + 1}'))
-}..addAll({
-    kToday: [
-      const Event('Today\'s Event 1'),
-      const Event('Today\'s Event 2'),
-    ],
-  });
-
-List<DateTime> daysInRange(DateTime first, DateTime last) {
-  final dayCount = last.difference(first).inDays + 1;
-  return List.generate(
-    dayCount,
-    (index) => DateTime.utc(first.year, first.month, first.day + index),
+class CalendarBalance {
+  const CalendarBalance(
+    this.type,
+    this.balance,
   );
+
+  final BalanceType type;
+  final num balance;
+
+  String typeString(BuildContext context) {
+    switch (type) {
+      case BalanceType.stock:
+        return AppLocalizations.of(context)!.stock;
+      case BalanceType.future:
+        return AppLocalizations.of(context)!.future;
+    }
+  }
+}
+
+class Balance {
+  List<StockBalance>? stock;
+  List<FutureBalance>? future;
+
+  Balance({this.stock, this.future});
+
+  Balance.fromJson(Map<String, dynamic> json) {
+    if (json['stock'] != null) {
+      stock = <StockBalance>[];
+      json['stock'].forEach((v) {
+        stock!.add(StockBalance.fromJson(v));
+      });
+    }
+    if (json['future'] != null) {
+      future = <FutureBalance>[];
+      json['future'].forEach((v) {
+        future!.add(FutureBalance.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (stock != null) {
+      data['stock'] = stock!.map((v) => v.toJson()).toList();
+    }
+    if (future != null) {
+      data['future'] = future!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class StockBalance {
+  num? id;
+  num? tradeCount;
+  num? forward;
+  num? reverse;
+  num? originalBalance;
+  num? discount;
+  num? total;
+  String? tradeDay;
+
+  StockBalance({this.id, this.tradeCount, this.forward, this.reverse, this.originalBalance, this.discount, this.total, this.tradeDay});
+
+  StockBalance.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    tradeCount = json['trade_count'];
+    forward = json['forward'];
+    reverse = json['reverse'];
+    originalBalance = json['original_balance'];
+    discount = json['discount'];
+    total = json['total'];
+    tradeDay = json['trade_day'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['trade_count'] = tradeCount;
+    data['forward'] = forward;
+    data['reverse'] = reverse;
+    data['original_balance'] = originalBalance;
+    data['discount'] = discount;
+    data['total'] = total;
+    data['trade_day'] = tradeDay;
+    return data;
+  }
+}
+
+class FutureBalance {
+  num? id;
+  num? tradeCount;
+  num? forward;
+  num? reverse;
+  num? total;
+  String? tradeDay;
+
+  FutureBalance({this.id, this.tradeCount, this.forward, this.reverse, this.total, this.tradeDay});
+
+  FutureBalance.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    tradeCount = json['trade_count'];
+    forward = json['forward'];
+    reverse = json['reverse'];
+    total = json['total'];
+    tradeDay = json['trade_day'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['trade_count'] = tradeCount;
+    data['forward'] = forward;
+    data['reverse'] = reverse;
+    data['total'] = total;
+    data['trade_day'] = tradeDay;
+    return data;
+  }
 }

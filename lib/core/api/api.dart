@@ -5,6 +5,7 @@ import 'package:cronet_http/cronet_http.dart';
 import 'package:cupertino_http/cupertino_http.dart';
 import 'package:http/http.dart';
 import 'package:http/io_client.dart';
+import 'package:toc_machine_trading_fe/features/balance/entity/entity.dart';
 import 'package:toc_machine_trading_fe/features/realtime/entity/snapshot.dart';
 import 'package:toc_machine_trading_fe/features/realtime/entity/stock.dart';
 
@@ -219,6 +220,35 @@ abstract class API {
       return data;
     } else {
       throw (result as Map<String, dynamic>)['code'] as int;
+    }
+  }
+
+  static Future<Balance> fetchBalance() async {
+    final response = await client.get(
+      Uri.parse('$backendURLPrefix/order/balance'),
+      headers: {
+        "Authorization": _apiToken,
+      },
+    );
+    final Map<String, dynamic> result = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      Balance data;
+      List<StockBalance> stock = [];
+      List<FutureBalance> future = [];
+      if (result['stock'] != null) {
+        for (final i in result['stock'] as List<dynamic>) {
+          stock.add(StockBalance.fromJson(i as Map<String, dynamic>));
+        }
+      }
+      if (result['future'] != null) {
+        for (final i in result['future'] as List<dynamic>) {
+          future.add(FutureBalance.fromJson(i as Map<String, dynamic>));
+        }
+      }
+      data = Balance(stock: stock, future: future);
+      return data;
+    } else {
+      throw result['code'] as int;
     }
   }
 }
