@@ -68,27 +68,19 @@ class _BalancePageState extends State<BalancePage> {
               _focusedDay = focusedDay;
             },
           ),
-          const SizedBox(height: 8.0),
+          const Divider(),
           Expanded(
             child: ValueListenableBuilder<List<Event>>(
               valueListenable: _selectedEvents,
               builder: (context, value, _) {
-                return ListView.builder(
+                return ListView.separated(
+                  separatorBuilder: (context, index) => const Divider(),
+                  shrinkWrap: true,
                   itemCount: value.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 12.0,
-                        vertical: 4.0,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: ListTile(
-                        onTap: () {},
-                        title: Text('${value[index]}'),
-                      ),
+                    return ListTile(
+                      onTap: () {},
+                      title: Text('${value[index]}'),
                     );
                   },
                 );

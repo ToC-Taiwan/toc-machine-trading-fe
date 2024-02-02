@@ -11,8 +11,9 @@ import 'package:toc_machine_trading_fe/firebase_options.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await FCM.initializeDB();
-  await FCM.insertNotification(message);
+  FCM.initializeDB().then((value) async {
+    await FCM.insertNotification(message);
+  });
 }
 
 Future<void> main() async {
