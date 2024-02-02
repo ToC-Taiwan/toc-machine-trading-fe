@@ -21,17 +21,17 @@ flutter precache --ios
 # Install Flutter dependencies.
 flutter pub get
 
+# Generate the l10n file.
+flutter gen-l10n
+
+# Generate the version file.
+dart ./scripts/gen_version.dart
+
 # Install CocoaPods using Homebrew.
 HOMEBREW_NO_AUTO_UPDATE=1 # disable homebrew's automatic updates.
 brew install cocoapods
 
 # Install CocoaPods dependencies.
 cd ios && pod install # run `pod install` in the `ios` directory.
-
-# Generate the version file.
-dart ./scripts/gen_version.dart
-
-# Generate the l10n file.
-flutter gen-l10n
 
 exit 0
