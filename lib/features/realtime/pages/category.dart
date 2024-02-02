@@ -248,6 +248,8 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
           Padding(
             padding: const EdgeInsets.only(top: 5),
             child: Text(
+              overflow: TextOverflow.values[2],
+              maxLines: 1,
               label,
               style: Theme.of(context).textTheme.labelLarge,
             ),

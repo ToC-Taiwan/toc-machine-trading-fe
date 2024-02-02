@@ -40,6 +40,7 @@ class _BalancePageState extends State<BalancePage> {
       body: Column(
         children: [
           TableCalendar<Event>(
+            locale: AppLocalizations.of(context)!.localeName,
             firstDay: kFirstDay,
             lastDay: kLastDay,
             focusedDay: _focusedDay,
@@ -113,7 +114,6 @@ class _BalancePageState extends State<BalancePage> {
         _rangeEnd = null;
         _rangeSelectionMode = RangeSelectionMode.toggledOff;
       });
-
       _selectedEvents.value = _getEventsForDay(selectedDay);
     }
   }
@@ -140,7 +140,6 @@ class _BalancePageState extends State<BalancePage> {
   List<Event> _getEventsForRange(DateTime start, DateTime end) {
     // Implementation example
     final days = daysInRange(start, end);
-
     return [
       for (final d in days) ..._getEventsForDay(d),
     ];
