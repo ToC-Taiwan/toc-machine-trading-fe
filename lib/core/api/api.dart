@@ -8,6 +8,7 @@ import 'package:http/io_client.dart';
 import 'package:toc_machine_trading_fe/features/balance/entity/entity.dart';
 import 'package:toc_machine_trading_fe/features/realtime/entity/snapshot.dart';
 import 'package:toc_machine_trading_fe/features/realtime/entity/stock.dart';
+import 'package:toc_machine_trading_fe/features/universal/entity/user.dart';
 
 const String protocol = 'https';
 const String wsProtocol = 'wss';
@@ -247,6 +248,21 @@ abstract class API {
       }
       data = Balance(stock: stock, future: future);
       return data;
+    } else {
+      throw result['code'] as int;
+    }
+  }
+
+  static Future<UserInfo> fetchUserInfo() async {
+    final response = await client.get(
+      Uri.parse('$backendURLPrefix/user/info'),
+      headers: {
+        "Authorization": _apiToken,
+      },
+    );
+    final Map<String, dynamic> result = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      return UserInfo.fromJson(result);
     } else {
       throw result['code'] as int;
     }

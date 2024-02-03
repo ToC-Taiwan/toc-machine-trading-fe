@@ -122,5 +122,6 @@
   "mxf": "소형 대만 지수",
   "order": "주문",
   "target_combo": "대상 조합",
-  "not_available": "사용할 수 없음"
+  "not_available": "사용할 수 없음",
+  "remove_all_ads_on_all_pages": "모든 페이지의 광고 제거"
 }

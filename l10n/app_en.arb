@@ -122,5 +122,6 @@
   "mxf": "MXF",
   "order": "Order",
   "target_combo": "Target Combo",
-  "not_available": "Not Available"
+  "not_available": "Not Available",
+  "remove_all_ads_on_all_pages": "Remove all ads on all pages"
 }

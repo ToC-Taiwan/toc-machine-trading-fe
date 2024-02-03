@@ -12,6 +12,7 @@ import 'package:toc_machine_trading_fe/core/fcm/fcm.dart';
 import 'package:toc_machine_trading_fe/core/locale/locale.dart';
 import 'package:toc_machine_trading_fe/features/login/repo/repo.dart';
 import 'package:toc_machine_trading_fe/features/universal/entity/store.dart';
+import 'package:toc_machine_trading_fe/features/universal/entity/user.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -48,6 +49,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
   bool _pushNotification = false;
   bool _pushNotificationPermamentlyDenied = false;
+
+  UserInfo? userInfo;
 
   @override
   void initState() {
@@ -118,17 +121,55 @@ class _SettingsPageState extends State<SettingsPage> {
               ExpansionTile(
                 maintainState: true,
                 controller: controllerA,
-                onExpansionChanged: (value) {
+                onExpansionChanged: (value) async {
                   if (value) {
                     controllerB!.collapse();
                     controllerC!.collapse();
                     controllerD!.collapse();
+                    final UserInfo data = await API.fetchUserInfo();
+                    setState(() {
+                      userInfo = data;
+                    });
                   }
                 },
                 iconColor: Colors.blueGrey,
                 childrenPadding: const EdgeInsets.only(left: 50),
                 leading: const Icon(Icons.account_circle_outlined),
                 title: Text(AppLocalizations.of(context)!.user),
+                children: userInfo == null
+                    ? [
+                        ListTile(
+                          trailing: Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: Text(
+                              '${AppLocalizations.of(context)!.loading}...',
+                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ),
+                        )
+                      ]
+                    : [
+                        ListTile(
+                          title: Text(AppLocalizations.of(context)!.username),
+                          trailing: Text(
+                            userInfo!.username!,
+                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(AppLocalizations.of(context)!.email_address),
+                          trailing: Text(
+                            userInfo!.email!,
+                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                        ),
+                      ],
               ),
               ExpansionTile(
                 maintainState: true,
@@ -305,10 +346,10 @@ class _SettingsPageState extends State<SettingsPage> {
         (ProductDetails productDetails) {
           return ListTile(
             title: Text(
-              productDetails.title,
+              productIDToLocalString(productDetails.id),
             ),
             subtitle: Text(
-              productDetails.description,
+              productIDToLocalDescriptionString(productDetails.id),
             ),
             trailing: TextButton(
               style: TextButton.styleFrom(
@@ -348,7 +389,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future<void> initStoreInfo() async {
     final bool isAvailable = await _inAppPurchase.isAvailable();
-    if (!isAvailable) {
+    if (!isAvailable || Platform.isAndroid) {
       setState(() {
         _isAvailable = isAvailable;
         _products = <ProductDetails>[];
@@ -448,4 +489,22 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void _handleInvalidPurchase(PurchaseDetails purchaseDetails) {}
+
+  String productIDToLocalString(String id) {
+    switch (id) {
+      case _removeADProductId:
+        return AppLocalizations.of(context)!.remove_ads;
+      default:
+        return id;
+    }
+  }
+
+  String productIDToLocalDescriptionString(String id) {
+    switch (id) {
+      case _removeADProductId:
+        return AppLocalizations.of(context)!.remove_all_ads_on_all_pages;
+      default:
+        return id;
+    }
+  }
 }

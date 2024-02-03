@@ -122,5 +122,6 @@
   "mxf": "小型台指",
   "order": "注文",
   "target_combo": "対象組み合わせ",
-  "not_available": "利用不可"
+  "not_available": "利用不可",
+  "remove_all_ads_on_all_pages": "すべてのページの広告を削除する"
 }

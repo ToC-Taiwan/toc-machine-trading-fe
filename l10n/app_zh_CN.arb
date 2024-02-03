@@ -122,5 +122,6 @@
   "mxf": "小型台指",
   "order": "下单",
   "target_combo": "标的组合",
-  "not_available": "不可用"
+  "not_available": "不可用",
+  "remove_all_ads_on_all_pages": "移除所有页面上的广告"
 }
