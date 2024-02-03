@@ -24,7 +24,7 @@
   "stock_dose_not_exist": "Stock dose not exist",
   "language": "Language",
   "version": "Version",
-  "remove_ads": "Remove Ads",
+  "remove_ads": "Remove Ad",
   "about_me": "About Me",
   "terms_and_conditions_of_use": "Terms and Conditions of Use",
   "notification": "Notification",
@@ -121,5 +121,6 @@
   "not_found": "Not Found",
   "mxf": "MXF",
   "order": "Order",
-  "target_combo": "Target Combo"
+  "target_combo": "Target Combo",
+  "not_available": "Not Available"
 }

@@ -121,5 +121,6 @@
   "not_found": "找不到",
   "mxf": "小型台指",
   "order": "下单",
-  "target_combo": "标的组合"
+  "target_combo": "标的组合",
+  "not_available": "不可用"
 }

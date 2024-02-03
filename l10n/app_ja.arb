@@ -121,5 +121,6 @@
   "not_found": "見つかりません (みつかりません)",
   "mxf": "小型台指",
   "order": "注文",
-  "target_combo": "対象組み合わせ"
+  "target_combo": "対象組み合わせ",
+  "not_available": "利用不可"
 }

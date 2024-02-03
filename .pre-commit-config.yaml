@@ -1,12 +1,5 @@
 exclude: "lib/core/pb|ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md"
 repos:
-  - repo: local
-    hooks:
-      - id: version-check
-        name: version-check
-        language: system
-        entry: ./scripts/pre_commit_version.sh
-
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:

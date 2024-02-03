@@ -16,6 +16,7 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		A875FE842B6E0512002D844F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A875FE832B6E0512002D844F /* StoreKit.framework */; };
 		B5CEC02A9E2461DF03D50F77 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16F015EBFC9865DC94C7F6C6 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +65,7 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A875FE832B6E0512002D844F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		A89E5D392B5FF95A00F83181 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		A8B3BC052B6D4C0D007ACE49 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = ci_post_clone.sh; path = ci_scripts/ci_post_clone.sh; sourceTree = "<group>"; };
 		D0C33DE32E33C537D706FD39 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,6 +79,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50E5596635E61C4E3181C8C0 /* Pods_Runner.framework in Frameworks */,
+				A875FE842B6E0512002D844F /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +118,7 @@
 		5DDF6D9BC20A13DC989535FB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A875FE832B6E0512002D844F /* StoreKit.framework */,
 				D0C33DE32E33C537D706FD39 /* Pods_Runner.framework */,
 				6C7E84A15E73C0EDA9A3CE1A /* Pods_RunnerTests.framework */,
 			);
