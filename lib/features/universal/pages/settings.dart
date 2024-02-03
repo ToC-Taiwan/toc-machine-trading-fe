@@ -225,14 +225,17 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         )
                       ]
-                    : !_loading
+                    : _loading
                         ? [
                             ListTile(
-                              trailing: Text(
-                                '${AppLocalizations.of(context)!.loading}...',
-                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                              trailing: Padding(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: Text(
+                                  '${AppLocalizations.of(context)!.loading}...',
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
                               ),
                             )
                           ]
