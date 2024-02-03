@@ -2,8 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 	<dict>
+		<key>ITSAppUsesNonExemptEncryption</key>
+		<false />
 		<key>CADisableMinimumFrameDurationOnPhone</key>
-		<true/>
+		<true />
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
@@ -27,7 +29,7 @@
 		<key>GADApplicationIdentifier</key>
 		<string>ca-app-pub-1617900048851450~5212154454</string>
 		<key>LSRequiresIPhoneOS</key>
-		<true/>
+		<true />
 		<key>SKAdNetworkItems</key>
 		<array>
 			<dict>
@@ -228,7 +230,7 @@
 			</dict>
 		</array>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
-		<true/>
+		<true />
 		<key>UIBackgroundModes</key>
 		<array>
 			<string>fetch</string>
@@ -252,6 +254,6 @@
 			<string>UIInterfaceOrientationLandscapeRight</string>
 		</array>
 		<key>UIStatusBarHidden</key>
-		<false/>
+		<false />
 	</dict>
 </plist>
