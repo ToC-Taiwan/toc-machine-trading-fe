@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:toc_machine_trading_fe/core/ad/ad.dart';
 import 'package:toc_machine_trading_fe/core/api/twse.dart';
+import 'package:toc_machine_trading_fe/features/universal/repo/settings.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -19,9 +20,16 @@ class _NewsPageState extends State<NewsPage> {
 
   Future<List<TWSENews>> newsList = TWSE.getTWSENews();
 
+  bool _removeAds = false;
   bool _isLoaded = false;
   BannerAd? _inlineAdaptiveAd;
   AdSize? _adSize;
+
+  @override
+  void initState() {
+    checkRemoveAds();
+    super.initState();
+  }
 
   @override
   void didChangeDependencies() {
@@ -50,7 +58,7 @@ class _NewsPageState extends State<NewsPage> {
             if (snapshot.hasData) {
               return ListView.separated(
                 separatorBuilder: (context, index) {
-                  if (index == 5) {
+                  if (index == 5 && !_removeAds) {
                     return _getAdUnit();
                   }
                   return Divider(
@@ -169,5 +177,12 @@ class _NewsPageState extends State<NewsPage> {
         return Container();
       },
     );
+  }
+
+  Future<void> checkRemoveAds() async {
+    final bool value = await SettingsRepo.isAdsRemoved();
+    setState(() {
+      _removeAds = value;
+    });
   }
 }

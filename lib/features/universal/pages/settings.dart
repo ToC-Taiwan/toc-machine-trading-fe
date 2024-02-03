@@ -13,6 +13,7 @@ import 'package:toc_machine_trading_fe/core/locale/locale.dart';
 import 'package:toc_machine_trading_fe/features/login/repo/repo.dart';
 import 'package:toc_machine_trading_fe/features/universal/entity/store.dart';
 import 'package:toc_machine_trading_fe/features/universal/entity/user.dart';
+import 'package:toc_machine_trading_fe/features/universal/repo/settings.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -49,6 +50,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   bool _pushNotification = false;
   bool _pushNotificationPermamentlyDenied = false;
+  bool _removeAds = false;
 
   UserInfo? userInfo;
 
@@ -61,6 +63,7 @@ class _SettingsPageState extends State<SettingsPage> {
       _subscription.cancel();
     }, onError: (Object error) {});
     initStoreInfo();
+    checkRemoveAds();
     super.initState();
     checkPushIsPermantlyDenied();
     AppLifecycleListener(
@@ -161,7 +164,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         ),
                         ListTile(
-                          title: Text(AppLocalizations.of(context)!.email_address),
+                          title: Text(AppLocalizations.of(context)!.email),
                           trailing: Text(
                             userInfo!.email!,
                             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -356,13 +359,15 @@ class _SettingsPageState extends State<SettingsPage> {
                 backgroundColor: Colors.green[800],
                 foregroundColor: Colors.white,
               ),
-              onPressed: () {
-                late PurchaseParam purchaseParam;
-                purchaseParam = PurchaseParam(
-                  productDetails: productDetails,
-                );
-                _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
-              },
+              onPressed: _removeAds
+                  ? null
+                  : () {
+                      late PurchaseParam purchaseParam;
+                      purchaseParam = PurchaseParam(
+                        productDetails: productDetails,
+                      );
+                      _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+                    },
               child: Text(productDetails.price),
             ),
           );
@@ -370,21 +375,30 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
     );
 
-    productList.add(ListTile(
-      title: Text(AppLocalizations.of(context)!.already_purchased),
-      subtitle: Text(AppLocalizations.of(context)!.restore_purchase),
-      trailing: TextButton(
-        style: TextButton.styleFrom(
-          backgroundColor: Colors.blueGrey,
-          foregroundColor: Colors.white,
+    if (!_removeAds) {
+      productList.add(ListTile(
+        title: Text(AppLocalizations.of(context)!.already_purchased),
+        subtitle: Text(AppLocalizations.of(context)!.restore_purchase),
+        trailing: TextButton(
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.blueGrey,
+            foregroundColor: Colors.white,
+          ),
+          onPressed: () {
+            _inAppPurchase.restorePurchases();
+          },
+          child: Text(AppLocalizations.of(context)!.restore),
         ),
-        onPressed: () {
-          _inAppPurchase.restorePurchases();
-        },
-        child: Text(AppLocalizations.of(context)!.restore),
-      ),
-    ));
+      ));
+    }
     return productList;
+  }
+
+  Future<void> checkRemoveAds() async {
+    final bool value = await SettingsRepo.isAdsRemoved();
+    setState(() {
+      _removeAds = value;
+    });
   }
 
   Future<void> initStoreInfo() async {
@@ -459,6 +473,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Future<void> deliverProduct(PurchaseDetails purchaseDetails) async {
+    await SettingsRepo.removeAds();
     setState(() {
       _purchases.add(purchaseDetails);
       _purchasePending = false;
