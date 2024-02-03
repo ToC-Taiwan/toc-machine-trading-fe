@@ -217,11 +217,34 @@ class _SettingsPageState extends State<SettingsPage> {
                 leading: const Icon(Icons.remove_circle),
                 title: Text(AppLocalizations.of(context)!.remove_ads),
                 children: _queryProductError != null
-                    ? [ListTile(title: Text(_queryProductError!))]
-                    : _loading
-                        ? [ListTile(title: Text(AppLocalizations.of(context)!.loading))]
+                    ? [
+                        ListTile(
+                          title: Text(
+                            _queryProductError!,
+                            style: TextStyle(color: ThemeData.light().colorScheme.error),
+                          ),
+                        )
+                      ]
+                    : !_loading
+                        ? [
+                            ListTile(
+                              trailing: Text(
+                                '${AppLocalizations.of(context)!.loading}...',
+                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                            )
+                          ]
                         : !_isAvailable
-                            ? [ListTile(title: Text(AppLocalizations.of(context)!.not_available))]
+                            ? [
+                                ListTile(
+                                  title: Text(
+                                    AppLocalizations.of(context)!.not_available,
+                                    style: TextStyle(color: ThemeData.light().colorScheme.error),
+                                  ),
+                                )
+                              ]
                             : _buildProductList(),
               ),
               ListTile(
