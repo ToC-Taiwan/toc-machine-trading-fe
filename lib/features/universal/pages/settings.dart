@@ -462,12 +462,6 @@ class _SettingsPageState extends State<SettingsPage> {
     });
   }
 
-  void handleError(IAPError error) {
-    setState(() {
-      _purchasePending = false;
-    });
-  }
-
   Future<bool> _verifyPurchase(PurchaseDetails purchaseDetails) {
     return Future<bool>.value(true);
   }
@@ -495,7 +489,10 @@ class _SettingsPageState extends State<SettingsPage> {
             _handleInvalidPurchase(purchaseDetails);
             return;
           }
+        } else if (purchaseDetails.status == PurchaseStatus.canceled) {
+          _handleInvalidPurchase(purchaseDetails);
         }
+
         if (purchaseDetails.pendingCompletePurchase) {
           await _inAppPurchase.completePurchase(purchaseDetails);
         }
@@ -503,7 +500,21 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
-  void _handleInvalidPurchase(PurchaseDetails purchaseDetails) {}
+  void handleError(IAPError error) {
+    Future.delayed(const Duration(seconds: 1), () {
+      setState(() {
+        _purchasePending = false;
+      });
+    });
+  }
+
+  void _handleInvalidPurchase(PurchaseDetails purchaseDetails) {
+    Future.delayed(const Duration(seconds: 1), () {
+      setState(() {
+        _purchasePending = false;
+      });
+    });
+  }
 
   String productIDToLocalString(String id) {
     switch (id) {
