@@ -1,13 +1,14 @@
 name: toc_machine_trading_fe
 description: "Status of trade agent, let user query analyzed stocks."
 publish_to: "none"
-version: 4.2.31+40082
+version: 4.2.32+40083
 
 environment:
   sdk: ">=3.2.5 <4.0.0"
 
 dependencies:
   another_flushbar: ^1.12.30
+  carousel_slider: ^4.2.1
   cronet_http: ^1.0.0
   cupertino_http: ^1.2.0
   date_format: ^2.0.7

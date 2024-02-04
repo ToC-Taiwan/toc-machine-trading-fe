@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -20,12 +21,12 @@ class RealTimeCategoryPage extends StatefulWidget {
 }
 
 class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
+  final CarouselController _controller = CarouselController();
   late IOWebSocketChannel? _channel;
 
-  Future<List<pb.StockVolumeRankMessage>?> _dataSource = Future.value([]);
+  List<List<pb.StockVolumeRankMessage>> imageSliders = [];
   List<pb.StockVolumeRankMessage> _data = [];
   bool _expanded = true;
-  bool _hasNewData = false;
 
   @override
   void initState() {
@@ -52,108 +53,29 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
       appBar: topAppBar(
         context,
         AppLocalizations.of(context)!.realtime,
-        actions: [
-          _hasNewData
-              ? IconButton(
-                  icon: const Icon(
-                    Icons.refresh,
-                    color: Colors.red,
-                    shadows: [
-                      Shadow(
-                        color: Colors.yellow,
-                        offset: Offset(0, 1),
-                        blurRadius: 3,
-                      ),
-                    ],
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _dataSource = Future.value([]);
-                      Future.delayed(const Duration(milliseconds: 300), () {
-                        _dataSource = Future.value(_data);
-                      });
-                      _hasNewData = false;
-                    });
-                  },
-                )
-              : const SizedBox.shrink(),
-        ],
       ),
       body: Stack(
         children: [
-          FutureBuilder<List<pb.StockVolumeRankMessage>?>(
-            future: _dataSource,
-            builder: (context, snapshot) {
-              if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                return LayoutBuilder(
-                  builder: (BuildContext context, BoxConstraints constraints) {
-                    return SizedBox(
-                      height: constraints.maxHeight * (_expanded ? 0.8 : 0.9) + 10,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: SfTreemap(
-                              colorMappers: const [
-                                TreemapColorMapper.range(from: -9999, to: -0.01, color: Colors.greenAccent),
-                                TreemapColorMapper.range(from: 0, to: 0, color: Colors.blueGrey),
-                                TreemapColorMapper.range(from: 0.01, to: 9999, color: Colors.redAccent),
-                              ],
-                              dataCount: snapshot.data!.length,
-                              weightValueMapper: (int index) {
-                                return snapshot.data![index].totalAmount.toDouble();
-                              },
-                              onSelectionChanged: (value) async {
-                                ScaffoldMessenger.of(context).clearSnackBars();
-                                bool pickExist = await PickStockRepo.exist(snapshot.data![value.indices[0]].code);
-                                if (!pickExist) {
-                                  await PickStockRepo.insert(snapshot.data![value.indices[0]].code);
-                                  showAddResultSnackBar();
-                                }
-                              },
-                              levels: [
-                                TreemapLevel(
-                                  groupMapper: (int index) {
-                                    if (index < 9) {
-                                      return '${snapshot.data![index].name} (${snapshot.data![index].changePrice == 0 ? '' : snapshot.data![index].changePrice > 0 ? '+' : '-'}${snapshot.data![index].changePrice.abs()})';
-                                    }
-                                    return snapshot.data![index].code;
-                                  },
-                                  colorValueMapper: (tile) {
-                                    return snapshot.data![tile.indices[0]].changePrice;
-                                  },
-                                  padding: const EdgeInsets.all(1.5),
-                                  labelBuilder: (BuildContext context, TreemapTile tile) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Text(
-                                        tile.group,
-                                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          shadows: [
-                                            const Shadow(
-                                              color: Colors.black,
-                                              offset: Offset(0, 1),
-                                              blurRadius: 3,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
+          LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return SizedBox(
+                height: constraints.maxHeight * (_expanded ? 0.8 : 0.9) + 10,
+                child: imageSliders.isEmpty
+                    ? const SpinKitWave(color: Colors.blueGrey, size: 35.0)
+                    : CarouselSlider.builder(
+                        carouselController: _controller,
+                        options: CarouselOptions(
+                          initialPage: imageSliders.length - 1,
+                          height: double.infinity,
+                          viewportFraction: 1.0,
+                          enableInfiniteScroll: false,
+                          autoPlay: false,
+                        ),
+                        itemCount: imageSliders.length,
+                        itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
+                          return _buildTreeMap(imageSliders[itemIndex]);
+                        },
                       ),
-                    );
-                  },
-                );
-              }
-              return const Center(
-                child: SpinKitWave(color: Colors.blueGrey, size: 35.0),
               );
             },
           ),
@@ -215,6 +137,61 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
     );
   }
 
+  Widget _buildTreeMap(List<pb.StockVolumeRankMessage> data) {
+    return SfTreemap(
+      colorMappers: const [
+        TreemapColorMapper.range(from: -9999, to: -0.01, color: Colors.greenAccent),
+        TreemapColorMapper.range(from: 0, to: 0, color: Colors.blueGrey),
+        TreemapColorMapper.range(from: 0.01, to: 9999, color: Colors.redAccent),
+      ],
+      dataCount: data.length,
+      weightValueMapper: (int index) {
+        return data[index].totalAmount.toDouble();
+      },
+      onSelectionChanged: (value) async {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        bool pickExist = await PickStockRepo.exist(data[value.indices[0]].code);
+        if (!pickExist) {
+          await PickStockRepo.insert(data[value.indices[0]].code);
+          showAddResultSnackBar();
+        }
+      },
+      levels: [
+        TreemapLevel(
+          groupMapper: (int index) {
+            if (index < 9) {
+              return '${data[index].name} (${data[index].changePrice == 0 ? '' : data[index].changePrice > 0 ? '+' : '-'}${data[index].changePrice.abs()})';
+            }
+            return data[index].code;
+          },
+          colorValueMapper: (tile) {
+            return data[tile.indices[0]].changePrice;
+          },
+          padding: const EdgeInsets.all(1.5),
+          labelBuilder: (BuildContext context, TreemapTile tile) {
+            return Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Text(
+                tile.group,
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  shadows: [
+                    const Shadow(
+                      color: Colors.black,
+                      offset: Offset(0, 1),
+                      blurRadius: 3,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
   void showAddResultSnackBar() {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -259,16 +236,13 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
         } else {
           _data = msg.data;
         }
-        _dataSource.then((value) {
-          if (value!.isNotEmpty) {
-            setState(() {
-              _hasNewData = true;
-            });
-          } else {
-            setState(() {
-              _dataSource = Future.value(_data);
-            });
+        if (_data.isEmpty) return;
+        setState(() {
+          imageSliders.add(_data);
+          if (imageSliders.length > 3) {
+            imageSliders.removeAt(0);
           }
+          _controller.animateToPage(imageSliders.length - 1);
         });
       },
       onDone: () {},
