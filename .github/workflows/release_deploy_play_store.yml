@@ -18,7 +18,9 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v4
-      - run: ./scripts/flutter_clean.sh
+      - run: |
+          ./scripts/flutter_clean.sh
+          dart ./scripts/gen_version.dart
 
       - name: Setup Fastlane
         uses: ruby/setup-ruby@v1
