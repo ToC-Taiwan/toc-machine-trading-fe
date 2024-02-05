@@ -1,5 +1,7 @@
 # TOC MACHINE TRADING FE
 
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/ToC-Taiwan/toc-machine-trading-fe/badge)](https://securityscorecards.dev/viewer/?uri=github.com/ToC-Taiwan/toc-machine-trading-fe)
+
 ## Create projcet
 
 - flutter create
