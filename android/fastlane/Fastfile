@@ -5,7 +5,7 @@ platform :android do
   lane :deploy do
     sh "flutter build appbundle"
     upload_to_play_store(
-      track: 'beta',
+      track: 'internal',
       aab: '../build/app/outputs/bundle/release/app-release.aab',
       json_key_data: ENV['PLAY_STORE_CONFIG_JSON']
     )
