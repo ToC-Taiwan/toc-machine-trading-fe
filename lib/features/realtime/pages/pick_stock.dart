@@ -124,6 +124,9 @@ class _PickStockPageState extends State<PickStockPage> {
                         if (value == null || value.isEmpty) {
                           return AppLocalizations.of(context)!.input_must_not_empty;
                         }
+                        if (value.contains(' ')) {
+                          return AppLocalizations.of(context)!.cannot_contain_space;
+                        }
                         if (stockOrder[textFieldController.text] != null) {
                           return AppLocalizations.of(context)!.stock_already_exists;
                         }

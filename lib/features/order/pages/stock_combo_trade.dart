@@ -22,7 +22,9 @@ class _StockComboTradePageState extends State<StockComboTradePage> {
       body: SafeArea(
         child: Stack(
           children: [
-            Expanded(
+            SizedBox(
+              width: double.infinity,
+              height: double.infinity,
               child: Container(
                 margin: const EdgeInsets.all(20),
                 child: const Stack(

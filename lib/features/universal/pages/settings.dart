@@ -407,8 +407,20 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Future<void> initStoreInfo() async {
+    if (Platform.isAndroid) {
+      setState(() {
+        _isAvailable = false;
+        _products = <ProductDetails>[];
+        _purchases = <PurchaseDetails>[];
+        _notFoundIds = <String>[];
+        _purchasePending = false;
+        _loading = false;
+      });
+      return;
+    }
+
     final bool isAvailable = await _inAppPurchase.isAvailable();
-    if (!isAvailable || Platform.isAndroid) {
+    if (!isAvailable) {
       setState(() {
         _isAvailable = isAvailable;
         _products = <ProductDetails>[];

@@ -239,10 +239,12 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
         if (_data.isEmpty) return;
         setState(() {
           imageSliders.add(_data);
+          if (imageSliders.length > 1) {
+            _controller.animateToPage(imageSliders.length - 1);
+          }
           if (imageSliders.length > 3) {
             imageSliders.removeAt(0);
           }
-          _controller.animateToPage(imageSliders.length - 1);
         });
       },
       onDone: () {},

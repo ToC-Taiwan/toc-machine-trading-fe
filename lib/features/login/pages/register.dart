@@ -116,6 +116,9 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                                   if (value == null || value.isEmpty) {
                                     return AppLocalizations.of(context)!.email_cannot_be_empty;
                                   }
+                                  if (value.contains(' ')) {
+                                    return AppLocalizations.of(context)!.cannot_contain_space;
+                                  }
                                   if (!EmailValidator.validate(value)) {
                                     return AppLocalizations.of(context)!.email_is_invalid;
                                   }
@@ -144,6 +147,9 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return AppLocalizations.of(context)!.username_cannot_be_empty;
+                                  }
+                                  if (value.contains(' ')) {
+                                    return AppLocalizations.of(context)!.cannot_contain_space;
                                   }
                                   if (value.length < 8) {
                                     return AppLocalizations.of(context)!.username_minimum_length_is_8;
@@ -174,6 +180,9 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return AppLocalizations.of(context)!.password_cannot_be_empty;
+                                  }
+                                  if (value.contains(' ')) {
+                                    return AppLocalizations.of(context)!.cannot_contain_space;
                                   }
                                   if (value.length < 8) {
                                     return AppLocalizations.of(context)!.password_minimum_length_is_8;

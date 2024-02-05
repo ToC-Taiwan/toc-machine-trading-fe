@@ -125,5 +125,6 @@
   "username_minimum_length_is_8": "Username minimum length is 8",
   "version": "Version",
   "warning": "Warning",
-  "please_try_again": "Please try again"
+  "please_try_again": "Please try again",
+  "cannot_contain_space": "Cannot contain space"
 }

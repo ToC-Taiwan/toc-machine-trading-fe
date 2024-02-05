@@ -138,6 +138,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                         if (value == null || value.isEmpty) {
                                           return AppLocalizations.of(context)!.username_cannot_be_empty;
                                         }
+                                        if (value.contains(' ')) {
+                                          return AppLocalizations.of(context)!.cannot_contain_space;
+                                        }
                                         username = value;
                                         return null;
                                       },
@@ -164,6 +167,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return AppLocalizations.of(context)!.password_cannot_be_empty;
+                                        }
+                                        if (value.contains(' ')) {
+                                          return AppLocalizations.of(context)!.cannot_contain_space;
                                         }
                                         password = value;
                                         return null;

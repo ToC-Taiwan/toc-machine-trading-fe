@@ -125,5 +125,6 @@
   "username_minimum_length_is_8": "帳號最少 8 個字元",
   "version": "版本",
   "warning": "警告",
-  "please_try_again": "請再試一次"
+  "please_try_again": "請再試一次",
+  "cannot_contain_space": "不能包含空格"
 }
