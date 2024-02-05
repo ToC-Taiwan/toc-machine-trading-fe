@@ -3,9 +3,10 @@ default_platform(:android)
 platform :android do
   desc "Deploy a new version to the Google Play"
   lane :deploy do
-    sh "cd .. && flutter build appbundle"
+    sh "flutter build appbundle"
     upload_to_play_store(
-      aab: './build/app/outputs/bundle/release/app-release.aab',
+      track: 'beta',
+      aab: '../build/app/outputs/bundle/release/app-release.aab',
       json_key_data: ENV['PLAY_STORE_CONFIG_JSON']
     )
   end
