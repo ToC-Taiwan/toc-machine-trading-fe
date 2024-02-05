@@ -45,3 +45,4 @@ app.*.map.json
 .vscode
 version.dart
 l10n/need_translate.txt
+Gemfile.lock
