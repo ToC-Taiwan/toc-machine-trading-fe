@@ -368,7 +368,11 @@ class _SettingsPageState extends State<SettingsPage> {
                       );
                       _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
                     },
-              child: Text(productDetails.price),
+              child: _removeAds
+                  ? const Text('✓')
+                  : Text(
+                      '${productDetails.currencyCode} ${productDetails.price}',
+                    ),
             ),
           );
         },
@@ -385,6 +389,7 @@ class _SettingsPageState extends State<SettingsPage> {
             foregroundColor: Colors.white,
           ),
           onPressed: () {
+            showPendingUI();
             _inAppPurchase.restorePurchases();
           },
           child: Text(AppLocalizations.of(context)!.restore),
@@ -462,15 +467,12 @@ class _SettingsPageState extends State<SettingsPage> {
     });
   }
 
-  Future<bool> _verifyPurchase(PurchaseDetails purchaseDetails) {
-    return Future<bool>.value(true);
-  }
-
   Future<void> deliverProduct(PurchaseDetails purchaseDetails) async {
     await SettingsRepo.removeAds();
     setState(() {
       _purchases.add(purchaseDetails);
       _purchasePending = false;
+      _removeAds = true;
     });
   }
 
@@ -480,19 +482,14 @@ class _SettingsPageState extends State<SettingsPage> {
         showPendingUI();
       } else {
         if (purchaseDetails.status == PurchaseStatus.error) {
-          handleError(purchaseDetails.error!);
+          handleError();
         } else if (purchaseDetails.status == PurchaseStatus.purchased || purchaseDetails.status == PurchaseStatus.restored) {
-          final bool valid = await _verifyPurchase(purchaseDetails);
-          if (valid) {
-            unawaited(deliverProduct(purchaseDetails));
-          } else {
-            _handleInvalidPurchase(purchaseDetails);
-            return;
-          }
+          await deliverProduct(purchaseDetails);
         } else if (purchaseDetails.status == PurchaseStatus.canceled) {
-          _handleInvalidPurchase(purchaseDetails);
+          setState(() {
+            _purchasePending = false;
+          });
         }
-
         if (purchaseDetails.pendingCompletePurchase) {
           await _inAppPurchase.completePurchase(purchaseDetails);
         }
@@ -500,20 +497,31 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
-  void handleError(IAPError error) {
-    Future.delayed(const Duration(seconds: 1), () {
-      setState(() {
-        _purchasePending = false;
-      });
-    });
-  }
-
-  void _handleInvalidPurchase(PurchaseDetails purchaseDetails) {
-    Future.delayed(const Duration(seconds: 1), () {
-      setState(() {
-        _purchasePending = false;
-      });
-    });
+  void handleError() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          AppLocalizations.of(context)!.error,
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+        content: Text(AppLocalizations.of(context)!.please_try_again),
+        actions: <Widget>[
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              setState(() {
+                _purchasePending = false;
+              });
+            },
+            child: Text(
+              AppLocalizations.of(context)!.ok,
+              style: const TextStyle(color: Colors.black),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   String productIDToLocalString(String id) {

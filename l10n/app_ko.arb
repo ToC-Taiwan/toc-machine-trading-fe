@@ -124,5 +124,6 @@
   "username_cannot_be_empty": "사용자 이름을 비울 수 없습니다",
   "username_minimum_length_is_8": "사용자 이름은 최소 8자 이어야 합니다",
   "version": "버전",
-  "warning": "경고"
+  "warning": "경고",
+  "please_try_again": "다시 시도해주세요"
 }

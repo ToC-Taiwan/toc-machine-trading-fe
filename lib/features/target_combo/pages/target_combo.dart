@@ -17,7 +17,7 @@ class _TargetComboPageState extends State<TargetComboPage> {
         context,
         AppLocalizations.of(context)!.target_combo,
         automaticallyImplyLeading: true,
-        disableActions: false,
+        disableActions: true,
       ),
     );
   }

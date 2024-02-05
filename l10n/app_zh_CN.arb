@@ -124,5 +124,6 @@
   "username_cannot_be_empty": "帐号不能空白",
   "username_minimum_length_is_8": "帐号最少 8 个字元",
   "version": "版本",
-  "warning": "警告"
+  "warning": "警告",
+  "please_try_again": "请再试一次"
 }

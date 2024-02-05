@@ -103,11 +103,6 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                           setState(() {
                             reloginCheck = true;
                           });
-                          // Navigator.pushNamedAndRemoveUntil(
-                          //   context,
-                          //   LoginPage.routeName,
-                          //   (route) => false,
-                          // );
                         },
                         child: Text(
                           AppLocalizations.of(context)!.ok,

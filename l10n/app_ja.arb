@@ -124,5 +124,6 @@
   "username_cannot_be_empty": "ユーザー名は空白にできません",
   "username_minimum_length_is_8": "ユーザー名の最小長は8です",
   "version": "バージョン",
-  "warning": "警告"
+  "warning": "警告",
+  "please_try_again": "もう一度試してください"
 }
