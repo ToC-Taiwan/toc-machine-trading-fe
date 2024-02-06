@@ -1,6 +1,10 @@
 # TOC MACHINE TRADING FE
 
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/ToC-Taiwan/toc-machine-trading-fe/badge)](https://securityscorecards.dev/viewer/?uri=github.com/ToC-Taiwan/toc-machine-trading-fe)
+[![BUILD](https://img.shields.io/github/actions/workflow/status/ToC-Taiwan/toc-machine-trading-fe/release_deploy_play_store.yml?style=for-the-badge&logo=github)](https://github.com/ToC-Taiwan/toc-machine-trading-fe/actions/workflows/main.yml)
+[![RELEASE](https://img.shields.io/github/release/ToC-Taiwan/toc-machine-trading-fe?style=for-the-badge)](https://github.com/ToC-Taiwan/toc-machine-trading-fe/releases/latest)
+
+[![OSSF-Scorecard Score](https://img.shields.io/ossf-scorecard/github.com/ToC-Taiwan/toc-machine-trading-fe?style=for-the-badge)](https://securityscorecards.dev/viewer/?uri=github.com/ToC-Taiwan/toc-machine-trading-fe)
+[![LICENSE](https://img.shields.io/github/license/ToC-Taiwan/toc-machine-trading-fe?style=for-the-badge)](COPYING)
 
 ## Create projcet
 
