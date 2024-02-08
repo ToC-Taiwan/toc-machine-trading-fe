@@ -68,7 +68,8 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                           initialPage: imageSliders.length - 1,
                           height: double.infinity,
                           viewportFraction: 1.0,
-                          enableInfiniteScroll: false,
+                          scrollPhysics: const NeverScrollableScrollPhysics(),
+                          enableInfiniteScroll: true,
                           autoPlay: false,
                         ),
                         itemCount: imageSliders.length,
@@ -239,10 +240,11 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
         if (_data.isEmpty) return;
         setState(() {
           imageSliders.add(_data);
-          if (imageSliders.length > 1) {
-            _controller.animateToPage(imageSliders.length - 1);
+          if (imageSliders.length == 1) {
+            return;
           }
-          if (imageSliders.length > 3) {
+          _controller.nextPage();
+          if (imageSliders.length > 1) {
             imageSliders.removeAt(0);
           }
         });

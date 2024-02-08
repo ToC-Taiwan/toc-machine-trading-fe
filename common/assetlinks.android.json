@@ -1,0 +1,14 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.tocandraw.trade_agent_v2",
+            "sha256_cert_fingerprints": [
+                "88:62:8B:C1:CF:93:3C:9F:53:2D:7C:86:14:45:A0:E6:3F:1E:30:0A:95:21:49:4B:FB:1F:E4:7E:29:9D:EB:2F"
+            ]
+        }
+    }
+]
