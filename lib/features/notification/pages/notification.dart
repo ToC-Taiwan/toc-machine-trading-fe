@@ -84,6 +84,7 @@ class _NotificationPageState extends State<NotificationPage> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
+                    primary: false,
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       return ListTile(

@@ -68,6 +68,7 @@ class _NewsPageState extends State<NewsPage> {
                     indent: 40,
                   );
                 },
+                primary: false,
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   return ListTile(

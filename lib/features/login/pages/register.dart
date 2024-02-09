@@ -75,11 +75,13 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
         },
         child: Stack(
           children: <Widget>[
-            Image.asset(
-              "assets/background.png",
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              fit: BoxFit.cover,
+            SizedBox(
+              height: double.infinity,
+              width: double.infinity,
+              child: Image.asset(
+                "assets/background.png",
+                fit: BoxFit.fill,
+              ),
             ),
             Scaffold(
               backgroundColor: Colors.transparent,

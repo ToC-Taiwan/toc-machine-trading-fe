@@ -102,6 +102,7 @@ class _BalancePageState extends State<BalancePage> {
                     valueListenable: _selectedEvents,
                     builder: (context, value, _) {
                       return ListView.separated(
+                        primary: false,
                         separatorBuilder: (context, index) => const Divider(),
                         shrinkWrap: true,
                         itemCount: value.length,

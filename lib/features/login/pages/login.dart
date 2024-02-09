@@ -84,11 +84,13 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
       },
       child: Stack(
         children: <Widget>[
-          Image.asset(
-            "assets/background.png",
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            fit: BoxFit.cover,
+          SizedBox(
+            height: double.infinity,
+            width: double.infinity,
+            child: Image.asset(
+              "assets/background.png",
+              fit: BoxFit.fill,
+            ),
           ),
           Scaffold(
             backgroundColor: Colors.transparent,

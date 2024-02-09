@@ -67,7 +67,7 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                         options: CarouselOptions(
                           initialPage: imageSliders.length - 1,
                           height: double.infinity,
-                          viewportFraction: 1.0,
+                          viewportFraction: 1,
                           scrollPhysics: const NeverScrollableScrollPhysics(),
                           enableInfiniteScroll: true,
                           autoPlay: false,
@@ -109,22 +109,34 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                     items: [
                       _buildCustomButtom(AppLocalizations.of(context)!.mxf, Colors.blue[600], Icons.chrome_reader_mode_rounded, onTap: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(fullscreenDialog: true, builder: (context) => FutureRealTimePage(code: AppLocalizations.of(context)!.mxf)),
+                          MaterialPageRoute(
+                            fullscreenDialog: true,
+                            builder: (context) => FutureRealTimePage(code: AppLocalizations.of(context)!.mxf),
+                          ),
                         );
                       }),
                       _buildCustomButtom(AppLocalizations.of(context)!.pick_stock, Colors.red[600], Icons.playlist_add_check_circle, onTap: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(fullscreenDialog: true, builder: (context) => const PickStockPage()),
+                          MaterialPageRoute(
+                            fullscreenDialog: true,
+                            builder: (context) => const PickStockPage(),
+                          ),
                         );
                       }),
                       _buildCustomButtom(AppLocalizations.of(context)!.target_combo, Colors.yellow[600], Icons.add_home_work_outlined, onTap: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(fullscreenDialog: false, builder: (context) => const TargetComboPage()),
+                          MaterialPageRoute(
+                            fullscreenDialog: false,
+                            builder: (context) => const TargetComboPage(),
+                          ),
                         );
                       }),
                       _buildCustomButtom(AppLocalizations.of(context)!.order, Colors.green[600], Icons.shopping_cart, onTap: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(fullscreenDialog: false, builder: (context) => const OrderPage()),
+                          MaterialPageRoute(
+                            fullscreenDialog: false,
+                            builder: (context) => const OrderPage(),
+                          ),
                         );
                       }),
                     ],
@@ -175,6 +187,7 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
               child: Text(
                 tile.group,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  overflow: TextOverflow.values[2],
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   shadows: [
@@ -321,6 +334,7 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
         ],
       ),
       child: ListView(
+        primary: false,
         controller: scrollController,
         physics: const ClampingScrollPhysics(),
         children: listViewItem,

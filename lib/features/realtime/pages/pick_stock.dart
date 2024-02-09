@@ -182,6 +182,7 @@ class _PickStockPageState extends State<PickStockPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.separated(
+              primary: false,
               separatorBuilder: (context, index) => const Divider(height: 0),
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {

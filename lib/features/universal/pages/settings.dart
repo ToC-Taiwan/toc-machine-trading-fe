@@ -120,6 +120,7 @@ class _SettingsPageState extends State<SettingsPage> {
             disableActions: true,
           ),
           body: ListView(
+            primary: false,
             children: [
               ExpansionTile(
                 maintainState: true,
