@@ -11,6 +11,8 @@ import 'package:toc_machine_trading_fe/core/pb/app/app.pb.dart' as pb;
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
 import 'package:web_socket_channel/io.dart';
 
+const Color backgroundColor = Colors.white;
+
 class KbarPage extends StatefulWidget {
   const KbarPage({required this.code, required this.name, super.key});
   final String code;
@@ -48,14 +50,13 @@ class _KbarPageState extends State<KbarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff18191d),
+      backgroundColor: backgroundColor,
       appBar: topAppBar(
         context,
         '${widget.name}(${widget.code})',
         automaticallyImplyLeading: true,
         disableActions: true,
-        backgroundColor: const Color(0xff18191d),
-        titleColor: Colors.white,
+        backgroundColor: backgroundColor,
       ),
       body: SafeArea(
         child: Stack(
@@ -149,7 +150,6 @@ class _KbarPageState extends State<KbarPage> {
 }
 
 class ChartCustomColor with ChartColors {
-  subBackground() => Colors.transparent;
   @override
   Color get upColor => Colors.redAccent;
 
@@ -167,4 +167,7 @@ class ChartCustomColor with ChartColors {
 
   @override
   Color get infoWindowDnColor => Colors.greenAccent;
+
+  @override
+  List<Color> get bgColor => [backgroundColor, backgroundColor];
 }

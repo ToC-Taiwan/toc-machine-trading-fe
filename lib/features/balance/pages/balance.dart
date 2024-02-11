@@ -6,37 +6,33 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';
 import 'package:toc_machine_trading_fe/features/balance/entity/entity.dart';
-import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
+import 'package:toc_machine_trading_fe/features/balance/pages/orders.dart';
 
-class BalancePage extends StatefulWidget {
-  const BalancePage({super.key});
+class BalanceContent extends StatefulWidget {
+  const BalanceContent({super.key});
 
   @override
-  State<BalancePage> createState() => _BalancePageState();
+  State<BalanceContent> createState() => _BalanceContentState();
 }
 
-class _BalancePageState extends State<BalancePage> {
+class _BalanceContentState extends State<BalanceContent> {
   static final kToday = DateTime.now();
   static final kFirstDay = DateTime(kToday.year - 1, kToday.month, kToday.day);
   static final kLastDay = DateTime(kToday.year + 1, kToday.month, kToday.day);
 
-  late final ValueNotifier<List<CalendarBalance>> _selectedEvents;
+  ValueNotifier<List<CalendarBalance>> _selectedEvents = ValueNotifier<List<CalendarBalance>>([]);
   LinkedHashMap<DateTime, List<CalendarBalance>> kBalances = LinkedHashMap<DateTime, List<CalendarBalance>>(equals: isSameDay, hashCode: getHashCode);
 
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  DateTime? _rangeStart;
-  DateTime? _rangeEnd;
   bool loading = false;
 
   CalendarFormat _calendarFormat = CalendarFormat.month;
-  // RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.disabled;
 
   @override
   void initState() {
     super.initState();
-    _selectedDay = _focusedDay;
-    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+    fillBalance();
   }
 
   @override
@@ -47,83 +43,81 @@ class _BalancePageState extends State<BalancePage> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    fillBalance();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: topAppBar(
-        context,
-        AppLocalizations.of(context)!.balance,
-      ),
-      body: loading
-          ? const Center(
-              child: SpinKitWave(color: Colors.blueGrey, size: 35.0),
-            )
-          : Column(
-              children: [
-                TableCalendar<CalendarBalance>(
-                  locale: AppLocalizations.of(context)!.localeName,
-                  firstDay: kFirstDay,
-                  lastDay: kLastDay,
-                  focusedDay: _focusedDay,
-                  selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-                  rangeStartDay: _rangeStart,
-                  rangeEndDay: _rangeEnd,
-                  calendarFormat: _calendarFormat,
-                  rangeSelectionMode: RangeSelectionMode.disabled,
-                  eventLoader: _getEventsForDay,
-                  startingDayOfWeek: StartingDayOfWeek.monday,
-                  calendarStyle: const CalendarStyle(
-                    outsideDaysVisible: false,
-                    markerDecoration: BoxDecoration(
-                      color: Colors.deepOrange,
-                      shape: BoxShape.circle,
+    return Column(
+      children: [
+        loading
+            ? const Center(
+                child: SpinKitWave(color: Colors.blueGrey, size: 35.0),
+              )
+            : TableCalendar<CalendarBalance>(
+                locale: AppLocalizations.of(context)!.localeName,
+                firstDay: kFirstDay,
+                lastDay: kLastDay,
+                focusedDay: _focusedDay,
+                selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+                calendarFormat: _calendarFormat,
+                rangeSelectionMode: RangeSelectionMode.disabled,
+                eventLoader: _getEventsForDay,
+                startingDayOfWeek: StartingDayOfWeek.monday,
+                calendarStyle: const CalendarStyle(
+                  selectedDecoration: BoxDecoration(
+                    color: Colors.blueGrey,
+                    shape: BoxShape.circle,
+                  ),
+                  outsideDaysVisible: false,
+                  markerDecoration: BoxDecoration(
+                    color: Colors.deepOrange,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                onDaySelected: _onDaySelected,
+                onFormatChanged: (format) {
+                  if (_calendarFormat != format) {
+                    setState(() {
+                      _calendarFormat = format;
+                    });
+                  }
+                },
+                onPageChanged: (focusedDay) {
+                  _focusedDay = focusedDay;
+                },
+              ),
+        Expanded(
+          child: ValueListenableBuilder<List<CalendarBalance>>(
+            valueListenable: _selectedEvents,
+            builder: (context, value, _) {
+              return ListView.builder(
+                primary: false,
+                shrinkWrap: true,
+                itemCount: value.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            fullscreenDialog: true,
+                            builder: (context) => const OrdersPage(),
+                          ),
+                        );
+                      },
+                      title: Text(
+                        '${value[index].typeString(context)}:',
+                        style: Theme.of(context).textTheme.bodyLarge!,
+                      ),
+                      trailing: Text(
+                        '${value[index].balance}',
+                        style: Theme.of(context).textTheme.bodyLarge!,
+                      ),
                     ),
-                  ),
-                  onDaySelected: _onDaySelected,
-                  onFormatChanged: (format) {
-                    if (_calendarFormat != format) {
-                      setState(() {
-                        _calendarFormat = format;
-                      });
-                    }
-                  },
-                  onPageChanged: (focusedDay) {
-                    _focusedDay = focusedDay;
-                  },
-                ),
-                const Divider(),
-                Expanded(
-                  child: ValueListenableBuilder<List<CalendarBalance>>(
-                    valueListenable: _selectedEvents,
-                    builder: (context, value, _) {
-                      return ListView.separated(
-                        primary: false,
-                        separatorBuilder: (context, index) => const Divider(),
-                        shrinkWrap: true,
-                        itemCount: value.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            onTap: () {},
-                            title: Text(
-                              '${value[index].typeString(context)}:',
-                            ),
-                            trailing: Text(
-                              '${value[index].balance}',
-                              style: Theme.of(context).textTheme.labelLarge!,
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
+                  );
+                },
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 
@@ -157,6 +151,8 @@ class _BalancePageState extends State<BalancePage> {
     }
     setState(() {
       loading = false;
+      _selectedDay = _focusedDay;
+      _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
     });
   }
 
@@ -169,8 +165,6 @@ class _BalancePageState extends State<BalancePage> {
       setState(() {
         _selectedDay = selectedDay;
         _focusedDay = focusedDay;
-        _rangeStart = null; // Important to clean those
-        _rangeEnd = null;
       });
       _selectedEvents.value = _getEventsForDay(selectedDay);
     }

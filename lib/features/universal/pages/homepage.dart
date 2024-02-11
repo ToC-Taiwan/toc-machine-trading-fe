@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';
 import 'package:toc_machine_trading_fe/core/fcm/fcm.dart';
-import 'package:toc_machine_trading_fe/features/balance/pages/balance.dart';
+import 'package:toc_machine_trading_fe/features/balance/pages/category.dart';
 import 'package:toc_machine_trading_fe/features/login/pages/login.dart';
 import 'package:toc_machine_trading_fe/features/news/pages/news.dart';
 import 'package:toc_machine_trading_fe/features/notification/pages/notification.dart';
@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   List<Widget> pages = [
     const NewsPage(),
     const RealTimeCategoryPage(),
-    const BalancePage(),
+    const BalanceCategoryPage(),
     const NotificationPage(),
   ];
 
@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage> {
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         animationDuration: const Duration(milliseconds: 250),
         backgroundColor: Colors.white,
-        indicatorColor: Colors.deepOrange[200],
+        indicatorColor: Colors.blueGrey[300],
         elevation: 0,
         height: 50,
         onDestinationSelected: (int index) {

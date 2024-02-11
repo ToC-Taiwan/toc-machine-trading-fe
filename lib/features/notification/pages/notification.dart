@@ -16,6 +16,7 @@ class _NotificationPageState extends State<NotificationPage> {
   late Future<List<NotificationMessage>?> notifications;
 
   bool _disAllowNotification = false;
+  bool _unread = false;
 
   @override
   void initState() {
@@ -41,7 +42,13 @@ class _NotificationPageState extends State<NotificationPage> {
   void refreshData() {
     checkAllowNotification();
     setState(() {
-      notifications = FCM.getNotifications();
+      notifications = FCM.getNotifications().then((value) {
+        if (value == null) {
+          return null;
+        }
+        _unread = value.any((element) => !element.read);
+        return value;
+      });
     });
   }
 
@@ -63,18 +70,17 @@ class _NotificationPageState extends State<NotificationPage> {
       appBar: topAppBar(
         context,
         AppLocalizations.of(context)!.notification,
-        actions: _disAllowNotification
-            ? null
-            : [
-                IconButton(
-                  icon: const Icon(Icons.mark_email_read, color: Colors.blueGrey),
-                  onPressed: () async {
-                    await FCM.markAllNotificationsAsRead();
-                    refreshData();
-                  },
-                ),
-              ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: !_unread
+          ? const SizedBox.shrink()
+          : ElevatedButton(
+              child: const Icon(Icons.mark_email_read, color: Colors.green),
+              onPressed: () async {
+                await FCM.markAllNotificationsAsRead();
+                refreshData();
+              },
+            ),
       body: _disAllowNotification
           ? Center(
               child: Text(AppLocalizations.of(context)!.please_go_to_settings_to_allow_notification),

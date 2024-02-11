@@ -15,7 +15,10 @@ AppBar topAppBar(
       : actions ??
           [
             IconButton(
-              icon: const Icon(Icons.settings_outlined, color: Colors.blueGrey),
+              icon: const Icon(
+                Icons.settings,
+                color: Colors.blueGrey,
+              ),
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
