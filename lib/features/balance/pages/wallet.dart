@@ -1,25 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
 
-class OrdersPage extends StatefulWidget {
-  const OrdersPage({super.key});
+class WalletContent extends StatefulWidget {
+  const WalletContent({super.key});
 
   @override
-  State<OrdersPage> createState() => _OrdersPageState();
+  State<WalletContent> createState() => _WalletContentState();
 }
 
-class _OrdersPageState extends State<OrdersPage> {
+class _WalletContentState extends State<WalletContent> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: topAppBar(
-        context,
-        AppLocalizations.of(context)!.order,
-        automaticallyImplyLeading: true,
-        disableActions: true,
-      ),
-      body: SafeArea(
+    return Center(
+      child: SafeArea(
         child: Stack(
           children: [
             SizedBox(
