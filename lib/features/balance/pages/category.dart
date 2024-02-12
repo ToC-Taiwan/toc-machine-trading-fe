@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toc_machine_trading_fe/features/balance/pages/balance.dart';
 import 'package:toc_machine_trading_fe/features/balance/pages/inventory.dart';
+import 'package:toc_machine_trading_fe/features/balance/pages/wallet.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
 
 class BalanceCategoryPage extends StatefulWidget {
@@ -20,7 +21,7 @@ class _BalanceCategoryPageState extends State<BalanceCategoryPage> with TickerPr
   void initState() {
     super.initState();
     _tabController = TabController(
-      length: 2,
+      length: 3,
       vsync: this,
     );
   }
@@ -38,7 +39,11 @@ class _BalanceCategoryPageState extends State<BalanceCategoryPage> with TickerPr
       floatingActionButton: _buildSegmentedControl(),
       appBar: topAppBar(
         context,
-        _selectedIndex != 1 ? AppLocalizations.of(context)!.balance : AppLocalizations.of(context)!.inventory,
+        _selectedIndex == 0
+            ? AppLocalizations.of(context)!.balance
+            : _selectedIndex == 1
+                ? AppLocalizations.of(context)!.inventory
+                : AppLocalizations.of(context)!.wallet,
       ),
       body: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
@@ -46,6 +51,7 @@ class _BalanceCategoryPageState extends State<BalanceCategoryPage> with TickerPr
         children: const [
           BalanceContent(),
           InventoryContent(),
+          WalletContent(),
         ],
       ),
     );
@@ -80,7 +86,7 @@ class _BalanceCategoryPageState extends State<BalanceCategoryPage> with TickerPr
           ButtonSegment<int>(
             value: 0,
             icon: const Icon(
-              Icons.account_balance_wallet,
+              Icons.history,
               color: Colors.blueGrey,
             ),
             label: Text(
@@ -96,7 +102,17 @@ class _BalanceCategoryPageState extends State<BalanceCategoryPage> with TickerPr
             label: Text(
               AppLocalizations.of(context)!.inventory,
             ),
-          )
+          ),
+          ButtonSegment<int>(
+            value: 2,
+            icon: const Icon(
+              Icons.account_balance_wallet,
+              color: Colors.deepOrange,
+            ),
+            label: Text(
+              AppLocalizations.of(context)!.wallet,
+            ),
+          ),
         ],
         selected: <int>{_selectedIndex},
         onSelectionChanged: (Set<int> newSelection) {

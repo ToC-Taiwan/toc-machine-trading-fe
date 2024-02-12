@@ -127,5 +127,6 @@
   "warning": "警告",
   "please_try_again": "请再试一次",
   "cannot_contain_space": "不能包含空格",
-  "inventory": "存货"
+  "inventory": "存货",
+  "wallet": "钱包"
 }

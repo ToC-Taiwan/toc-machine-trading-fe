@@ -127,5 +127,6 @@
   "warning": "Warning",
   "please_try_again": "Please try again",
   "cannot_contain_space": "Cannot contain space",
-  "inventory": "Inventory"
+  "inventory": "Inventory",
+  "wallet": "Wallet"
 }
