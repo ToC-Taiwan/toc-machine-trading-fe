@@ -10,6 +10,33 @@ class InventoryContent extends StatefulWidget {
 class _InventoryContentState extends State<InventoryContent> {
   @override
   Widget build(BuildContext context) {
-    return const Center();
+    return Center(
+      child: SafeArea(
+        child: Stack(
+          children: [
+            SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: Container(
+                margin: const EdgeInsets.all(20),
+                child: const Stack(
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      height: double.infinity,
+                      child: Icon(
+                        Icons.build,
+                        size: 100,
+                        color: Colors.blueGrey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

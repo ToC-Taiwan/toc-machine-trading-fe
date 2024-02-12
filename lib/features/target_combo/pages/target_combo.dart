@@ -19,6 +19,32 @@ class _TargetComboPageState extends State<TargetComboPage> {
         automaticallyImplyLeading: true,
         disableActions: true,
       ),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: Container(
+                margin: const EdgeInsets.all(20),
+                child: const Stack(
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      height: double.infinity,
+                      child: Icon(
+                        Icons.build,
+                        size: 100,
+                        color: Colors.blueGrey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
