@@ -6,6 +6,7 @@ import 'package:cupertino_http/cupertino_http.dart';
 import 'package:http/http.dart';
 import 'package:http/io_client.dart';
 import 'package:toc_machine_trading_fe/features/balance/entity/entity.dart';
+import 'package:toc_machine_trading_fe/features/balance/entity/position.dart';
 import 'package:toc_machine_trading_fe/features/realtime/entity/snapshot.dart';
 import 'package:toc_machine_trading_fe/features/realtime/entity/stock.dart';
 import 'package:toc_machine_trading_fe/features/universal/entity/user.dart';
@@ -21,7 +22,7 @@ const String backendHost = 'tocraw.com';
 const String backendURLPrefix = '$protocol://$backendHost/tmt/v1';
 
 const String backendPickWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/stream/ws/pick-stock';
-const String backendPickWSURLPrefixV2 = '$wsProtocol://$backendHost/tmt/v1/stream/ws/pick-stock/v2';
+const String backendPickWSURLPrefixV2 = '$wsProtocol://$backendHost/tmt/v1/stream/ws/v2/pick-stock';
 
 const String backendFutureWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/stream/ws/future';
 const String backendTargetWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/targets/ws';
@@ -250,6 +251,25 @@ abstract class API {
       return data;
     } else {
       throw result['code'] as int;
+    }
+  }
+
+  static Future<List<PositionStock>?> fetchPositionStock() async {
+    final response = await client.get(
+      Uri.parse('$backendURLPrefix/trade/inventory/stock'),
+      headers: {
+        "Authorization": _apiToken,
+      },
+    );
+    final List<dynamic> result = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      List<PositionStock> data = [];
+      for (final i in result) {
+        data.add(PositionStock.fromJson(i as Map<String, dynamic>));
+      }
+      return data;
+    } else {
+      return null;
     }
   }
 
