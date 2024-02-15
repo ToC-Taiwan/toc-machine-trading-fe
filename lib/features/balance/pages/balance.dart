@@ -44,13 +44,13 @@ class _BalanceContentState extends State<BalanceContent> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        loading
-            ? const Center(
-                child: SpinKitWave(color: Colors.blueGrey, size: 35.0),
-              )
-            : TableCalendar<CalendarBalance>(
+    return loading
+        ? const Center(
+            child: SpinKitWave(color: Colors.blueGrey, size: 35.0),
+          )
+        : Column(
+            children: [
+              TableCalendar<CalendarBalance>(
                 locale: AppLocalizations.of(context)!.localeName,
                 firstDay: kFirstDay,
                 lastDay: kLastDay,
@@ -83,42 +83,42 @@ class _BalanceContentState extends State<BalanceContent> {
                   _focusedDay = focusedDay;
                 },
               ),
-        Expanded(
-          child: ValueListenableBuilder<List<CalendarBalance>>(
-            valueListenable: _selectedEvents,
-            builder: (context, value, _) {
-              return ListView.builder(
-                primary: false,
-                shrinkWrap: true,
-                itemCount: value.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    child: ListTile(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            fullscreenDialog: true,
-                            builder: (context) => const OrdersPage(),
+              Expanded(
+                child: ValueListenableBuilder<List<CalendarBalance>>(
+                  valueListenable: _selectedEvents,
+                  builder: (context, value, _) {
+                    return ListView.builder(
+                      primary: false,
+                      shrinkWrap: true,
+                      itemCount: value.length,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          child: ListTile(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  fullscreenDialog: true,
+                                  builder: (context) => const OrdersPage(),
+                                ),
+                              );
+                            },
+                            title: Text(
+                              '${value[index].typeString(context)}:',
+                              style: Theme.of(context).textTheme.bodyLarge!,
+                            ),
+                            trailing: Text(
+                              '${value[index].balance}',
+                              style: Theme.of(context).textTheme.bodyLarge!,
+                            ),
                           ),
                         );
                       },
-                      title: Text(
-                        '${value[index].typeString(context)}:',
-                        style: Theme.of(context).textTheme.bodyLarge!,
-                      ),
-                      trailing: Text(
-                        '${value[index].balance}',
-                        style: Theme.of(context).textTheme.bodyLarge!,
-                      ),
-                    ),
-                  );
-                },
-              );
-            },
-          ),
-        ),
-      ],
-    );
+                    );
+                  },
+                ),
+              ),
+            ],
+          );
   }
 
   void fillBalance() async {

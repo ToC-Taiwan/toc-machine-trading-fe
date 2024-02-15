@@ -128,5 +128,8 @@
   "please_try_again": "다시 시도해주세요",
   "cannot_contain_space": "공백을 포함하지 않을 수 없습니다",
   "inventory": "재고",
-  "wallet": "지갑"
+  "wallet": "지갑",
+  "lot": "전체주식",
+  "odd": "소수주",
+  "recent_ticks": "최근 거래 동향"
 }

@@ -9,6 +9,7 @@ AppBar topAppBar(
   bool automaticallyImplyLeading = false,
   bool disableActions = false,
   List<Widget>? actions,
+  PreferredSizeWidget? bottom,
 }) {
   List<Widget>? finalActions = disableActions
       ? null
@@ -55,5 +56,6 @@ AppBar topAppBar(
     actions: finalActions,
     backgroundColor: backgroundColor,
     iconTheme: automaticallyImplyLeading && titleColor != null ? const IconThemeData(color: Colors.white) : null,
+    bottom: bottom,
   );
 }
