@@ -131,7 +131,7 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
                 child: futureTickArr.length < 2
                     ? Center(
                         child: Text(
-                          AppLocalizations.of(context)!.no_data,
+                          AppLocalizations.of(context)!.recent_ticks,
                           style: const TextStyle(
                             color: Colors.grey,
                             fontSize: 30,
@@ -320,7 +320,11 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
             alignment: Alignment.centerRight,
             child: numberText(
               priceChg.toStringAsFixed(2),
-              color: priceChg > 0 ? Colors.redAccent : Colors.greenAccent,
+              color: priceChg == 0
+                  ? Colors.grey
+                  : priceChg > 0
+                      ? Colors.redAccent
+                      : Colors.greenAccent,
             ),
           ),
         ),

@@ -7,7 +7,7 @@ import 'package:toc_machine_trading_fe/core/api/api.dart';
 import 'package:toc_machine_trading_fe/core/pb/forwarder/realtime.pb.dart' as pb;
 import 'package:toc_machine_trading_fe/features/order/pages/order.dart';
 import 'package:toc_machine_trading_fe/features/realtime/pages/future.dart';
-import 'package:toc_machine_trading_fe/features/realtime/pages/pick_stock.dart';
+import 'package:toc_machine_trading_fe/features/realtime/pages/pick_category.dart';
 import 'package:toc_machine_trading_fe/features/realtime/repo/pick_stock.dart';
 import 'package:toc_machine_trading_fe/features/target_combo/pages/target_combo.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
@@ -119,7 +119,7 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             fullscreenDialog: true,
-                            builder: (context) => const PickStockPage(),
+                            builder: (context) => const PickStockCategoryPage(),
                           ),
                         );
                       }),

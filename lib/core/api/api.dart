@@ -23,6 +23,7 @@ const String backendURLPrefix = '$protocol://$backendHost/tmt/v1';
 
 const String backendPickWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/stream/ws/pick-stock';
 const String backendPickWSURLPrefixV2 = '$wsProtocol://$backendHost/tmt/v1/stream/ws/v2/pick-stock';
+const String backendPickOddsWSURLPrefixV2 = '$wsProtocol://$backendHost/tmt/v1/stream/ws/v2/pick-stock/odds';
 
 const String backendFutureWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/stream/ws/future';
 const String backendTargetWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/targets/ws';

@@ -128,5 +128,8 @@
   "please_try_again": "Please try again",
   "cannot_contain_space": "Cannot contain space",
   "inventory": "Inventory",
-  "wallet": "Wallet"
+  "wallet": "Wallet",
+  "lot": "Lot",
+  "odd": "Odd",
+  "recent_ticks": "Recent Ticks"
 }

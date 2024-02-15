@@ -128,5 +128,8 @@
   "please_try_again": "もう一度試してください",
   "cannot_contain_space": "スペースを含めないでください",
   "inventory": "在庫",
-  "wallet": "財布"
+  "wallet": "財布",
+  "lot": "株式一括",
+  "odd": "零股",
+  "recent_ticks": "最近の値動き"
 }
