@@ -1,9 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:toc_machine_trading_fe/core/api/api.dart';
 
 abstract class ErrorCode {
   static String toMsg(BuildContext context, int code) {
     switch (code) {
+      case serverError:
+        return AppLocalizations.of(context)!.server_error;
       case -1001:
         return AppLocalizations.of(context)!.user_not_found;
       case -1002:

@@ -138,7 +138,7 @@ class _PickStockWidgetState extends State<PickStockWidget> {
                       snapshot.data![index].chgType.toInt(),
                     ),
                     subtitle: numberText(
-                      Utils.commaNumber(snapshot.data![index].totalVolume.toString()),
+                      Utils.commaNumber(snapshot.data![index].totalVolume == 0 ? '-' : snapshot.data![index].totalVolume.toString()),
                       color: Colors.grey,
                     ),
                     trailing: SizedBox(
@@ -308,7 +308,7 @@ class _PickStockWidgetState extends State<PickStockWidget> {
       code: data.stockNum,
       close: data.close!.toDouble(),
       priceChg: data.priceChg!.toDouble(),
-      totalVolume: Int64(data.volumeSum!),
+      totalVolume: widget.isOdd ? Int64(0) : Int64(data.volumeSum!),
       // snapshot -- tick_type (TickType): Close is buy or sell price {None, Buy, Sell}
       // pb -- tick_type (int): 內外盤別{1: 外盤, 2: 內盤, 0: 無法判定}
       tickType: data.tickType == "None"
