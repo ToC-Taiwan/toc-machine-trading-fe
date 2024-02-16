@@ -217,7 +217,7 @@ class _PickStockWidgetState extends State<PickStockWidget> {
           if (value == null) {
             return;
           }
-          if (stockOrder[msg.code] == null) {
+          if (stockOrder[msg.code] == null || msg.totalVolume == 0) {
             return;
           }
           setState(() {

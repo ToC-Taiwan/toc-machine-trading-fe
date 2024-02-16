@@ -132,5 +132,8 @@
   "lot": "Lot",
   "odd": "Odd",
   "recent_ticks": "Recent Ticks",
-  "server_error": "Server Error"
+  "server_error": "Server Error",
+  "sell_first": "Sell First",
+  "buy_later": "Buy Later",
+  "tap_to_choose_stock": "Tap to choose stock"
 }

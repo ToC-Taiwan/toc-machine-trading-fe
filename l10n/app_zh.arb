@@ -132,5 +132,8 @@
   "lot": "整股",
   "odd": "零股",
   "recent_ticks": "最近的行情",
-  "server_error": "伺服器錯誤"
+  "server_error": "伺服器錯誤",
+  "sell_first": "先賣",
+  "buy_later": "回補",
+  "tap_to_choose_stock": "點選選擇股票"
 }

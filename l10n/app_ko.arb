@@ -132,5 +132,8 @@
   "lot": "전체주식",
   "odd": "소수주",
   "recent_ticks": "최근 거래 동향",
-  "server_error": "서버 오류"
+  "server_error": "서버 오류",
+  "sell_first": "먼저 판매하다",
+  "buy_later": "보충",
+  "tap_to_choose_stock": "주식을 선택하려면 탭"
 }

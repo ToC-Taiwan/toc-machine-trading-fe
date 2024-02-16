@@ -132,5 +132,8 @@
   "lot": "整股",
   "odd": "零股",
   "recent_ticks": "最近的行情",
-  "server_error": "服务器错误"
+  "server_error": "服务器错误",
+  "sell_first": "先卖",
+  "buy_later": "回补",
+  "tap_to_choose_stock": "点击选择股票"
 }
