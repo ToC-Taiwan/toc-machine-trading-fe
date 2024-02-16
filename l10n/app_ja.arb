@@ -131,5 +131,9 @@
   "wallet": "財布",
   "lot": "株式一括",
   "odd": "零股",
-  "recent_ticks": "最近の値動き"
+  "recent_ticks": "最近の値動き",
+  "server_error": "サーバーエラー",
+  "sell_first": "最初に売る",
+  "buy_later": "補完",
+  "tap_to_choose_stock": "銘柄を選択するにはタップしてください"
 }

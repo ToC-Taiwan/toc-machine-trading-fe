@@ -143,8 +143,10 @@ class _InventoryContentState extends State<InventoryContent> with AutomaticKeepA
 
   void _onRefresh() async {
     setState(() {
-      inventory = _getInventory();
+      inventory = _getInventory().then((value) {
+        Future.delayed(const Duration(milliseconds: 1000)).then((value) => _refreshController.refreshCompleted());
+        return value;
+      });
     });
-    _refreshController.refreshCompleted();
   }
 }

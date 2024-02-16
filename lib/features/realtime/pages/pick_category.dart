@@ -47,7 +47,6 @@ class _PickStockCategoryPageState extends State<PickStockCategoryPage> with Tick
             indicatorSize: TabBarIndicatorSize.label,
             indicatorColor: Colors.blueGrey,
             overlayColor: MaterialStateProperty.all(Colors.transparent),
-            physics: const NeverScrollableScrollPhysics(),
             controller: _tabController,
             tabs: <Widget>[
               Tab(
@@ -172,6 +171,7 @@ class _PickStockCategoryPageState extends State<PickStockCategoryPage> with Tick
           ],
         ),
         body: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
           controller: _tabController,
           children: [
             PickStockWidget(_streamController, false),
