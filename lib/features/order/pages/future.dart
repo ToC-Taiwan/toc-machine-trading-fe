@@ -36,7 +36,6 @@ class _FutureTradePageState extends State<FutureTradePage> {
                       child: Icon(
                         Icons.build,
                         size: 100,
-                        color: Colors.blueGrey,
                       ),
                     ),
                   ],

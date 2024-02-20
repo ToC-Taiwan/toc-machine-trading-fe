@@ -75,11 +75,11 @@ class _HomePageState extends State<HomePage> {
       reverseAnimationCurve: Curves.easeInToLinear,
       forwardAnimationCurve: Curves.easeInToLinear,
       backgroundColor: Colors.white,
-      leftBarIndicatorColor: Colors.blueGrey,
+      leftBarIndicatorColor: Theme.of(context).colorScheme.secondary,
       isDismissible: true,
-      icon: const Icon(
+      icon: Icon(
         Icons.notifications,
-        color: Colors.blueGrey,
+        color: Theme.of(context).colorScheme.secondary,
         size: 30,
       ),
       titleText: Text(
@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage> {
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         animationDuration: const Duration(milliseconds: 250),
         backgroundColor: Colors.white,
-        indicatorColor: Colors.blueGrey[300],
+        indicatorColor: Theme.of(context).colorScheme.secondary,
         elevation: 0,
         height: 50,
         onDestinationSelected: (int index) {

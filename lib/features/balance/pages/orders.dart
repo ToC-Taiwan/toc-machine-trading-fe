@@ -35,7 +35,6 @@ class _OrdersPageState extends State<OrdersPage> {
                       child: Icon(
                         Icons.build,
                         size: 100,
-                        color: Colors.blueGrey,
                       ),
                     ),
                   ],

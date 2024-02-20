@@ -35,7 +35,6 @@ class _StockComboTradePageState extends State<StockComboTradePage> {
                       child: Icon(
                         Icons.build,
                         size: 100,
-                        color: Colors.blueGrey,
                       ),
                     ),
                   ],

@@ -88,8 +88,11 @@ class _KbarPageState extends State<KbarPage> {
               ),
             ),
             loading
-                ? const Center(
-                    child: SpinKitWave(color: Colors.blueGrey, size: 35.0),
+                ? Center(
+                    child: SpinKitWave(
+                      color: Theme.of(context).colorScheme.primary,
+                      size: 35.0,
+                    ),
                   )
                 : Container(),
           ],

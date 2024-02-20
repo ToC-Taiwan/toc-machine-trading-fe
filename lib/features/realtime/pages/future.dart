@@ -312,7 +312,7 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
       children: [
         Expanded(
           flex: 2,
-          child: numberText(name, color: Colors.blueGrey),
+          child: numberText(name, color: Theme.of(context).colorScheme.secondary),
         ),
         Expanded(
           flex: 3,

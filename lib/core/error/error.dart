@@ -3,8 +3,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';
 
 abstract class ErrorCode {
+  static const int underDevelopment = -99;
+
   static String toMsg(BuildContext context, int code) {
     switch (code) {
+      case underDevelopment:
+        return AppLocalizations.of(context)!.under_development;
       case serverError:
         return AppLocalizations.of(context)!.server_error;
       case -1001:

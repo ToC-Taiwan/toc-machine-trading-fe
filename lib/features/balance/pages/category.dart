@@ -45,21 +45,23 @@ class _BalanceCategoryPageState extends State<BalanceCategoryPage> with TickerPr
                 ? AppLocalizations.of(context)!.inventory
                 : AppLocalizations.of(context)!.wallet,
       ),
-      body: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
-        return SizedBox(
-          width: constraints.maxWidth,
-          height: constraints.maxHeight * 0.9,
-          child: TabBarView(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: _tabController,
-            children: const [
-              BalanceContent(),
-              InventoryContent(),
-              WalletContent(),
-            ],
-          ),
-        );
-      }),
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return SizedBox(
+            width: constraints.maxWidth,
+            height: constraints.maxHeight * 0.9,
+            child: TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: _tabController,
+              children: const [
+                BalanceContent(),
+                InventoryContent(),
+                WalletContent(),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -75,12 +77,6 @@ class _BalanceCategoryPageState extends State<BalanceCategoryPage> with TickerPr
               color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
             ),
           ),
-          backgroundColor: MaterialStateProperty.resolveWith((states) {
-            if (states.contains(MaterialState.selected)) {
-              return Colors.blueGrey.shade100;
-            }
-            return Theme.of(context).colorScheme.surface;
-          }),
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(

@@ -27,42 +27,49 @@ class _StockTradePageState extends State<StockTradePage> with TickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: topAppBar(
-        context,
-        '${AppLocalizations.of(context)!.order}(${AppLocalizations.of(context)!.stock})',
-        automaticallyImplyLeading: true,
-        disableActions: true,
-        bottom: TabBar(
-          indicatorSize: TabBarIndicatorSize.label,
-          indicatorColor: Colors.blueGrey,
-          overlayColor: MaterialStateProperty.all(Colors.transparent),
-          physics: const NeverScrollableScrollPhysics(),
-          controller: _tabController,
-          tabs: <Widget>[
-            Tab(
-              child: Text(
-                AppLocalizations.of(context)!.odd,
-                style: Theme.of(context).textTheme.titleMedium!,
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: topAppBar(
+          context,
+          '${AppLocalizations.of(context)!.order}(${AppLocalizations.of(context)!.stock})',
+          automaticallyImplyLeading: true,
+          disableActions: true,
+          bottom: TabBar(
+            indicatorSize: TabBarIndicatorSize.label,
+            physics: const NeverScrollableScrollPhysics(),
+            controller: _tabController,
+            tabs: <Widget>[
+              Tab(
+                child: Text(
+                  AppLocalizations.of(context)!.odd,
+                  style: Theme.of(context).textTheme.titleMedium!,
+                ),
               ),
-            ),
-            Tab(
-              child: Text(
-                AppLocalizations.of(context)!.lot,
-                style: Theme.of(context).textTheme.titleMedium!,
+              Tab(
+                child: Text(
+                  AppLocalizations.of(context)!.lot,
+                  style: Theme.of(context).textTheme.titleMedium!,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: TabBarView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: _tabController,
-          children: const <Widget>[
-            PlaceOrderWidget(),
-            PlaceOrderWidget(),
-          ],
+        body: SafeArea(
+          child: TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: _tabController,
+            children: const <Widget>[
+              PlaceOrderWidget(isOdd: true),
+              PlaceOrderWidget(isOdd: false),
+            ],
+          ),
         ),
       ),
     );

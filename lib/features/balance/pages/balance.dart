@@ -45,8 +45,11 @@ class _BalanceContentState extends State<BalanceContent> {
   @override
   Widget build(BuildContext context) {
     return loading
-        ? const Center(
-            child: SpinKitWave(color: Colors.blueGrey, size: 35.0),
+        ? Center(
+            child: SpinKitWave(
+              color: Theme.of(context).colorScheme.primary,
+              size: 35.0,
+            ),
           )
         : Column(
             children: [
@@ -60,13 +63,13 @@ class _BalanceContentState extends State<BalanceContent> {
                 rangeSelectionMode: RangeSelectionMode.disabled,
                 eventLoader: _getEventsForDay,
                 startingDayOfWeek: StartingDayOfWeek.monday,
-                calendarStyle: const CalendarStyle(
+                calendarStyle: CalendarStyle(
                   selectedDecoration: BoxDecoration(
-                    color: Colors.blueGrey,
+                    color: Theme.of(context).colorScheme.primary,
                     shape: BoxShape.circle,
                   ),
                   outsideDaysVisible: false,
-                  markerDecoration: BoxDecoration(
+                  markerDecoration: const BoxDecoration(
                     color: Colors.deepOrange,
                     shape: BoxShape.circle,
                   ),

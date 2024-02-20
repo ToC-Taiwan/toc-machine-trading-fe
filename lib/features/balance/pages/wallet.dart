@@ -27,7 +27,6 @@ class _WalletContentState extends State<WalletContent> {
                       child: Icon(
                         Icons.build,
                         size: 100,
-                        color: Colors.blueGrey,
                       ),
                     ),
                   ],

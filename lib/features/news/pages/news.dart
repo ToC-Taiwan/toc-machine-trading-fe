@@ -61,8 +61,7 @@ class _NewsPageState extends State<NewsPage> {
                   if (index == 5 && !_removeAds) {
                     return _getAdUnit();
                   }
-                  return Divider(
-                    color: Colors.blueGrey[200],
+                  return const Divider(
                     thickness: 3,
                     height: 0,
                     indent: 40,
@@ -108,8 +107,11 @@ class _NewsPageState extends State<NewsPage> {
                 },
               );
             }
-            return const Center(
-              child: SpinKitWave(color: Colors.blueGrey, size: 35.0),
+            return Center(
+              child: SpinKitWave(
+                color: Theme.of(context).colorScheme.primary,
+                size: 35.0,
+              ),
             );
           },
         ));

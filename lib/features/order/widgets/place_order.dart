@@ -1,116 +1,70 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';
-import 'package:toc_machine_trading_fe/core/pb/forwarder/mq.pb.dart' as pb;
-import 'package:toc_machine_trading_fe/features/realtime/entity/snapshot.dart';
-import 'package:web_socket_channel/io.dart';
-
-enum Action { buy, sell, sellFirst, buyLater, none }
+import 'package:toc_machine_trading_fe/core/error/error.dart';
+import 'package:toc_machine_trading_fe/features/order/entity/order.dart';
+import 'package:toc_machine_trading_fe/features/order/widgets/order_detail_category.dart';
+import 'package:toc_machine_trading_fe/features/order/widgets/stock_picker.dart';
 
 class PlaceOrderWidget extends StatefulWidget {
-  const PlaceOrderWidget({super.key});
+  const PlaceOrderWidget({required this.isOdd, super.key});
+  final bool isOdd;
 
   @override
   State<PlaceOrderWidget> createState() => _PlaceOrderWidgetState();
 }
 
 class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
-  late IOWebSocketChannel? _channel;
+  final StreamController<Order> _orderStreamController = StreamController<Order>.broadcast();
 
-  Action _action = Action.none;
-  SnapShot? _snapShot;
+  OrderAction _action = OrderAction.none;
+  Order? orderDetail;
 
   @override
   void initState() {
     super.initState();
-    initialWS();
-  }
-
-  @override
-  void dispose() {
-    _channel!.sink.close();
-    super.dispose();
+    _orderStreamController.stream.listen((Order order) {
+      if (orderDetail == null || orderDetail!.code != order.code) {
+        setState(() {
+          orderDetail = order;
+          _action = OrderAction.none;
+        });
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: Padding(
-        padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+        padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
         child: Column(
           children: [
             Expanded(
               flex: 2,
-              child: Card(
-                clipBehavior: Clip.hardEdge,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: InkWell(
-                        onTap: () async {
-                          // Map<String, SnapShot> snapshots = await API.fetchSnapshots(["2330"]);
-                          // // if (snapshots.isEmpty) {
-                          // //   return null;
-                          // // }
-                          // setState(() {
-                          //   _snapShot = snapshots["2330"];
-                          // });
-                          // _channel!.sink.add(
-                          //   pb.PickRealMap(
-                          //     pickMap: {
-                          //       "2330": pb.PickListType.TYPE_ADD,
-                          //     },
-                          //   ).writeToBuffer(),
-                          // );
-                        },
-                        child: _snapShot == null
-                            ? SizedBox(
-                                width: double.infinity,
-                                height: double.infinity,
-                                child: Center(
-                                  child: Text(
-                                    AppLocalizations.of(context)!.tap_to_choose_stock,
-                                    style: Theme.of(context).textTheme.titleMedium!,
-                                  ),
-                                ),
-                              )
-                            : Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(_snapShot!.stockNum!),
-                                  Text(_snapShot!.stockName!),
-                                  Text(_snapShot!.open!.toString()),
-                                  Text(_snapShot!.high!.toString()),
-                                  Text(_snapShot!.low!.toString()),
-                                  Text(_snapShot!.close!.toString()),
-                                ],
-                              ),
-                      ),
-                    ),
-                  ],
-                ),
+              child: StockPickerWidget(
+                orderStreamController: _orderStreamController,
+                isOdd: widget.isOdd,
               ),
             ),
-            const Expanded(
-              flex: 5,
-              child: Card(
-                clipBehavior: Clip.hardEdge,
-                child: Row(
-                  children: [],
-                ),
-              ),
+            const Divider(
+              color: Colors.transparent,
+              height: 5,
             ),
             Expanded(
-              child: SizedBox(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(child: _buildActionButton(Action.buy)),
-                    Expanded(child: _buildActionButton(Action.sell)),
-                    Expanded(child: _buildActionButton(Action.sellFirst)),
-                    Expanded(child: _buildActionButton(Action.buyLater)),
-                  ],
-                ),
+              flex: 5,
+              child: OrderOptionWidget(orderStreamController: _orderStreamController),
+            ),
+            Expanded(
+              child: Row(
+                children: [
+                  Expanded(child: _buildActionButton(OrderAction.buy)),
+                  Expanded(child: _buildActionButton(OrderAction.sell)),
+                  Expanded(child: _buildActionButton(OrderAction.sellFirst)),
+                  Expanded(child: _buildActionButton(OrderAction.buyLater)),
+                ],
               ),
             ),
             Expanded(
@@ -118,15 +72,73 @@ class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueGrey,
+                    backgroundColor: (orderDetail != null && _action != OrderAction.none)
+                        ? Theme.of(context).colorScheme.secondary
+                        : Theme.of(context).colorScheme.background,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    if (orderDetail == null) {
+                      return;
+                    }
+                    orderDetail!.action = _action;
+                    sendOrder(orderDetail!).then((_) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text(
+                            AppLocalizations.of(context)!.success,
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                          // content: Text(AppLocalizations.of(context)!.success),
+                          actions: <Widget>[
+                            ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  _action = OrderAction.none;
+                                });
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                AppLocalizations.of(context)!.ok,
+                                style: const TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }).catchError((e) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text(
+                            AppLocalizations.of(context)!.error,
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                          content: Text(ErrorCode.toMsg(context, e)),
+                          actions: <Widget>[
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                AppLocalizations.of(context)!.ok,
+                                style: const TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    });
+                  },
                   child: Text(
-                    AppLocalizations.of(context)!.ok,
-                    style: const TextStyle(color: Colors.black),
+                    AppLocalizations.of(context)!.send,
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: (orderDetail != null && _action != OrderAction.none) ? Colors.white : Colors.grey,
+                        ),
                   ),
                 ),
               ),
@@ -137,105 +149,71 @@ class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
     );
   }
 
-  Widget _buildActionButton(Action action) {
-    return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
-      return SizedBox(
-        height: constraints.maxHeight * 0.8,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+  Widget _buildActionButton(OrderAction action) {
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return SizedBox(
+          height: constraints.maxHeight * 0.8,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              backgroundColor: _action != action
+                  ? Theme.of(context).colorScheme.background
+                  : _action == OrderAction.buy
+                      ? Colors.redAccent
+                      : _action == OrderAction.sell
+                          ? Colors.greenAccent
+                          : _action == OrderAction.sellFirst
+                              ? Colors.greenAccent
+                              : Colors.redAccent,
             ),
-            backgroundColor: _action != action
-                ? Colors.grey[100]
-                : _action == Action.buy
-                    ? Colors.redAccent
-                    : _action == Action.sell
-                        ? Colors.greenAccent
-                        : _action == Action.sellFirst
-                            ? Colors.greenAccent
-                            : Colors.redAccent,
+            onPressed: () {
+              if (action != OrderAction.buy) return;
+              setState(() {
+                if (_action == action) {
+                  _action = OrderAction.none;
+                  return;
+                }
+                _action = action;
+              });
+            },
+            child: Text(
+              action == OrderAction.buy
+                  ? AppLocalizations.of(context)!.buy
+                  : action == OrderAction.sell
+                      ? AppLocalizations.of(context)!.sell
+                      : action == OrderAction.sellFirst
+                          ? AppLocalizations.of(context)!.sell_first
+                          : AppLocalizations.of(context)!.buy_later,
+              style: const TextStyle(color: Colors.black),
+            ),
           ),
-          onPressed: () {
-            setState(() {
-              if (_action == action) {
-                _action = Action.none;
-                return;
-              }
-              _action = action;
-            });
-          },
-          child: Text(
-            action == Action.buy
-                ? AppLocalizations.of(context)!.buy
-                : action == Action.sell
-                    ? AppLocalizations.of(context)!.sell
-                    : action == Action.sellFirst
-                        ? AppLocalizations.of(context)!.sell_first
-                        : AppLocalizations.of(context)!.buy_later,
-            style: const TextStyle(color: Colors.black),
-          ),
-        ),
-      );
-    });
-  }
-
-  Future<void> initialWS() async {
-    String url = backendPickWSURLPrefixV2;
-    // if (widget.isOdd) {
-    //   url = backendPickOddsWSURLPrefixV2;
-    // }
-    _channel = IOWebSocketChannel.connect(
-      Uri.parse(url),
-      pingInterval: const Duration(seconds: 1),
-      headers: {
-        "Authorization": API.authKey,
+        );
       },
-    );
-    await _channel!.ready;
-    _channel!.stream.listen(
-      (message) {
-        final msg = pb.StockRealTimeTickMessage.fromBuffer(message as List<int>);
-        setState(() {
-          _snapShot = _snapshotFromPB(msg);
-        });
-      },
-      onDone: () {},
-      onError: (error) {},
     );
   }
 
-  SnapShot _snapshotFromPB(pb.StockRealTimeTickMessage msg) {
-    return SnapShot(
-      stockNum: msg.code,
-      stockName: _snapShot!.stockName,
-      open: msg.open,
-      high: msg.high,
-      low: msg.low,
-      close: msg.close,
-      tickType: msg.tickType == 0
-          ? "None"
-          : msg.tickType == 1
-              ? "Buy"
-              : "Sell",
-      priceChg: msg.priceChg,
-      pctChg: msg.pctChg,
-      chgType: msg.chgType == 1
-          ? "LimitUp"
-          : msg.chgType == 2
-              ? "Up"
-              : msg.chgType == 3
-                  ? "Unchanged"
-                  : msg.chgType == 4
-                      ? "Down"
-                      : "LimitDown",
-      volume: msg.volume.toInt(),
-      volumeSum: msg.totalVolume.toInt(),
-      amount: msg.amount.toInt(),
-      amountSum: msg.totalAmount.toInt(),
-      // snapTime: msg.time,
-      // yesterdayVolume: msg.yesterdayVolume.toInt(),
-      // volumeRatio: msg.volumeRatio,
-    );
+  Future<void> sendOrder(Order orderDetail) async {
+    switch (orderDetail.type) {
+      case OrderType.stock:
+        throw ErrorCode.underDevelopment;
+      case OrderType.stockOdd:
+        if (orderDetail.action == OrderAction.buy) {
+          await API.buyOddStock(
+            code: orderDetail.code!,
+            price: orderDetail.price!,
+            share: orderDetail.count!,
+          );
+        }
+        break;
+      case OrderType.future:
+        throw ErrorCode.underDevelopment;
+      case OrderType.combo:
+        throw ErrorCode.underDevelopment;
+      default:
+        return;
+    }
   }
 }

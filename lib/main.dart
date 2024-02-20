@@ -44,7 +44,12 @@ class MainApp extends StatelessWidget {
       initialData: LocaleBloc.currentLocale,
       builder: (context, snapshot) {
         return MaterialApp(
-          theme: ThemeData(useMaterial3: true),
+          theme: ThemeData(
+            useMaterial3: true,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.blueGrey,
+            ),
+          ),
           debugShowCheckedModeBanner: false,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,

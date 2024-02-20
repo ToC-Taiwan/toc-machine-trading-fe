@@ -136,7 +136,6 @@ class _SettingsPageState extends State<SettingsPage> {
                     });
                   }
                 },
-                iconColor: Colors.blueGrey,
                 childrenPadding: const EdgeInsets.only(left: 50),
                 leading: const Icon(Icons.account_circle_outlined),
                 title: Text(AppLocalizations.of(context)!.user),
@@ -178,7 +177,6 @@ class _SettingsPageState extends State<SettingsPage> {
               ExpansionTile(
                 maintainState: true,
                 controller: controllerB,
-                iconColor: Colors.blueGrey,
                 childrenPadding: const EdgeInsets.only(left: 50),
                 onExpansionChanged: (value) async {
                   if (value) {
@@ -198,7 +196,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 children: [
                   SwitchListTile(
                     value: _pushNotification,
-                    activeColor: Colors.blueGrey,
                     onChanged: _pushNotificationPermamentlyDenied
                         ? null
                         : (bool? value) async {
@@ -230,14 +227,12 @@ class _SettingsPageState extends State<SettingsPage> {
                     controllerD!.collapse();
                   }
                 },
-                iconColor: Colors.blueGrey,
                 childrenPadding: const EdgeInsets.only(left: 50),
                 leading: const Icon(Icons.language),
                 title: Text(AppLocalizations.of(context)!.language),
                 children: <Widget>[
                   for (var item in LocaleBloc.supportedLocales)
                     RadioListTile<String>(
-                      activeColor: Colors.blueGrey,
                       value: item,
                       title: Text(LocaleBloc.localeName(item)),
                       groupValue: LocaleBloc.currentLocale.toString(),
@@ -257,7 +252,6 @@ class _SettingsPageState extends State<SettingsPage> {
                     controllerC!.collapse();
                   }
                 },
-                iconColor: Colors.blueGrey,
                 childrenPadding: const EdgeInsets.only(left: 50),
                 leading: const Icon(Icons.remove_circle),
                 title: Text(AppLocalizations.of(context)!.remove_ads),
@@ -323,8 +317,11 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
         if (_purchasePending)
-          const Center(
-            child: SpinKitWave(color: Colors.blueGrey, size: 35.0),
+          Center(
+            child: SpinKitWave(
+              color: Theme.of(context).colorScheme.primary,
+              size: 35.0,
+            ),
           ),
       ],
     );
@@ -355,11 +352,7 @@ class _SettingsPageState extends State<SettingsPage> {
             subtitle: Text(
               productIDToLocalDescriptionString(productDetails.id),
             ),
-            trailing: TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.green[800],
-                foregroundColor: Colors.white,
-              ),
+            trailing: ElevatedButton(
               onPressed: _removeAds
                   ? null
                   : () {
@@ -384,11 +377,7 @@ class _SettingsPageState extends State<SettingsPage> {
       productList.add(ListTile(
         title: Text(AppLocalizations.of(context)!.already_purchased),
         subtitle: Text(AppLocalizations.of(context)!.restore_purchase),
-        trailing: TextButton(
-          style: TextButton.styleFrom(
-            backgroundColor: Colors.blueGrey,
-            foregroundColor: Colors.white,
-          ),
+        trailing: ElevatedButton(
           onPressed: () {
             showPendingUI();
             _inAppPurchase.restorePurchases();
