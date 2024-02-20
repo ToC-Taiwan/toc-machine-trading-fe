@@ -35,7 +35,6 @@ class _TargetComboPageState extends State<TargetComboPage> {
                       child: Icon(
                         Icons.build,
                         size: 100,
-                        color: Colors.blueGrey,
                       ),
                     ),
                   ],

@@ -135,5 +135,13 @@
   "server_error": "服务器错误",
   "sell_first": "先卖",
   "buy_later": "回补",
-  "tap_to_choose_stock": "点击选择股票"
+  "tap_to_choose_stock": "点击选择股票",
+  "send": "发送",
+  "greater_than_0": "必须大于 0",
+  "less_than_1000": "必须小于 1000",
+  "price": "价格",
+  "count": "数量",
+  "auto_close": "自动平仓",
+  "valid_until": "有效期至",
+  "under_development": "开发中"
 }

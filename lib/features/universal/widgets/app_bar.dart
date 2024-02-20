@@ -18,7 +18,6 @@ AppBar topAppBar(
             IconButton(
               icon: const Icon(
                 Icons.settings,
-                color: Colors.blueGrey,
               ),
               onPressed: () {
                 Navigator.of(context).push(

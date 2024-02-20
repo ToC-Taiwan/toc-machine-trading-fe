@@ -132,7 +132,6 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                                   hintText: AppLocalizations.of(context)!.email_address,
                                   border: InputBorder.none,
                                   contentPadding: const EdgeInsets.all(10),
-                                  hintStyle: const TextStyle(color: Colors.blueGrey),
                                 ),
                               ),
                             ),
@@ -164,7 +163,6 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                                   hintText: AppLocalizations.of(context)!.username,
                                   border: InputBorder.none,
                                   contentPadding: const EdgeInsets.all(10),
-                                  hintStyle: const TextStyle(color: Colors.blueGrey),
                                 ),
                               ),
                             ),
@@ -197,7 +195,6 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                                   hintText: AppLocalizations.of(context)!.password,
                                   border: InputBorder.none,
                                   contentPadding: const EdgeInsets.all(10),
-                                  hintStyle: const TextStyle(color: Colors.blueGrey),
                                   suffixIcon: IconButton(
                                     onPressed: () {
                                       setState(() {
@@ -235,7 +232,6 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                                   hintText: AppLocalizations.of(context)!.confirm_password,
                                   border: InputBorder.none,
                                   contentPadding: const EdgeInsets.all(10),
-                                  hintStyle: const TextStyle(color: Colors.blueGrey),
                                   suffixIcon: IconButton(
                                     onPressed: () {
                                       setState(() {
@@ -251,7 +247,7 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                               width: 115,
                               margin: const EdgeInsets.only(right: 10, left: 5, bottom: 10),
                               decoration: BoxDecoration(
-                                color: Colors.blueGrey,
+                                color: Theme.of(context).colorScheme.secondary,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: TextButton(
@@ -331,9 +327,6 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
             },
             child: Text(
               AppLocalizations.of(context)!.dismiss,
-              style: const TextStyle(
-                color: Colors.blueGrey,
-              ),
             ),
           )
         ],

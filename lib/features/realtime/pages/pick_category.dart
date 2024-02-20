@@ -45,8 +45,6 @@ class _PickStockCategoryPageState extends State<PickStockCategoryPage> with Tick
           automaticallyImplyLeading: true,
           bottom: TabBar(
             indicatorSize: TabBarIndicatorSize.label,
-            indicatorColor: Colors.blueGrey,
-            overlayColor: MaterialStateProperty.all(Colors.transparent),
             controller: _tabController,
             tabs: <Widget>[
               Tab(

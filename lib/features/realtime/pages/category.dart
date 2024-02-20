@@ -61,7 +61,10 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
               return SizedBox(
                 height: constraints.maxHeight * (_expanded ? 0.8 : 0.9) + 10,
                 child: imageSliders.isEmpty
-                    ? const SpinKitWave(color: Colors.blueGrey, size: 35.0)
+                    ? SpinKitWave(
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 35.0,
+                      )
                     : CarouselSlider.builder(
                         carouselController: _controller,
                         options: CarouselOptions(
@@ -152,10 +155,10 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
 
   Widget _buildTreeMap(List<pb.StockVolumeRankMessage> data) {
     return SfTreemap(
-      colorMappers: const [
-        TreemapColorMapper.range(from: -9999, to: -0.01, color: Colors.greenAccent),
-        TreemapColorMapper.range(from: 0, to: 0, color: Colors.blueGrey),
-        TreemapColorMapper.range(from: 0.01, to: 9999, color: Colors.redAccent),
+      colorMappers: [
+        const TreemapColorMapper.range(from: -9999, to: -0.01, color: Colors.greenAccent),
+        TreemapColorMapper.range(from: 0, to: 0, color: Theme.of(context).colorScheme.primary),
+        const TreemapColorMapper.range(from: 0.01, to: 9999, color: Colors.redAccent),
       ],
       dataCount: data.length,
       weightValueMapper: (int index) {

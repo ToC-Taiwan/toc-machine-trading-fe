@@ -135,5 +135,13 @@
   "server_error": "サーバーエラー",
   "sell_first": "最初に売る",
   "buy_later": "補完",
-  "tap_to_choose_stock": "銘柄を選択するにはタップしてください"
+  "tap_to_choose_stock": "銘柄を選択するにはタップしてください",
+  "send": "送信",
+  "greater_than_0": "0より大きい",
+  "less_than_1000": "1000より小さい",
+  "price": "価格",
+  "count": "回数",
+  "auto_close": "自動終了",
+  "valid_until": "有効期限",
+  "under_development": "開発中"
 }

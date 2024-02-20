@@ -151,7 +151,6 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                         hintText: AppLocalizations.of(context)!.username,
                                         border: InputBorder.none,
                                         contentPadding: const EdgeInsets.all(10),
-                                        hintStyle: const TextStyle(color: Colors.blueGrey),
                                       ),
                                     ),
                                   ),
@@ -181,7 +180,6 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                         hintText: AppLocalizations.of(context)!.password,
                                         border: InputBorder.none,
                                         contentPadding: const EdgeInsets.all(10),
-                                        hintStyle: const TextStyle(color: Colors.blueGrey),
                                         suffixIcon: IconButton(
                                           onPressed: () {
                                             setState(() {
@@ -200,7 +198,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                         width: 115,
                                         margin: const EdgeInsets.only(left: 10, right: 5, bottom: 10),
                                         decoration: BoxDecoration(
-                                          color: Colors.blueGrey,
+                                          color: Theme.of(context).colorScheme.secondary,
                                           borderRadius: BorderRadius.circular(10),
                                         ),
                                         child: TextButton(
@@ -259,7 +257,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                         width: 115,
                                         margin: const EdgeInsets.only(right: 10, left: 5, bottom: 10),
                                         decoration: BoxDecoration(
-                                          color: Colors.blueGrey,
+                                          color: Theme.of(context).colorScheme.secondary,
                                           borderRadius: BorderRadius.circular(10),
                                         ),
                                         child: TextButton(

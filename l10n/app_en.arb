@@ -135,5 +135,13 @@
   "server_error": "Server Error",
   "sell_first": "Sell First",
   "buy_later": "Buy Later",
-  "tap_to_choose_stock": "Tap to choose stock"
+  "tap_to_choose_stock": "Tap to choose stock",
+  "send": "Send",
+  "greater_than_0": "Greater than 0",
+  "less_than_1000": "Less than 1000",
+  "price": "Price",
+  "count": "Count",
+  "auto_close": "Auto Close",
+  "valid_until": "Valid Until",
+  "under_development": "Under Development"
 }

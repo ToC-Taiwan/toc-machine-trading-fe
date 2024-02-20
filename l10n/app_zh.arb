@@ -135,5 +135,13 @@
   "server_error": "伺服器錯誤",
   "sell_first": "先賣",
   "buy_later": "回補",
-  "tap_to_choose_stock": "點選選擇股票"
+  "tap_to_choose_stock": "點選選擇股票",
+  "send": "送出",
+  "greater_than_0": "必須大於 0",
+  "less_than_1000": "必須小於 1000",
+  "price": "價格",
+  "count": "次數",
+  "auto_close": "自動平倉",
+  "valid_until": "有效期限",
+  "under_development": "開發中"
 }

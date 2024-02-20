@@ -135,5 +135,13 @@
   "server_error": "서버 오류",
   "sell_first": "먼저 판매하다",
   "buy_later": "보충",
-  "tap_to_choose_stock": "주식을 선택하려면 탭"
+  "tap_to_choose_stock": "주식을 선택하려면 탭",
+  "send": "보내기",
+  "greater_than_0": "0보다 큰 수를 입력하십시오",
+  "less_than_1000": "1000보다 작은 수를 입력하십시오",
+  "price": "가격",
+  "count": "수량",
+  "auto_close": "자동 종료",
+  "valid_until": "유효 기간",
+  "under_development": "개발 중"
 }

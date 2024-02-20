@@ -297,7 +297,12 @@ abstract class API {
     }
   }
 
-  static Future<List<PositionStock>?> fetchPositionStock() async {
+  static Future<List<PositionStock>?> fetchPositionStock({String? code}) async {
+    String specificCode = '';
+    if (code != null) {
+      specificCode = code;
+    }
+
     try {
       final response = await client.get(
         Uri.parse('$backendURLPrefix/trade/inventory/stock'),
@@ -309,7 +314,11 @@ abstract class API {
       if (response.statusCode == 200) {
         List<PositionStock> data = [];
         for (final i in result) {
-          data.add(PositionStock.fromJson(i as Map<String, dynamic>));
+          PositionStock position = PositionStock.fromJson(i as Map<String, dynamic>);
+          if (specificCode.isNotEmpty && position.stockNum == specificCode) {
+            return [position];
+          }
+          data.add(position);
         }
         return data;
       } else {
@@ -331,6 +340,44 @@ abstract class API {
       final Map<String, dynamic> result = jsonDecode(response.body);
       if (response.statusCode == 200) {
         return UserInfo.fromJson(result);
+      } else {
+        throw result['code'] as int;
+      }
+    } on ClientException {
+      throw serverError;
+    }
+  }
+
+  static Future<void> buyOddStock({String? code, num? price, int? share}) async {
+    var putBody = {
+      'num': code,
+      'price': price,
+      'share': share,
+    };
+
+    if (code == null) {
+      throw 'code is empty';
+    }
+
+    if (price == null) {
+      throw 'price is empty';
+    }
+
+    if (share == null) {
+      throw 'share is empty';
+    }
+
+    try {
+      final response = await client.put(
+        Uri.parse('$backendURLPrefix/trade/stock/buy/odd'),
+        headers: {
+          "Authorization": _apiToken,
+        },
+        body: jsonEncode(putBody),
+      );
+      final Map<String, dynamic> result = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        return;
       } else {
         throw result['code'] as int;
       }
