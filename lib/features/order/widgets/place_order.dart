@@ -92,7 +92,6 @@ class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
                             AppLocalizations.of(context)!.success,
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
-                          // content: Text(AppLocalizations.of(context)!.success),
                           actions: <Widget>[
                             ElevatedButton(
                               onPressed: () {
@@ -169,16 +168,18 @@ class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
                               ? Colors.greenAccent
                               : Colors.redAccent,
             ),
-            onPressed: () {
-              if (action != OrderAction.buy) return;
-              setState(() {
-                if (_action == action) {
-                  _action = OrderAction.none;
-                  return;
-                }
-                _action = action;
-              });
-            },
+            onPressed: orderDetail == null
+                ? null
+                : () {
+                    if (action != OrderAction.buy) return;
+                    setState(() {
+                      if (_action == action) {
+                        _action = OrderAction.none;
+                        return;
+                      }
+                      _action = action;
+                    });
+                  },
             child: Text(
               action == OrderAction.buy
                   ? AppLocalizations.of(context)!.buy

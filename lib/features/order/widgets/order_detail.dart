@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:toc_machine_trading_fe/features/order/entity/order.dart';
 
 class OrderDetailWidget extends StatefulWidget {
@@ -15,14 +15,10 @@ class OrderDetailWidget extends StatefulWidget {
 }
 
 class _OrderDetailWidgetState extends State<OrderDetailWidget> with AutomaticKeepAliveClientMixin<OrderDetailWidget> {
-  final CarouselController _controller = CarouselController();
   final TextEditingController validTimeController = TextEditingController();
 
   Order? orderDetail;
   int? _priceIndex;
-
-  int _countIndex = 0;
-  List<int> availableCount = List<int>.generate(999, (int index) => index + 1);
 
   @override
   bool get wantKeepAlive => true;
@@ -35,13 +31,17 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> with AutomaticKee
         if (orderDetail == null || orderDetail!.code != order.code) {
           orderDetail = order;
           _priceIndex = orderDetail!.availablePrice!.indexWhere((element) => element == orderDetail!.price);
-          _controller.onReady.then((_) {
-            _controller.jumpToPage(0);
-          });
           validTimeController.text = OrderValidUntilUnit.m5.printDuration();
         }
       },
     );
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
   }
 
   @override
@@ -70,7 +70,6 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> with AutomaticKee
                         ),
                       ),
                       Expanded(
-                        flex: 2,
                         child: Center(
                           child: Text(
                             orderDetail!.availablePrice![_priceIndex!].toString(),
@@ -99,33 +98,84 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> with AutomaticKee
                 ? null
                 : [
                     Expanded(
-                      child: CarouselSlider.builder(
-                        carouselController: _controller,
-                        options: CarouselOptions(
-                          initialPage: 0,
-                          viewportFraction: 0.35,
-                          autoPlay: false,
-                          enableInfiniteScroll: false,
-                          onPageChanged: (index, reason) => setState(
-                            () {
-                              _countIndex = index;
-                              orderDetail!.count = availableCount[index];
-                              widget.orderStreamController.add(orderDetail!);
-                            },
-                          ),
-                        ),
-                        itemCount: availableCount.length,
-                        itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
-                          return Center(
-                            child: Text(
-                              availableCount[itemIndex].toString(),
-                              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                    fontSize: itemIndex == _countIndex ? 24 : 12,
-                                    color: (orderDetail!.count != availableCount[itemIndex]) ? Colors.grey : Colors.black,
-                                  ),
+                      child: IconButton(
+                        onPressed: () {
+                          if (orderDetail!.count! > 1) {
+                            setState(() {
+                              orderDetail!.count = orderDetail!.count! - 1;
+                            });
+                            widget.orderStreamController.add(orderDetail!);
+                          }
+                        },
+                        icon: const Icon(Icons.remove),
+                      ),
+                    ),
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          showModalBottomSheet(
+                            constraints: BoxConstraints(
+                              maxHeight: MediaQuery.of(context).size.height * 0.75,
                             ),
+                            isScrollControlled: true,
+                            showDragHandle: true,
+                            context: context,
+                            builder: (BuildContext context) {
+                              return SizedBox(
+                                height: MediaQuery.of(context).size.height * 0.35,
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: ScrollablePositionedList.builder(
+                                        initialScrollIndex: orderDetail!.count! - 3,
+                                        shrinkWrap: true,
+                                        itemCount: 999,
+                                        itemBuilder: (BuildContext context, int index) {
+                                          return ListTile(
+                                            title: Center(
+                                              child: Text(
+                                                (index + 1).toString(),
+                                                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                                      color: orderDetail!.count == index + 1 ? Theme.of(context).colorScheme.primary : null,
+                                                    ),
+                                              ),
+                                            ),
+                                            onTap: () {
+                                              setState(() {
+                                                orderDetail!.count = index + 1;
+                                              });
+                                              widget.orderStreamController.add(orderDetail!);
+                                              Navigator.pop(context);
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
                           );
                         },
+                        child: Center(
+                          child: Text(
+                            orderDetail!.count.toString(),
+                            style: Theme.of(context).textTheme.bodyLarge!,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: IconButton(
+                        onPressed: () {
+                          if (orderDetail!.count! < 999) {
+                            setState(() {
+                              orderDetail!.count = orderDetail!.count! + 1;
+                            });
+                            widget.orderStreamController.add(orderDetail!);
+                          }
+                        },
+                        icon: const Icon(Icons.add),
                       ),
                     ),
                   ],

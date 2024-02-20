@@ -113,6 +113,7 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                       _buildCustomButtom(AppLocalizations.of(context)!.mxf, Colors.blue[600], Icons.chrome_reader_mode_rounded, onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
+                            maintainState: false,
                             fullscreenDialog: true,
                             builder: (context) => FutureRealTimePage(code: AppLocalizations.of(context)!.mxf),
                           ),
@@ -121,6 +122,7 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                       _buildCustomButtom(AppLocalizations.of(context)!.pick_stock, Colors.red[600], Icons.playlist_add_check_circle, onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
+                            maintainState: false,
                             fullscreenDialog: true,
                             builder: (context) => const PickStockCategoryPage(),
                           ),
@@ -129,6 +131,7 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                       _buildCustomButtom(AppLocalizations.of(context)!.target_combo, Colors.yellow[600], Icons.add_home_work_outlined, onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
+                            maintainState: false,
                             fullscreenDialog: false,
                             builder: (context) => const TargetComboPage(),
                           ),
@@ -137,6 +140,7 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                       _buildCustomButtom(AppLocalizations.of(context)!.order, Colors.green[600], Icons.shopping_cart, onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
+                            maintainState: false,
                             fullscreenDialog: false,
                             builder: (context) => const OrderPage(),
                           ),
