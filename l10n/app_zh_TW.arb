@@ -143,5 +143,6 @@
   "count": "次數",
   "auto_close": "自動平倉",
   "valid_until": "有效期限",
-  "under_development": "開發中"
+  "under_development": "開發中",
+  "reverse": "反向"
 }

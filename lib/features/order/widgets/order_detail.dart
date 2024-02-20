@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:toc_machine_trading_fe/features/order/entity/order.dart';
+import 'package:toc_machine_trading_fe/features/order/widgets/count_selector.dart';
 
 class OrderDetailWidget extends StatefulWidget {
   const OrderDetailWidget({required this.orderStreamController, super.key});
@@ -93,7 +93,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> with AutomaticKee
                       ),
                     ]),
           _buildRow(
-            AppLocalizations.of(context)!.count,
+            AppLocalizations.of(context)!.trade_count,
             orderDetail == null
                 ? null
                 : [
@@ -115,46 +115,15 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> with AutomaticKee
                         onTap: () {
                           showModalBottomSheet(
                             constraints: BoxConstraints(
-                              maxHeight: MediaQuery.of(context).size.height * 0.75,
+                              maxHeight: MediaQuery.of(context).size.height * 0.45,
                             ),
                             isScrollControlled: true,
                             showDragHandle: true,
                             context: context,
-                            builder: (BuildContext context) {
-                              return SizedBox(
-                                height: MediaQuery.of(context).size.height * 0.35,
-                                child: Column(
-                                  children: [
-                                    Expanded(
-                                      child: ScrollablePositionedList.builder(
-                                        initialScrollIndex: orderDetail!.count! - 3,
-                                        shrinkWrap: true,
-                                        itemCount: 999,
-                                        itemBuilder: (BuildContext context, int index) {
-                                          return ListTile(
-                                            title: Center(
-                                              child: Text(
-                                                (index + 1).toString(),
-                                                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                                      color: orderDetail!.count == index + 1 ? Theme.of(context).colorScheme.primary : null,
-                                                    ),
-                                              ),
-                                            ),
-                                            onTap: () {
-                                              setState(() {
-                                                orderDetail!.count = index + 1;
-                                              });
-                                              widget.orderStreamController.add(orderDetail!);
-                                              Navigator.pop(context);
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
+                            builder: (context) => CountSelector(
+                              onConfirm: sendCount,
+                              currentCount: orderDetail!.count!,
+                            ),
                           );
                         },
                         child: Center(
@@ -193,6 +162,9 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> with AutomaticKee
                   orderDetail!.validUntilUnit = unit;
                 });
               },
+              menuStyle: const MenuStyle(
+                alignment: Alignment.topLeft,
+              ),
               inputDecorationTheme: const InputDecorationTheme(border: InputBorder.none),
               dropdownMenuEntries: OrderValidUntilUnit.values.map<DropdownMenuEntry<OrderValidUntilUnit>>((OrderValidUntilUnit unit) {
                 return DropdownMenuEntry<OrderValidUntilUnit>(
@@ -221,6 +193,13 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> with AutomaticKee
         ],
       ),
     );
+  }
+
+  void sendCount(int count) {
+    setState(() {
+      orderDetail!.count = count;
+    });
+    widget.orderStreamController.add(orderDetail!);
   }
 
   Expanded _buildRow(String title, List<Widget>? children) {
