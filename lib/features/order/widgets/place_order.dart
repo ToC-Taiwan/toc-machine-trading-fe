@@ -58,12 +58,25 @@ class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
               child: OrderOptionWidget(orderStreamController: _orderStreamController),
             ),
             Expanded(
+              flex: 2,
               child: Row(
                 children: [
-                  Expanded(child: _buildActionButton(OrderAction.buy)),
-                  Expanded(child: _buildActionButton(OrderAction.sell)),
-                  Expanded(child: _buildActionButton(OrderAction.sellFirst)),
-                  Expanded(child: _buildActionButton(OrderAction.buyLater)),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Expanded(child: _buildActionButton(OrderAction.buy)),
+                        Expanded(child: _buildActionButton(OrderAction.sell)),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Expanded(child: _buildActionButton(OrderAction.sellFirst)),
+                        Expanded(child: _buildActionButton(OrderAction.buyLater)),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -149,9 +162,29 @@ class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
   }
 
   Widget _buildActionButton(OrderAction action) {
+    EdgeInsetsGeometry? margin;
+    switch (action) {
+      case OrderAction.buy:
+        margin = const EdgeInsets.only(top: 5, bottom: 5, right: 2.5);
+        break;
+      case OrderAction.sell:
+        margin = const EdgeInsets.only(bottom: 5, right: 2.5);
+        break;
+      case OrderAction.sellFirst:
+        margin = const EdgeInsets.only(top: 5, bottom: 5, left: 2.5);
+        break;
+      case OrderAction.buyLater:
+        margin = const EdgeInsets.only(bottom: 5, left: 2.5);
+        break;
+      default:
+        margin = const EdgeInsets.all(0);
+    }
+
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        return SizedBox(
+        return Container(
+          margin: margin,
+          width: double.infinity,
           height: constraints.maxHeight * 0.8,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(

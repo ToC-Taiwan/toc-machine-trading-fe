@@ -143,5 +143,6 @@
   "count": "Count",
   "auto_close": "Auto Close",
   "valid_until": "Valid Until",
-  "under_development": "Under Development"
+  "under_development": "Under Development",
+  "reverse": "Reverse"
 }

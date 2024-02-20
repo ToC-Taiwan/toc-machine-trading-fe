@@ -143,5 +143,6 @@
   "count": "数量",
   "auto_close": "自动平仓",
   "valid_until": "有效期至",
-  "under_development": "开发中"
+  "under_development": "开发中",
+  "reverse": "反向"
 }

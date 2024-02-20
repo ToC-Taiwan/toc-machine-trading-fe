@@ -143,5 +143,6 @@
   "count": "回数",
   "auto_close": "自動終了",
   "valid_until": "有効期限",
-  "under_development": "開発中"
+  "under_development": "開発中",
+  "reverse": "逆"
 }

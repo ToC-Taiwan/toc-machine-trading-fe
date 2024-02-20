@@ -143,5 +143,6 @@
   "count": "수량",
   "auto_close": "자동 종료",
   "valid_until": "유효 기간",
-  "under_development": "개발 중"
+  "under_development": "개발 중",
+  "reverse": "반대"
 }
