@@ -14,6 +14,7 @@ enum OrderAction {
 }
 
 enum OrderValidUntilUnit {
+  none(Duration.zero),
   m5(Duration(minutes: 5)),
   m15(Duration(minutes: 15)),
   m30(Duration(minutes: 30)),
@@ -28,6 +29,22 @@ enum OrderValidUntilUnit {
     String twoDigits(int n) => n.toString().padLeft(2, "0");
     String twoDigitMinutes = twoDigits(value.inMinutes.remainder(60).abs());
     return "$negativeSign${twoDigits(value.inHours)}:$twoDigitMinutes";
+  }
+
+  OrderValidUntilUnit next() {
+    int index = OrderValidUntilUnit.values.indexOf(this);
+    if (index == OrderValidUntilUnit.values.length - 1) {
+      return OrderValidUntilUnit.values.first;
+    }
+    return OrderValidUntilUnit.values[index + 1];
+  }
+
+  OrderValidUntilUnit previous() {
+    int index = OrderValidUntilUnit.values.indexOf(this);
+    if (index == 0) {
+      return OrderValidUntilUnit.values.last;
+    }
+    return OrderValidUntilUnit.values[index - 1];
   }
 
   final Duration value;

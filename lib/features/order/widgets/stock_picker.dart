@@ -49,7 +49,7 @@ class _StockPickerWidgetState extends State<StockPickerWidget> {
               onTap: () {
                 showModalBottomSheet(
                   constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height * 0.75,
+                    maxHeight: MediaQuery.of(context).size.height * 0.55,
                   ),
                   isScrollControlled: true,
                   showDragHandle: true,
@@ -173,6 +173,7 @@ class _StockPickerWidgetState extends State<StockPickerWidget> {
       count: 1,
       type: widget.isOdd ? OrderType.stockOdd : OrderType.stock,
       availablePrice: getAvailablePrice(_snapShot!),
+      validUntilUnit: OrderValidUntilUnit.m5,
     ));
   }
 

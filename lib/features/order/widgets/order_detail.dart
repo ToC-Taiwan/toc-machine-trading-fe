@@ -15,8 +15,6 @@ class OrderDetailWidget extends StatefulWidget {
 }
 
 class _OrderDetailWidgetState extends State<OrderDetailWidget> with AutomaticKeepAliveClientMixin<OrderDetailWidget> {
-  final TextEditingController validTimeController = TextEditingController();
-
   Order? orderDetail;
   int? _priceIndex;
 
@@ -31,7 +29,6 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> with AutomaticKee
         if (orderDetail == null || orderDetail!.code != order.code) {
           orderDetail = order;
           _priceIndex = orderDetail!.availablePrice!.indexWhere((element) => element == orderDetail!.price);
-          validTimeController.text = OrderValidUntilUnit.m5.printDuration();
         }
       },
     );
@@ -149,31 +146,40 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> with AutomaticKee
                     ),
                   ],
           ),
-          _buildRow('${AppLocalizations.of(context)!.valid_until} (HH:MM)', [
-            DropdownMenu<OrderValidUntilUnit>(
-              leadingIcon: const Icon(Icons.timer),
-              selectedTrailingIcon: null,
-              enabled: orderDetail != null,
-              initialSelection: OrderValidUntilUnit.m5,
-              controller: validTimeController,
-              requestFocusOnTap: false,
-              onSelected: (OrderValidUntilUnit? unit) {
-                setState(() {
-                  orderDetail!.validUntilUnit = unit;
-                });
-              },
-              menuStyle: const MenuStyle(
-                alignment: Alignment.topLeft,
-              ),
-              inputDecorationTheme: const InputDecorationTheme(border: InputBorder.none),
-              dropdownMenuEntries: OrderValidUntilUnit.values.map<DropdownMenuEntry<OrderValidUntilUnit>>((OrderValidUntilUnit unit) {
-                return DropdownMenuEntry<OrderValidUntilUnit>(
-                  value: unit,
-                  label: unit.printDuration(),
-                );
-              }).toList(),
-            )
-          ]),
+          _buildRow(
+              '${AppLocalizations.of(context)!.valid_until} (HH:MM)',
+              orderDetail == null
+                  ? null
+                  : [
+                      Expanded(
+                        child: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              orderDetail!.validUntilUnit = orderDetail!.validUntilUnit!.previous();
+                            });
+                          },
+                          icon: const Icon(Icons.keyboard_arrow_left_outlined),
+                        ),
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            orderDetail!.validUntilUnit!.printDuration(),
+                            style: Theme.of(context).textTheme.bodyLarge!,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              orderDetail!.validUntilUnit = orderDetail!.validUntilUnit!.next();
+                            });
+                          },
+                          icon: const Icon(Icons.keyboard_arrow_right_outlined),
+                        ),
+                      ),
+                    ]),
           _buildRow(AppLocalizations.of(context)!.auto_close, [
             Expanded(child: Container()),
             Expanded(
