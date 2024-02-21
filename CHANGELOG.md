@@ -1,5 +1,30 @@
 # CHANGELOG
 
+## [v4.2.48](https://github.com/ToC-Taiwan/toc-machine-trading-fe/compare/v4.2.35...v4.2.48)
+
+> 2024-02-21
+
+### Code Refactoring (1)
+
+* optimize UI elements and update app version
+
+### Features (14)
+
+* implement secure storage and route updates
+* refactor valid time selection in order detail widget
+* "Implement CountSelector widget and update UI"
+* add place stock order for odd stock and only buy
+* "Improve stock trading UI and enhance real-time updates"
+* refactor StockTradePage with TabBar and actions
+* "Implement server error handling and volume display adjustment"
+* add odd pick stock page, modify future page text
+* implement positional stock data handling
+* "Implement UI enhancements on Orders page"
+* "Implement centered icon layout in app pages"
+* integrate Wallet tab into category section
+* refactor balance UI and introduce inventory feature
+* "Implement deep linking and infinite scrolling in Android app"
+
 ## v4.2.35
 
 > 2024-02-06
