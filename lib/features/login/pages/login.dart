@@ -12,7 +12,7 @@ import 'package:toc_machine_trading_fe/features/login/repo/repo.dart';
 import 'package:toc_machine_trading_fe/features/universal/pages/homepage.dart';
 
 class LoginPage extends StatefulWidget {
-  static const routeName = '/';
+  static const routeName = '/login';
 
   const LoginPage({required this.screenHeight, super.key});
 

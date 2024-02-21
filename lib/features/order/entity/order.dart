@@ -28,6 +28,9 @@ enum OrderValidUntilUnit {
     String negativeSign = value.isNegative ? '-' : '';
     String twoDigits(int n) => n.toString().padLeft(2, "0");
     String twoDigitMinutes = twoDigits(value.inMinutes.remainder(60).abs());
+    if (twoDigits(value.inHours) == "00" && twoDigitMinutes == "00") {
+      return "-";
+    }
     return "$negativeSign${twoDigits(value.inHours)}:$twoDigitMinutes";
   }
 
