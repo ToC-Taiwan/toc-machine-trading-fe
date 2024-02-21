@@ -95,7 +95,13 @@ abstract class API {
 
   static Future<void> refreshToken() async {
     if (_apiToken.isEmpty) {
-      _apiToken = await _storage.read(key: 'authKey') ?? '';
+      await _storage.read(key: 'authKey').then((value) {
+        if (value != null) {
+          setAuthKey = value;
+        } else {
+          throw serverError;
+        }
+      });
     }
 
     try {
