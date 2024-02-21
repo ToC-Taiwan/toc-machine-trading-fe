@@ -40,7 +40,6 @@ class _StockTradePageState extends State<StockTradePage> with TickerProviderStat
           context,
           '${AppLocalizations.of(context)!.order}(${AppLocalizations.of(context)!.stock})',
           automaticallyImplyLeading: true,
-          disableActions: true,
           bottom: TabBar(
             indicatorSize: TabBarIndicatorSize.label,
             physics: const NeverScrollableScrollPhysics(),

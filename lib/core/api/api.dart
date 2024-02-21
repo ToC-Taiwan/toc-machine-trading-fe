@@ -374,7 +374,6 @@ abstract class API {
       'price': price,
       'share': share,
     };
-
     if (code == null) {
       throw 'code is empty';
     }
@@ -386,10 +385,45 @@ abstract class API {
     if (share == null) {
       throw 'share is empty';
     }
-
     try {
       final response = await _client.put(
         Uri.parse('$backendURLPrefix/trade/stock/buy/odd'),
+        headers: {
+          "Authorization": _apiToken,
+        },
+        body: jsonEncode(putBody),
+      );
+      final Map<String, dynamic> result = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        return;
+      } else {
+        throw result['code'] as int;
+      }
+    } on ClientException {
+      throw serverError;
+    }
+  }
+
+  static Future<void> sellOddStock({String? code, num? price, int? share}) async {
+    var putBody = {
+      'num': code,
+      'price': price,
+      'share': share,
+    };
+    if (code == null) {
+      throw 'code is empty';
+    }
+
+    if (price == null) {
+      throw 'price is empty';
+    }
+
+    if (share == null) {
+      throw 'share is empty';
+    }
+    try {
+      final response = await _client.put(
+        Uri.parse('$backendURLPrefix/trade/stock/sell/odd'),
         headers: {
           "Authorization": _apiToken,
         },

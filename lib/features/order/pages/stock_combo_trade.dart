@@ -17,7 +17,6 @@ class _StockComboTradePageState extends State<StockComboTradePage> {
         context,
         '${AppLocalizations.of(context)!.order}(${AppLocalizations.of(context)!.target_combo})',
         automaticallyImplyLeading: true,
-        disableActions: true,
       ),
       body: SafeArea(
         child: Stack(

@@ -68,10 +68,6 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     super.dispose();
   }
 
-  Future<void> checkNotification() async {
-    await FCM.initialize();
-  }
-
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments;
@@ -214,16 +210,14 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                                   FocusScopeNode currentFocus = FocusScope.of(context);
                                                   currentFocus.unfocus();
                                                   API.login(username, password).then(
-                                                    (_) {
-                                                      checkNotification().then((_) {
-                                                        FCM.anyNotificationsUnread().then((value) {
-                                                          Navigator.of(context).pushAndRemoveUntil(
-                                                            MaterialPageRoute(
-                                                              builder: (context) => HomePage(notificationIsUnread: value),
-                                                            ),
-                                                            (route) => false,
-                                                          );
-                                                        });
+                                                    (_) async {
+                                                      await FCM.initialize().then((_) {
+                                                        Navigator.of(context).pushAndRemoveUntil(
+                                                          MaterialPageRoute(
+                                                            builder: (context) => const HomePage(),
+                                                          ),
+                                                          (route) => false,
+                                                        );
                                                       });
                                                     },
                                                   ).catchError((e) {

@@ -35,11 +35,9 @@ Future<void> main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   bool alreadyLogin = true;
-  bool hasNotification = false;
 
   await API.refreshToken().then((value) async {
     await FCM.initialize();
-    hasNotification = await FCM.anyNotificationsUnread();
   }).catchError((_) {
     alreadyLogin = false;
   });
@@ -47,7 +45,6 @@ Future<void> main() async {
   runApp(
     MainApp(
       alreadyLogin: alreadyLogin,
-      hasUnreadNotification: hasNotification,
     ),
   );
 }
@@ -55,12 +52,10 @@ Future<void> main() async {
 class MainApp extends StatelessWidget {
   const MainApp({
     this.alreadyLogin = false,
-    this.hasUnreadNotification = false,
     super.key,
   });
 
   final bool alreadyLogin;
-  final bool hasUnreadNotification;
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +76,7 @@ class MainApp extends StatelessWidget {
           locale: snapshot.data,
           routes: {
             LoginPage.routeName: (context) => LoginPage(screenHeight: MediaQuery.of(context).size.height),
-            HomePage.routeName: (context) => HomePage(notificationIsUnread: hasUnreadNotification),
+            HomePage.routeName: (context) => const HomePage(),
           },
           initialRoute: alreadyLogin ? HomePage.routeName : LoginPage.routeName,
         );

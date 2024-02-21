@@ -65,14 +65,14 @@ class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
                     child: Column(
                       children: [
                         Expanded(child: _buildActionButton(OrderAction.buy)),
-                        Expanded(child: _buildActionButton(OrderAction.sell)),
+                        Expanded(child: _buildActionButton(OrderAction.sellFirst)),
                       ],
                     ),
                   ),
                   Expanded(
                     child: Column(
                       children: [
-                        Expanded(child: _buildActionButton(OrderAction.sellFirst)),
+                        Expanded(child: _buildActionButton(OrderAction.sell)),
                         Expanded(child: _buildActionButton(OrderAction.buyLater)),
                       ],
                     ),
@@ -167,10 +167,10 @@ class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
       case OrderAction.buy:
         margin = const EdgeInsets.only(top: 5, bottom: 5, right: 2.5);
         break;
-      case OrderAction.sell:
+      case OrderAction.sellFirst:
         margin = const EdgeInsets.only(bottom: 5, right: 2.5);
         break;
-      case OrderAction.sellFirst:
+      case OrderAction.sell:
         margin = const EdgeInsets.only(top: 5, bottom: 5, left: 2.5);
         break;
       case OrderAction.buyLater:
@@ -203,16 +203,17 @@ class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
             ),
             onPressed: orderDetail == null
                 ? null
-                : () {
-                    if (action != OrderAction.buy) return;
-                    setState(() {
-                      if (_action == action) {
-                        _action = OrderAction.none;
-                        return;
-                      }
-                      _action = action;
-                    });
-                  },
+                : (action == OrderAction.sellFirst || action == OrderAction.buyLater)
+                    ? null
+                    : () {
+                        setState(() {
+                          if (_action == action) {
+                            _action = OrderAction.none;
+                            return;
+                          }
+                          _action = action;
+                        });
+                      },
             child: Text(
               action == OrderAction.buy
                   ? AppLocalizations.of(context)!.buy
@@ -236,6 +237,12 @@ class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
       case OrderType.stockOdd:
         if (orderDetail.action == OrderAction.buy) {
           await API.buyOddStock(
+            code: orderDetail.code!,
+            price: orderDetail.price!,
+            share: orderDetail.count!,
+          );
+        } else {
+          await API.sellOddStock(
             code: orderDetail.code!,
             price: orderDetail.price!,
             share: orderDetail.count!,

@@ -17,7 +17,6 @@ class _OrdersPageState extends State<OrdersPage> {
         context,
         AppLocalizations.of(context)!.order,
         automaticallyImplyLeading: true,
-        disableActions: true,
       ),
       body: SafeArea(
         child: Stack(

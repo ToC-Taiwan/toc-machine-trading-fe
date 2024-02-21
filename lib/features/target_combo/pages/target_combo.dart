@@ -17,7 +17,6 @@ class _TargetComboPageState extends State<TargetComboPage> {
         context,
         AppLocalizations.of(context)!.target_combo,
         automaticallyImplyLeading: true,
-        disableActions: true,
       ),
       body: SafeArea(
         child: Stack(

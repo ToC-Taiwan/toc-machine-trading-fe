@@ -17,7 +17,6 @@ class _FutureTradePageState extends State<FutureTradePage> {
         context,
         '${AppLocalizations.of(context)!.order}(${AppLocalizations.of(context)!.future})',
         automaticallyImplyLeading: true,
-        disableActions: true,
       ),
       // show this page is under development
       body: SafeArea(
