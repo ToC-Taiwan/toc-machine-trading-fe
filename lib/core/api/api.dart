@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cronet_http/cronet_http.dart';
 import 'package:cupertino_http/cupertino_http.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
 import 'package:http/io_client.dart';
 import 'package:toc_machine_trading_fe/features/balance/entity/entity.dart';
@@ -32,7 +33,15 @@ const String backendTargetWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/targe
 const String backendHistoryWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/history/ws';
 
 abstract class API {
-  static final client = httpClient();
+  static final _client = httpClient();
+
+  static final _storage = Platform.isIOS
+      ? const FlutterSecureStorage()
+      : const FlutterSecureStorage(
+          aOptions: AndroidOptions(
+            encryptedSharedPreferences: true,
+          ),
+        );
 
   static String _apiToken = '';
 
@@ -52,6 +61,7 @@ abstract class API {
   }
 
   static set setAuthKey(String token) {
+    _storage.write(key: 'authKey', value: token);
     _apiToken = token;
   }
 
@@ -65,7 +75,7 @@ abstract class API {
       'password': password,
     };
     try {
-      final response = await client.post(
+      final response = await _client.post(
         Uri.parse('$backendURLPrefix/login'),
         headers: {
           "Content-Type": "application/json",
@@ -84,8 +94,12 @@ abstract class API {
   }
 
   static Future<void> refreshToken() async {
+    if (_apiToken.isEmpty) {
+      _apiToken = await _storage.read(key: 'authKey') ?? '';
+    }
+
     try {
-      final response = await client.get(
+      final response = await _client.get(
         Uri.parse('$backendURLPrefix/refresh'),
         headers: {
           "Authorization": _apiToken,
@@ -108,7 +122,7 @@ abstract class API {
       'email': email,
     };
     try {
-      final response = await client.post(
+      final response = await _client.post(
         Uri.parse('$backendURLPrefix/user'),
         headers: {
           "Content-Type": "application/json",
@@ -126,7 +140,7 @@ abstract class API {
 
   static Future<void> sendToken(bool enabled, String pushToken) async {
     try {
-      final response = await client.put(
+      final response = await _client.put(
         Uri.parse('$backendURLPrefix/user/push-token'),
         headers: {
           "Content-Type": "application/json",
@@ -149,7 +163,7 @@ abstract class API {
 
   static Future<bool> checkTokenStatus(String pushToken) async {
     try {
-      final response = await client.get(
+      final response = await _client.get(
         Uri.parse('$backendURLPrefix/user/push-token'),
         headers: {
           "Content-Type": "application/json",
@@ -170,7 +184,7 @@ abstract class API {
 
   static Future<void> recalculateBalance(String date) async {
     try {
-      final response = await client.put(
+      final response = await _client.put(
         Uri.parse('$backendURLPrefix/order/date/$date'),
         headers: {
           "Authorization": _apiToken,
@@ -187,7 +201,7 @@ abstract class API {
 
   static Future<void> moveOrderToLatestTradeday(String orderID) async {
     try {
-      final response = await client.patch(
+      final response = await _client.patch(
         Uri.parse('$backendURLPrefix/order/future/$orderID'),
         headers: {
           "Authorization": _apiToken,
@@ -211,7 +225,7 @@ abstract class API {
       'stock_list': codeList,
     };
     try {
-      final response = await client.put(
+      final response = await _client.put(
         Uri.parse('$backendURLPrefix/basic/stock'),
         headers: {
           "Authorization": _apiToken,
@@ -242,7 +256,7 @@ abstract class API {
     };
 
     try {
-      final response = await client.put(
+      final response = await _client.put(
         Uri.parse('$backendURLPrefix/stream/snapshot'),
         headers: {
           "Authorization": _apiToken,
@@ -266,7 +280,7 @@ abstract class API {
 
   static Future<Balance> fetchBalance() async {
     try {
-      final response = await client.get(
+      final response = await _client.get(
         Uri.parse('$backendURLPrefix/order/balance'),
         headers: {
           "Authorization": _apiToken,
@@ -304,7 +318,7 @@ abstract class API {
     }
 
     try {
-      final response = await client.get(
+      final response = await _client.get(
         Uri.parse('$backendURLPrefix/trade/inventory/stock'),
         headers: {
           "Authorization": _apiToken,
@@ -331,7 +345,7 @@ abstract class API {
 
   static Future<UserInfo> fetchUserInfo() async {
     try {
-      final response = await client.get(
+      final response = await _client.get(
         Uri.parse('$backendURLPrefix/user/info'),
         headers: {
           "Authorization": _apiToken,
@@ -368,7 +382,7 @@ abstract class API {
     }
 
     try {
-      final response = await client.put(
+      final response = await _client.put(
         Uri.parse('$backendURLPrefix/trade/stock/buy/odd'),
         headers: {
           "Authorization": _apiToken,

@@ -12,7 +12,7 @@ import 'package:toc_machine_trading_fe/features/realtime/pages/category.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({required this.notificationIsUnread, super.key});
-
+  static const routeName = '/home';
   final bool notificationIsUnread;
 
   @override

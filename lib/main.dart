@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:toc_machine_trading_fe/core/api/api.dart';
 import 'package:toc_machine_trading_fe/core/database/database.dart';
 import 'package:toc_machine_trading_fe/core/fcm/fcm.dart';
 import 'package:toc_machine_trading_fe/core/locale/locale.dart';
 import 'package:toc_machine_trading_fe/features/login/pages/login.dart';
+import 'package:toc_machine_trading_fe/features/universal/pages/homepage.dart';
 import 'package:toc_machine_trading_fe/firebase_options.dart';
 
 @pragma('vm:entry-point')
@@ -31,11 +33,34 @@ Future<void> main() async {
   );
   FCM.registerBackgroundCallback();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  runApp(const MainApp());
+
+  bool alreadyLogin = true;
+  bool hasNotification = false;
+
+  await API.refreshToken().then((value) async {
+    await FCM.initialize();
+    hasNotification = await FCM.anyNotificationsUnread();
+  }).catchError((_) {
+    alreadyLogin = false;
+  });
+
+  runApp(
+    MainApp(
+      alreadyLogin: alreadyLogin,
+      hasUnreadNotification: hasNotification,
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  const MainApp({
+    this.alreadyLogin = false,
+    this.hasUnreadNotification = false,
+    super.key,
+  });
+
+  final bool alreadyLogin;
+  final bool hasUnreadNotification;
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +81,9 @@ class MainApp extends StatelessWidget {
           locale: snapshot.data,
           routes: {
             LoginPage.routeName: (context) => LoginPage(screenHeight: MediaQuery.of(context).size.height),
+            HomePage.routeName: (context) => HomePage(notificationIsUnread: hasUnreadNotification),
           },
-          initialRoute: LoginPage.routeName,
+          initialRoute: alreadyLogin ? HomePage.routeName : LoginPage.routeName,
         );
       },
     );
