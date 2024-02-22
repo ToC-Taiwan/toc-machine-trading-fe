@@ -2,7 +2,7 @@ enum OrderType {
   stock,
   stockOdd,
   future,
-  combo,
+  package,
 }
 
 enum OrderAction {

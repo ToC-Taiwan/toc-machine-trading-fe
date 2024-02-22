@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
 
-class OrdersPage extends StatefulWidget {
-  const OrdersPage({super.key});
+class PackageSettingPage extends StatefulWidget {
+  const PackageSettingPage({super.key});
 
   @override
-  State<OrdersPage> createState() => _OrdersPageState();
+  State<PackageSettingPage> createState() => _PackageSettingPageState();
 }
 
-class _OrdersPageState extends State<OrdersPage> {
+class _PackageSettingPageState extends State<PackageSettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: topAppBar(
         context,
-        AppLocalizations.of(context)!.order,
+        AppLocalizations.of(context)!.package,
         automaticallyImplyLeading: true,
       ),
       body: SafeArea(

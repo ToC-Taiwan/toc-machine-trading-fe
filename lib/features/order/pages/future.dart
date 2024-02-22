@@ -15,8 +15,9 @@ class _FutureTradePageState extends State<FutureTradePage> {
     return Scaffold(
       appBar: topAppBar(
         context,
-        '${AppLocalizations.of(context)!.order}(${AppLocalizations.of(context)!.future})',
+        AppLocalizations.of(context)!.future,
         automaticallyImplyLeading: true,
+        disableActions: true,
       ),
       // show this page is under development
       body: SafeArea(

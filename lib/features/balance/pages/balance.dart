@@ -6,7 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';
 import 'package:toc_machine_trading_fe/features/balance/entity/entity.dart';
-import 'package:toc_machine_trading_fe/features/balance/pages/orders.dart';
+import 'package:toc_machine_trading_fe/features/balance/pages/commission.dart';
 
 class BalanceContent extends StatefulWidget {
   const BalanceContent({super.key});
@@ -101,7 +101,7 @@ class _BalanceContentState extends State<BalanceContent> {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   fullscreenDialog: true,
-                                  builder: (context) => const OrdersPage(),
+                                  builder: (context) => const CommissionPerDatePage(),
                                 ),
                               );
                             },

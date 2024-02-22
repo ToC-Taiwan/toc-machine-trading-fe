@@ -70,7 +70,7 @@
   "notification": "通知",
   "ok": "确定",
   "open": "开盘",
-  "order": "下单",
+  "commission": "委托",
   "part_filled": "部分成交",
   "password": "密码",
   "password_cannot_be_empty": "密码不能空白",
@@ -106,7 +106,7 @@
   "strategy": "策略选股",
   "submitted": "已送出",
   "success": "成功",
-  "target_combo": "标的组合",
+  "package": "套餐",
   "targets": "交易目标",
   "terms_and_conditions_of_use": "使用条款及条件",
   "time_period": "时间区间",
@@ -144,5 +144,6 @@
   "auto_close": "自动平仓",
   "valid_until": "有效期至",
   "under_development": "开发中",
-  "reverse": "反向"
+  "reverse": "反向",
+  "place_order": "下单"
 }

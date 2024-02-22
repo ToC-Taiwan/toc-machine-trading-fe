@@ -146,7 +146,7 @@ class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
                     });
                   },
                   child: Text(
-                    AppLocalizations.of(context)!.send,
+                    AppLocalizations.of(context)!.place_order,
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           fontWeight: FontWeight.bold,
                           color: (orderDetail != null && _action != OrderAction.none) ? Colors.white : Colors.grey,
@@ -251,7 +251,7 @@ class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
         break;
       case OrderType.future:
         throw ErrorCode.underDevelopment;
-      case OrderType.combo:
+      case OrderType.package:
         throw ErrorCode.underDevelopment;
       default:
         return;
