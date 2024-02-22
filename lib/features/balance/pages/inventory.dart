@@ -14,23 +14,9 @@ class InventoryContent extends StatefulWidget {
 }
 
 class _InventoryContentState extends State<InventoryContent> with AutomaticKeepAliveClientMixin<InventoryContent> {
-  static Map<String, String> stockNameMap = {};
-  static Future<List<PositionStock>?> _getInventory() => API.fetchPositionStock().then((value) async {
-        var stockArr = <String>[];
-        for (final i in value!) {
-          stockArr.add(i.stockNum!);
-        }
-        List<Stock> stockDetail = await API.fetchStockDetail(stockArr);
-        for (final i in stockDetail) {
-          if (i.name!.isEmpty) {
-            continue;
-          }
-          stockNameMap[i.number!] = i.name!;
-        }
-        return value;
-      });
-
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
+  static Map<String, String> stockNameMap = {};
+
   Future<List<PositionStock>?> inventory = _getInventory();
 
   @override
@@ -140,6 +126,21 @@ class _InventoryContentState extends State<InventoryContent> with AutomaticKeepA
       },
     );
   }
+
+  static Future<List<PositionStock>?> _getInventory() => API.fetchPositionStock().then((value) async {
+        var stockArr = <String>[];
+        for (final i in value!) {
+          stockArr.add(i.stockNum!);
+        }
+        List<Stock> stockDetail = await API.fetchStockDetail(stockArr);
+        for (final i in stockDetail) {
+          if (i.name!.isEmpty) {
+            continue;
+          }
+          stockNameMap[i.number!] = i.name!;
+        }
+        return value;
+      });
 
   void _onRefresh() async {
     setState(() {

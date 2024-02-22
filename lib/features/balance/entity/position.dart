@@ -1,13 +1,21 @@
 class PositionStock {
   String? uUID;
-  double? avgPrice;
+  num? avgPrice;
   String? date;
   String? stockNum;
   int? lot;
   int? share;
   List<Position>? position;
 
-  PositionStock({this.uUID, this.avgPrice, this.date, this.stockNum, this.lot, this.share, this.position});
+  PositionStock({
+    this.uUID,
+    this.avgPrice,
+    this.date,
+    this.stockNum,
+    this.lot,
+    this.share,
+    this.position,
+  });
 
   PositionStock.fromJson(Map<String, dynamic> json) {
     uUID = json['UUID'];
@@ -51,7 +59,18 @@ class Position {
   int? fee;
   String? invID;
 
-  Position({this.stockNum, this.date, this.quantity, this.price, this.lastPrice, this.dseq, this.direction, this.pnl, this.fee, this.invID});
+  Position({
+    this.stockNum,
+    this.date,
+    this.quantity,
+    this.price,
+    this.lastPrice,
+    this.dseq,
+    this.direction,
+    this.pnl,
+    this.fee,
+    this.invID,
+  });
 
   Position.fromJson(Map<String, dynamic> json) {
     stockNum = json['StockNum'];
