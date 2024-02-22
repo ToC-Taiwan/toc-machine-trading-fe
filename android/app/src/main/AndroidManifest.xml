@@ -3,6 +3,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <application
         android:label="Trade Agent"
+        android:allowBackup="false"
         android:name="androidx.multidex.MultiDexApplication"
         android:icon="@mipmap/ic_launcher">
         <meta-data

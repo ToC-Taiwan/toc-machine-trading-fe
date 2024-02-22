@@ -46,16 +46,16 @@ abstract class API {
   static String _apiToken = '';
 
   static Client httpClient() {
+    if (Platform.isIOS) {
+      final config = URLSessionConfiguration.ephemeralSessionConfiguration()..cache = URLCache.withCapacity(memoryCapacity: 32 * 1024 * 1024);
+      return CupertinoClient.fromSessionConfiguration(config);
+    }
     if (Platform.isAndroid) {
       final engine = CronetEngine.build(
         cacheMode: CacheMode.memory,
         cacheMaxSize: 32 * 1024 * 1024,
       );
       return CronetClient.fromCronetEngine(engine);
-    }
-    if (Platform.isIOS) {
-      final config = URLSessionConfiguration.ephemeralSessionConfiguration()..cache = URLCache.withCapacity(memoryCapacity: 32 * 1024 * 1024);
-      return CupertinoClient.fromSessionConfiguration(config);
     }
     return IOClient();
   }

@@ -35,12 +35,15 @@ Future<void> main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   bool alreadyLogin = true;
-
-  await API.refreshToken().then((value) async {
-    await FCM.initialize();
-  }).catchError((_) {
-    alreadyLogin = false;
-  });
+  await API.refreshToken().then(
+    (_) async {
+      await FCM.initialize();
+    },
+  ).catchError(
+    (_) {
+      alreadyLogin = false;
+    },
+  );
 
   runApp(
     MainApp(
