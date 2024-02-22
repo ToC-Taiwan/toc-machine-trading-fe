@@ -70,7 +70,7 @@
   "notification": "알림",
   "ok": "확인",
   "open": "시가",
-  "order": "주문",
+  "commission": "위탁",
   "part_filled": "부분 완료됨",
   "password": "비밀번호",
   "password_cannot_be_empty": "비밀번호를 비울 수 없습니다",
@@ -106,7 +106,7 @@
   "strategy": "전략",
   "submitted": "제출됨",
   "success": "성공",
-  "target_combo": "대상 조합",
+  "package": "패키지",
   "targets": "목표",
   "terms_and_conditions_of_use": "이용 약관",
   "time_period": "시간 기간",
@@ -144,5 +144,6 @@
   "auto_close": "자동 종료",
   "valid_until": "유효 기간",
   "under_development": "개발 중",
-  "reverse": "반대"
+  "reverse": "반대",
+  "place_order": "주문하기"
 }

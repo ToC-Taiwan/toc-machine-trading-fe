@@ -70,6 +70,8 @@ class _NotificationPageState extends State<NotificationPage> {
       appBar: topAppBar(
         context,
         AppLocalizations.of(context)!.notification,
+        automaticallyImplyLeading: true,
+        disableActions: true,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: !_unread

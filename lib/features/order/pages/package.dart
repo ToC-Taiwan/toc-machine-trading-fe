@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
 
-class TargetComboPage extends StatefulWidget {
-  const TargetComboPage({super.key});
+class PackageTradePage extends StatefulWidget {
+  const PackageTradePage({super.key});
 
   @override
-  State<TargetComboPage> createState() => _TargetComboPageState();
+  State<PackageTradePage> createState() => _PackageTradePageState();
 }
 
-class _TargetComboPageState extends State<TargetComboPage> {
+class _PackageTradePageState extends State<PackageTradePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: topAppBar(
         context,
-        AppLocalizations.of(context)!.target_combo,
+        AppLocalizations.of(context)!.package,
         automaticallyImplyLeading: true,
         disableActions: true,
       ),

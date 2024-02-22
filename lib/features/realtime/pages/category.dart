@@ -5,11 +5,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:syncfusion_flutter_treemap/treemap.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';
 import 'package:toc_machine_trading_fe/core/pb/forwarder/realtime.pb.dart' as pb;
-import 'package:toc_machine_trading_fe/features/order/pages/order.dart';
+import 'package:toc_machine_trading_fe/features/order/pages/category.dart';
+import 'package:toc_machine_trading_fe/features/package_setting/pages/package_setting.dart';
 import 'package:toc_machine_trading_fe/features/realtime/pages/future.dart';
 import 'package:toc_machine_trading_fe/features/realtime/pages/pick_category.dart';
 import 'package:toc_machine_trading_fe/features/realtime/repo/pick_stock.dart';
-import 'package:toc_machine_trading_fe/features/target_combo/pages/target_combo.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
 import 'package:web_socket_channel/io.dart';
 
@@ -128,21 +128,21 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                           ),
                         );
                       }),
-                      _buildCustomButtom(AppLocalizations.of(context)!.target_combo, Colors.yellow[600], Icons.add_home_work_outlined, onTap: () {
+                      _buildCustomButtom(AppLocalizations.of(context)!.package, Colors.yellow[600], Icons.add_home_work_outlined, onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             maintainState: false,
                             fullscreenDialog: false,
-                            builder: (context) => const TargetComboPage(),
+                            builder: (context) => const PackageSettingPage(),
                           ),
                         );
                       }),
-                      _buildCustomButtom(AppLocalizations.of(context)!.order, Colors.green[600], Icons.shopping_cart, onTap: () {
+                      _buildCustomButtom(AppLocalizations.of(context)!.commission, Colors.green[600], Icons.shopping_cart, onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             maintainState: false,
                             fullscreenDialog: false,
-                            builder: (context) => const OrderPage(),
+                            builder: (context) => const CommissionCategoryPage(),
                           ),
                         );
                       }),

@@ -7,13 +7,11 @@ import 'package:toc_machine_trading_fe/core/fcm/fcm.dart';
 import 'package:toc_machine_trading_fe/features/balance/pages/category.dart';
 import 'package:toc_machine_trading_fe/features/login/pages/login.dart';
 import 'package:toc_machine_trading_fe/features/news/pages/news.dart';
-import 'package:toc_machine_trading_fe/features/notification/pages/notification.dart';
 import 'package:toc_machine_trading_fe/features/realtime/pages/category.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({required this.notificationIsUnread, super.key});
+  const HomePage({super.key});
   static const routeName = '/home';
-  final bool notificationIsUnread;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -24,7 +22,6 @@ class _HomePageState extends State<HomePage> {
     const NewsPage(),
     const RealTimeCategoryPage(),
     const BalanceCategoryPage(),
-    const NotificationPage(),
   ];
 
   int currentPageIndex = 0;
@@ -62,9 +59,6 @@ class _HomePageState extends State<HomePage> {
     await Flushbar(
       onTap: (flushbar) {
         flushbar.dismiss();
-        setState(() {
-          currentPageIndex = 3;
-        });
       },
       margin: const EdgeInsets.all(8),
       borderRadius: BorderRadius.circular(8),
@@ -146,21 +140,6 @@ class _HomePageState extends State<HomePage> {
               color: currentPageIndex != 2 ? null : Colors.white,
             ),
             label: AppLocalizations.of(context)!.balance,
-          ),
-          NavigationDestination(
-            icon: StreamBuilder<bool>(
-                stream: FCM.notificationCountStream,
-                initialData: widget.notificationIsUnread,
-                builder: (context, snapshot) {
-                  return Badge(
-                    isLabelVisible: snapshot.data!,
-                    child: Icon(
-                      Icons.notifications_outlined,
-                      color: currentPageIndex != 3 ? null : Colors.white,
-                    ),
-                  );
-                }),
-            label: AppLocalizations.of(context)!.notification,
           ),
         ],
       ),

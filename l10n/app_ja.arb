@@ -70,7 +70,7 @@
   "notification": "通知",
   "ok": "OK",
   "open": "始値",
-  "order": "注文",
+  "commission": "委託",
   "part_filled": "一部納入済み",
   "password": "パスワード",
   "password_cannot_be_empty": "パスワードは空白にできません",
@@ -106,7 +106,7 @@
   "strategy": "戦略",
   "submitted": "送信済み",
   "success": "成功",
-  "target_combo": "対象組み合わせ",
+  "package": "パッケージ",
   "targets": "ターゲット",
   "terms_and_conditions_of_use": "利用規約",
   "time_period": "時間帯",
@@ -144,5 +144,6 @@
   "auto_close": "自動終了",
   "valid_until": "有効期限",
   "under_development": "開発中",
-  "reverse": "逆"
+  "reverse": "逆",
+  "place_order": "注文"
 }

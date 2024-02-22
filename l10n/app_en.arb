@@ -70,7 +70,7 @@
   "notification": "Notification",
   "ok": "OK",
   "open": "Open",
-  "order": "Order",
+  "commission": "Commission",
   "part_filled": "Part Filled",
   "password": "Password",
   "password_cannot_be_empty": "Password cannot be empty",
@@ -106,7 +106,7 @@
   "strategy": "Strategy",
   "submitted": "Submitted",
   "success": "Success",
-  "target_combo": "Target Combo",
+  "package": "Package",
   "targets": "Targets",
   "terms_and_conditions_of_use": "Terms and Conditions of Use",
   "time_period": "Time Period",
@@ -144,5 +144,6 @@
   "auto_close": "Auto Close",
   "valid_until": "Valid Until",
   "under_development": "Under Development",
-  "reverse": "Reverse"
+  "reverse": "Reverse",
+  "place_order": "Place Order"
 }

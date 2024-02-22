@@ -2,22 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
 
-class StockComboTradePage extends StatefulWidget {
-  const StockComboTradePage({super.key});
+class PackageSettingPage extends StatefulWidget {
+  const PackageSettingPage({super.key});
 
   @override
-  State<StockComboTradePage> createState() => _StockComboTradePageState();
+  State<PackageSettingPage> createState() => _PackageSettingPageState();
 }
 
-class _StockComboTradePageState extends State<StockComboTradePage> {
+class _PackageSettingPageState extends State<PackageSettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: topAppBar(
         context,
-        '${AppLocalizations.of(context)!.order}(${AppLocalizations.of(context)!.target_combo})',
+        AppLocalizations.of(context)!.package,
         automaticallyImplyLeading: true,
-        disableActions: true,
       ),
       body: SafeArea(
         child: Stack(

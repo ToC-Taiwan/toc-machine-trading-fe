@@ -46,16 +46,16 @@ abstract class API {
   static String _apiToken = '';
 
   static Client httpClient() {
+    if (Platform.isIOS) {
+      final config = URLSessionConfiguration.ephemeralSessionConfiguration()..cache = URLCache.withCapacity(memoryCapacity: 32 * 1024 * 1024);
+      return CupertinoClient.fromSessionConfiguration(config);
+    }
     if (Platform.isAndroid) {
       final engine = CronetEngine.build(
         cacheMode: CacheMode.memory,
         cacheMaxSize: 32 * 1024 * 1024,
       );
       return CronetClient.fromCronetEngine(engine);
-    }
-    if (Platform.isIOS) {
-      final config = URLSessionConfiguration.ephemeralSessionConfiguration()..cache = URLCache.withCapacity(memoryCapacity: 32 * 1024 * 1024);
-      return CupertinoClient.fromSessionConfiguration(config);
     }
     return IOClient();
   }
@@ -374,7 +374,6 @@ abstract class API {
       'price': price,
       'share': share,
     };
-
     if (code == null) {
       throw 'code is empty';
     }
@@ -386,10 +385,45 @@ abstract class API {
     if (share == null) {
       throw 'share is empty';
     }
-
     try {
       final response = await _client.put(
         Uri.parse('$backendURLPrefix/trade/stock/buy/odd'),
+        headers: {
+          "Authorization": _apiToken,
+        },
+        body: jsonEncode(putBody),
+      );
+      final Map<String, dynamic> result = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        return;
+      } else {
+        throw result['code'] as int;
+      }
+    } on ClientException {
+      throw serverError;
+    }
+  }
+
+  static Future<void> sellOddStock({String? code, num? price, int? share}) async {
+    var putBody = {
+      'num': code,
+      'price': price,
+      'share': share,
+    };
+    if (code == null) {
+      throw 'code is empty';
+    }
+
+    if (price == null) {
+      throw 'price is empty';
+    }
+
+    if (share == null) {
+      throw 'share is empty';
+    }
+    try {
+      final response = await _client.put(
+        Uri.parse('$backendURLPrefix/trade/stock/sell/odd'),
         headers: {
           "Authorization": _apiToken,
         },

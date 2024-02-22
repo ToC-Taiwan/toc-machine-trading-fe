@@ -32,6 +32,7 @@ abstract class FCM {
   static bool _allowPush = false;
   static bool _abort = false;
   static bool _backgroundRegistered = false;
+  static bool _hasNotification = false;
 
   static Future<void> initializeDB() async {
     if (_db != null) {
@@ -66,6 +67,7 @@ abstract class FCM {
       version: 1,
     );
     allowPush = await getDBAllowPush;
+    _hasNotification = await anyNotificationsUnread();
   }
 
   static Future<void> initialize() async {
@@ -205,6 +207,7 @@ abstract class FCM {
       },
     );
     _counterController.sink.add(true);
+    _hasNotification = true;
   }
 
   static Future<void> markAllNotificationsAsRead() async {
@@ -247,7 +250,12 @@ abstract class FCM {
     return maps.isNotEmpty;
   }
 
+  static bool get hasNotification {
+    return _hasNotification;
+  }
+
   static Future<void> triggerUpdate() async {
+    _hasNotification = await anyNotificationsUnread();
     _counterController.sink.add(await anyNotificationsUnread());
   }
 }

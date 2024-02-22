@@ -27,49 +27,41 @@ class _StockTradePageState extends State<StockTradePage> with TickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
-      },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: topAppBar(
-          context,
-          '${AppLocalizations.of(context)!.order}(${AppLocalizations.of(context)!.stock})',
-          automaticallyImplyLeading: true,
-          disableActions: true,
-          bottom: TabBar(
-            indicatorSize: TabBarIndicatorSize.label,
-            physics: const NeverScrollableScrollPhysics(),
-            controller: _tabController,
-            tabs: <Widget>[
-              Tab(
-                child: Text(
-                  AppLocalizations.of(context)!.odd,
-                  style: Theme.of(context).textTheme.titleMedium!,
-                ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: topAppBar(
+        context,
+        AppLocalizations.of(context)!.stock,
+        automaticallyImplyLeading: true,
+        disableActions: true,
+        bottom: TabBar(
+          indicatorSize: TabBarIndicatorSize.label,
+          physics: const NeverScrollableScrollPhysics(),
+          controller: _tabController,
+          tabs: <Widget>[
+            Tab(
+              child: Text(
+                AppLocalizations.of(context)!.odd,
+                style: Theme.of(context).textTheme.titleMedium!,
               ),
-              Tab(
-                child: Text(
-                  AppLocalizations.of(context)!.lot,
-                  style: Theme.of(context).textTheme.titleMedium!,
-                ),
+            ),
+            Tab(
+              child: Text(
+                AppLocalizations.of(context)!.lot,
+                style: Theme.of(context).textTheme.titleMedium!,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        body: SafeArea(
-          child: TabBarView(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: _tabController,
-            children: const <Widget>[
-              PlaceOrderWidget(isOdd: true),
-              PlaceOrderWidget(isOdd: false),
-            ],
-          ),
+      ),
+      body: SafeArea(
+        child: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: _tabController,
+          children: const <Widget>[
+            PlaceOrderWidget(isOdd: true),
+            PlaceOrderWidget(isOdd: false),
+          ],
         ),
       ),
     );
