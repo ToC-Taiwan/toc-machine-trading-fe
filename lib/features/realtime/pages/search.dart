@@ -8,6 +8,21 @@ import 'package:toc_machine_trading_fe/features/realtime/pages/future.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
 import 'package:web_socket_channel/io.dart';
 
+abstract class SearchCache {
+  static String code = '';
+  static void setCode(String value) {
+    code = value;
+  }
+
+  static String getCode() {
+    return code;
+  }
+
+  static void clear() {
+    code = '';
+  }
+}
+
 class SearchFuturePage extends StatefulWidget {
   const SearchFuturePage({super.key});
 
@@ -16,6 +31,7 @@ class SearchFuturePage extends StatefulWidget {
 }
 
 class _SearchFuturePageState extends State<SearchFuturePage> {
+  final TextEditingController _controller = TextEditingController();
   late IOWebSocketChannel? _channel;
 
   List<FutureDetail> futureList = [];
@@ -41,64 +57,79 @@ class _SearchFuturePageState extends State<SearchFuturePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: topAppBar(
-        context,
-        AppLocalizations.of(context)!.search,
-        automaticallyImplyLeading: true,
-      ),
-      body: SizedBox(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  onChanged: (value) {
-                    if (value.isNotEmpty) {
-                      _channel!.sink.add(value);
-                    }
-                  },
-                  decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context)!.search,
+    return PopScope(
+      onPopInvoked: (_) {
+        SearchCache.clear();
+      },
+      child: Scaffold(
+        appBar: topAppBar(
+          context,
+          AppLocalizations.of(context)!.search,
+          automaticallyImplyLeading: true,
+        ),
+        body: SizedBox(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: _controller,
+                    onChanged: (value) {
+                      if (value.isNotEmpty) {
+                        _channel!.sink.add(value);
+                        SearchCache.setCode(value);
+                      }
+                    },
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.search,
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          _controller.clear();
+                          SearchCache.clear();
+                          _channel!.sink.add('');
+                        },
+                        icon: const Icon(Icons.clear),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: futureList.isEmpty
-                    ? Center(
-                        child: Text(
-                          AppLocalizations.of(context)!.no_data,
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 30,
+                Expanded(
+                  child: futureList.isEmpty
+                      ? Center(
+                          child: Text(
+                            AppLocalizations.of(context)!.no_data,
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 30,
+                            ),
                           ),
-                        ),
-                      )
-                    : ListView.builder(
-                        itemCount: futureList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ListTile(
-                            title: Text(futureList[index].name!),
-                            subtitle: Text(futureList[index].code!),
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  maintainState: false,
-                                  fullscreenDialog: false,
-                                  builder: (context) => FutureRealTimePage(
-                                    code: futureList[index].code!,
+                        )
+                      : ListView.builder(
+                          itemCount: futureList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ListTile(
+                              title: Text(futureList[index].name!),
+                              subtitle: Text(futureList[index].code!),
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    maintainState: true,
+                                    fullscreenDialog: false,
+                                    builder: (context) => FutureRealTimePage(
+                                      code: futureList[index].code!,
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      ),
-              ),
-            ],
+                                );
+                              },
+                            );
+                          },
+                        ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -114,6 +145,10 @@ class _SearchFuturePageState extends State<SearchFuturePage> {
       },
     );
     await _channel!.ready;
+    if (SearchCache.getCode().isNotEmpty) {
+      _controller.text = SearchCache.getCode();
+      _channel!.sink.add(SearchCache.getCode());
+    }
     _channel!.stream.listen(
       (message) {
         final msg = jsonDecode(message);
