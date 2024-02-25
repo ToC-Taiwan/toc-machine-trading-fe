@@ -15,8 +15,7 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../google/protobuf/empty.pb.dart' as $0;
-import 'entity.pb.dart' as $3;
+import '../google/protobuf/empty.pb.dart' as $1;
 
 class FuturePosition extends $pb.GeneratedMessage {
   factory FuturePosition({
@@ -195,6 +194,7 @@ class FuturePositionArr extends $pb.GeneratedMessage {
 /// collateral (int): collateral
 /// short_sale_margin (int): short_sale_margin
 /// interest (int): interest
+/// StockPosition(id = 0, code = '2344', direction = <Action.Buy: 'Buy'>, quantity = 10, price = 28.3, last_price = 27.1, pnl = -15.0, yd_quantity = 10, margin_purchase_amount = 0, collateral = 0, short_sale_margin = 0, interest = 0)
 class StockPosition extends $pb.GeneratedMessage {
   factory StockPosition({
     $core.int? id,
@@ -210,6 +210,7 @@ class StockPosition extends $pb.GeneratedMessage {
     $core.int? collateral,
     $core.int? shortSaleMargin,
     $core.int? interest,
+    $core.Iterable<StockPositionDetail>? detailArr,
   }) {
     final $result = create();
     if (id != null) {
@@ -251,6 +252,9 @@ class StockPosition extends $pb.GeneratedMessage {
     if (interest != null) {
       $result.interest = interest;
     }
+    if (detailArr != null) {
+      $result.detailArr.addAll(detailArr);
+    }
     return $result;
   }
   StockPosition._() : super();
@@ -271,6 +275,7 @@ class StockPosition extends $pb.GeneratedMessage {
     ..a<$core.int>(11, _omitFieldNames ? '' : 'collateral', $pb.PbFieldType.O3)
     ..a<$core.int>(12, _omitFieldNames ? '' : 'shortSaleMargin', $pb.PbFieldType.O3)
     ..a<$core.int>(13, _omitFieldNames ? '' : 'interest', $pb.PbFieldType.O3)
+    ..pc<StockPositionDetail>(14, _omitFieldNames ? '' : 'detailArr', $pb.PbFieldType.PM, subBuilder: StockPositionDetail.create)
     ..hasRequiredFields = false
   ;
 
@@ -411,6 +416,9 @@ class StockPosition extends $pb.GeneratedMessage {
   $core.bool hasInterest() => $_has(12);
   @$pb.TagNumber(13)
   void clearInterest() => clearField(13);
+
+  @$pb.TagNumber(14)
+  $core.List<StockPositionDetail> get detailArr => $_getList(13);
 }
 
 class StockPositionArr extends $pb.GeneratedMessage {
@@ -455,6 +463,183 @@ class StockPositionArr extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.List<StockPosition> get positionArr => $_getList(0);
+}
+
+/// StockPositionDetail(date = '2024-01-04', code = '2344', quantity = 0, price = 147.0, last_price = 134.0, dseq = 'IC320', direction = <Action.Buy: 'Buy'>, pnl = -13.0, currency = <Currency.TWD: 'TWD'>, fee = 1.0)
+class StockPositionDetail extends $pb.GeneratedMessage {
+  factory StockPositionDetail({
+    $core.String? date,
+    $core.String? code,
+    $core.int? quantity,
+    $core.double? price,
+    $core.double? lastPrice,
+    $core.String? dseq,
+    $core.String? direction,
+    $core.double? pnl,
+    $core.String? currency,
+    $core.double? fee,
+  }) {
+    final $result = create();
+    if (date != null) {
+      $result.date = date;
+    }
+    if (code != null) {
+      $result.code = code;
+    }
+    if (quantity != null) {
+      $result.quantity = quantity;
+    }
+    if (price != null) {
+      $result.price = price;
+    }
+    if (lastPrice != null) {
+      $result.lastPrice = lastPrice;
+    }
+    if (dseq != null) {
+      $result.dseq = dseq;
+    }
+    if (direction != null) {
+      $result.direction = direction;
+    }
+    if (pnl != null) {
+      $result.pnl = pnl;
+    }
+    if (currency != null) {
+      $result.currency = currency;
+    }
+    if (fee != null) {
+      $result.fee = fee;
+    }
+    return $result;
+  }
+  StockPositionDetail._() : super();
+  factory StockPositionDetail.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory StockPositionDetail.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'StockPositionDetail', package: const $pb.PackageName(_omitMessageNames ? '' : 'forwarder'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'date')
+    ..aOS(2, _omitFieldNames ? '' : 'code')
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'quantity', $pb.PbFieldType.O3)
+    ..a<$core.double>(4, _omitFieldNames ? '' : 'price', $pb.PbFieldType.OD)
+    ..a<$core.double>(5, _omitFieldNames ? '' : 'lastPrice', $pb.PbFieldType.OD)
+    ..aOS(6, _omitFieldNames ? '' : 'dseq')
+    ..aOS(7, _omitFieldNames ? '' : 'direction')
+    ..a<$core.double>(8, _omitFieldNames ? '' : 'pnl', $pb.PbFieldType.OD)
+    ..aOS(9, _omitFieldNames ? '' : 'currency')
+    ..a<$core.double>(10, _omitFieldNames ? '' : 'fee', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  StockPositionDetail clone() => StockPositionDetail()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  StockPositionDetail copyWith(void Function(StockPositionDetail) updates) => super.copyWith((message) => updates(message as StockPositionDetail)) as StockPositionDetail;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static StockPositionDetail create() => StockPositionDetail._();
+  StockPositionDetail createEmptyInstance() => create();
+  static $pb.PbList<StockPositionDetail> createRepeated() => $pb.PbList<StockPositionDetail>();
+  @$core.pragma('dart2js:noInline')
+  static StockPositionDetail getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StockPositionDetail>(create);
+  static StockPositionDetail? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get date => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set date($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasDate() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearDate() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get code => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set code($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCode() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCode() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get quantity => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set quantity($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasQuantity() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearQuantity() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.double get price => $_getN(3);
+  @$pb.TagNumber(4)
+  set price($core.double v) { $_setDouble(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasPrice() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPrice() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.double get lastPrice => $_getN(4);
+  @$pb.TagNumber(5)
+  set lastPrice($core.double v) { $_setDouble(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasLastPrice() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearLastPrice() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get dseq => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set dseq($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasDseq() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearDseq() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.String get direction => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set direction($core.String v) { $_setString(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasDirection() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearDirection() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.double get pnl => $_getN(7);
+  @$pb.TagNumber(8)
+  set pnl($core.double v) { $_setDouble(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasPnl() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearPnl() => clearField(8);
+
+  @$pb.TagNumber(9)
+  $core.String get currency => $_getSZ(8);
+  @$pb.TagNumber(9)
+  set currency($core.String v) { $_setString(8, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasCurrency() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearCurrency() => clearField(9);
+
+  @$pb.TagNumber(10)
+  $core.double get fee => $_getN(9);
+  @$pb.TagNumber(10)
+  set fee($core.double v) { $_setDouble(9, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasFee() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearFee() => clearField(10);
 }
 
 class StockOrderDetail extends $pb.GeneratedMessage {
@@ -933,134 +1118,6 @@ class OrderID extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static OrderID getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<OrderID>(create);
   static OrderID? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get orderId => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set orderId($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasOrderId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearOrderId() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.bool get simulate => $_getBF(1);
-  @$pb.TagNumber(2)
-  set simulate($core.bool v) { $_setBool(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasSimulate() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearSimulate() => clearField(2);
-}
-
-class FutureOrderID extends $pb.GeneratedMessage {
-  factory FutureOrderID({
-    $core.String? orderId,
-    $core.bool? simulate,
-  }) {
-    final $result = create();
-    if (orderId != null) {
-      $result.orderId = orderId;
-    }
-    if (simulate != null) {
-      $result.simulate = simulate;
-    }
-    return $result;
-  }
-  FutureOrderID._() : super();
-  factory FutureOrderID.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory FutureOrderID.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FutureOrderID', package: const $pb.PackageName(_omitMessageNames ? '' : 'forwarder'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'orderId')
-    ..aOB(2, _omitFieldNames ? '' : 'simulate')
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  FutureOrderID clone() => FutureOrderID()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  FutureOrderID copyWith(void Function(FutureOrderID) updates) => super.copyWith((message) => updates(message as FutureOrderID)) as FutureOrderID;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static FutureOrderID create() => FutureOrderID._();
-  FutureOrderID createEmptyInstance() => create();
-  static $pb.PbList<FutureOrderID> createRepeated() => $pb.PbList<FutureOrderID>();
-  @$core.pragma('dart2js:noInline')
-  static FutureOrderID getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FutureOrderID>(create);
-  static FutureOrderID? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get orderId => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set orderId($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasOrderId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearOrderId() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.bool get simulate => $_getBF(1);
-  @$pb.TagNumber(2)
-  set simulate($core.bool v) { $_setBool(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasSimulate() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearSimulate() => clearField(2);
-}
-
-class OptionOrderID extends $pb.GeneratedMessage {
-  factory OptionOrderID({
-    $core.String? orderId,
-    $core.bool? simulate,
-  }) {
-    final $result = create();
-    if (orderId != null) {
-      $result.orderId = orderId;
-    }
-    if (simulate != null) {
-      $result.simulate = simulate;
-    }
-    return $result;
-  }
-  OptionOrderID._() : super();
-  factory OptionOrderID.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory OptionOrderID.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'OptionOrderID', package: const $pb.PackageName(_omitMessageNames ? '' : 'forwarder'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'orderId')
-    ..aOB(2, _omitFieldNames ? '' : 'simulate')
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  OptionOrderID clone() => OptionOrderID()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  OptionOrderID copyWith(void Function(OptionOrderID) updates) => super.copyWith((message) => updates(message as OptionOrderID)) as OptionOrderID;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static OptionOrderID create() => OptionOrderID._();
-  OptionOrderID createEmptyInstance() => create();
-  static $pb.PbList<OptionOrderID> createRepeated() => $pb.PbList<OptionOrderID>();
-  @$core.pragma('dart2js:noInline')
-  static OptionOrderID getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<OptionOrderID>(create);
-  static OptionOrderID? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get orderId => $_getSZ(0);
@@ -1690,6 +1747,9 @@ class TradeInterfaceApi {
   $pb.RpcClient _client;
   TradeInterfaceApi(this._client);
 
+  $async.Future<TradeResult> cancelOrder($pb.ClientContext? ctx, OrderID request) =>
+    _client.invoke<TradeResult>(ctx, 'TradeInterface', 'CancelOrder', request, TradeResult())
+  ;
   $async.Future<TradeResult> buyStock($pb.ClientContext? ctx, StockOrderDetail request) =>
     _client.invoke<TradeResult>(ctx, 'TradeInterface', 'BuyStock', request, TradeResult())
   ;
@@ -1705,9 +1765,6 @@ class TradeInterfaceApi {
   $async.Future<TradeResult> sellFirstStock($pb.ClientContext? ctx, StockOrderDetail request) =>
     _client.invoke<TradeResult>(ctx, 'TradeInterface', 'SellFirstStock', request, TradeResult())
   ;
-  $async.Future<TradeResult> cancelStock($pb.ClientContext? ctx, OrderID request) =>
-    _client.invoke<TradeResult>(ctx, 'TradeInterface', 'CancelStock', request, TradeResult())
-  ;
   $async.Future<TradeResult> buyFuture($pb.ClientContext? ctx, FutureOrderDetail request) =>
     _client.invoke<TradeResult>(ctx, 'TradeInterface', 'BuyFuture', request, TradeResult())
   ;
@@ -1716,9 +1773,6 @@ class TradeInterfaceApi {
   ;
   $async.Future<TradeResult> sellFirstFuture($pb.ClientContext? ctx, FutureOrderDetail request) =>
     _client.invoke<TradeResult>(ctx, 'TradeInterface', 'SellFirstFuture', request, TradeResult())
-  ;
-  $async.Future<TradeResult> cancelFuture($pb.ClientContext? ctx, FutureOrderID request) =>
-    _client.invoke<TradeResult>(ctx, 'TradeInterface', 'CancelFuture', request, TradeResult())
   ;
   $async.Future<TradeResult> buyOption($pb.ClientContext? ctx, OptionOrderDetail request) =>
     _client.invoke<TradeResult>(ctx, 'TradeInterface', 'BuyOption', request, TradeResult())
@@ -1729,34 +1783,25 @@ class TradeInterfaceApi {
   $async.Future<TradeResult> sellFirstOption($pb.ClientContext? ctx, OptionOrderDetail request) =>
     _client.invoke<TradeResult>(ctx, 'TradeInterface', 'SellFirstOption', request, TradeResult())
   ;
-  $async.Future<TradeResult> cancelOption($pb.ClientContext? ctx, OptionOrderID request) =>
-    _client.invoke<TradeResult>(ctx, 'TradeInterface', 'CancelOption', request, TradeResult())
+  $async.Future<$1.Empty> getLocalOrderStatusArr($pb.ClientContext? ctx, $1.Empty request) =>
+    _client.invoke<$1.Empty>(ctx, 'TradeInterface', 'GetLocalOrderStatusArr', request, $1.Empty())
   ;
-  $async.Future<$0.Empty> getLocalOrderStatusArr($pb.ClientContext? ctx, $0.Empty request) =>
-    _client.invoke<$0.Empty>(ctx, 'TradeInterface', 'GetLocalOrderStatusArr', request, $0.Empty())
+  $async.Future<$1.Empty> getSimulateOrderStatusArr($pb.ClientContext? ctx, $1.Empty request) =>
+    _client.invoke<$1.Empty>(ctx, 'TradeInterface', 'GetSimulateOrderStatusArr', request, $1.Empty())
   ;
-  $async.Future<$0.Empty> getSimulateOrderStatusArr($pb.ClientContext? ctx, $0.Empty request) =>
-    _client.invoke<$0.Empty>(ctx, 'TradeInterface', 'GetSimulateOrderStatusArr', request, $0.Empty())
-  ;
-  $async.Future<TradeResult> getOrderStatusByID($pb.ClientContext? ctx, OrderID request) =>
-    _client.invoke<TradeResult>(ctx, 'TradeInterface', 'GetOrderStatusByID', request, TradeResult())
-  ;
-  $async.Future<$3.ErrorMessage> getNonBlockOrderStatusArr($pb.ClientContext? ctx, $0.Empty request) =>
-    _client.invoke<$3.ErrorMessage>(ctx, 'TradeInterface', 'GetNonBlockOrderStatusArr', request, $3.ErrorMessage())
-  ;
-  $async.Future<FuturePositionArr> getFuturePosition($pb.ClientContext? ctx, $0.Empty request) =>
+  $async.Future<FuturePositionArr> getFuturePosition($pb.ClientContext? ctx, $1.Empty request) =>
     _client.invoke<FuturePositionArr>(ctx, 'TradeInterface', 'GetFuturePosition', request, FuturePositionArr())
   ;
-  $async.Future<StockPositionArr> getStockPosition($pb.ClientContext? ctx, $0.Empty request) =>
+  $async.Future<StockPositionArr> getStockPosition($pb.ClientContext? ctx, $1.Empty request) =>
     _client.invoke<StockPositionArr>(ctx, 'TradeInterface', 'GetStockPosition', request, StockPositionArr())
   ;
-  $async.Future<SettlementList> getSettlement($pb.ClientContext? ctx, $0.Empty request) =>
+  $async.Future<SettlementList> getSettlement($pb.ClientContext? ctx, $1.Empty request) =>
     _client.invoke<SettlementList>(ctx, 'TradeInterface', 'GetSettlement', request, SettlementList())
   ;
-  $async.Future<AccountBalance> getAccountBalance($pb.ClientContext? ctx, $0.Empty request) =>
+  $async.Future<AccountBalance> getAccountBalance($pb.ClientContext? ctx, $1.Empty request) =>
     _client.invoke<AccountBalance>(ctx, 'TradeInterface', 'GetAccountBalance', request, AccountBalance())
   ;
-  $async.Future<Margin> getMargin($pb.ClientContext? ctx, $0.Empty request) =>
+  $async.Future<Margin> getMargin($pb.ClientContext? ctx, $1.Empty request) =>
     _client.invoke<Margin>(ctx, 'TradeInterface', 'GetMargin', request, Margin())
   ;
 }

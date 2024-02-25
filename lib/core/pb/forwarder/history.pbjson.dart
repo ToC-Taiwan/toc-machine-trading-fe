@@ -171,13 +171,7 @@ const $core.Map<$core.String, $core.dynamic> HistoryDataInterfaceServiceBase$jso
     {'1': 'GetStockHistoryTick', '2': '.forwarder.StockNumArrWithDate', '3': '.forwarder.HistoryTickResponse', '4': {}},
     {'1': 'GetStockHistoryKbar', '2': '.forwarder.StockNumArrWithDate', '3': '.forwarder.HistoryKbarResponse', '4': {}},
     {'1': 'GetStockHistoryClose', '2': '.forwarder.StockNumArrWithDate', '3': '.forwarder.HistoryCloseResponse', '4': {}},
-    {'1': 'GetStockHistoryCloseByDateArr', '2': '.forwarder.StockNumArrWithDateArr', '3': '.forwarder.HistoryCloseResponse', '4': {}},
-    {'1': 'GetFutureHistoryTick', '2': '.forwarder.FutureCodeArrWithDate', '3': '.forwarder.HistoryTickResponse', '4': {}},
     {'1': 'GetFutureHistoryKbar', '2': '.forwarder.FutureCodeArrWithDate', '3': '.forwarder.HistoryKbarResponse', '4': {}},
-    {'1': 'GetFutureHistoryClose', '2': '.forwarder.FutureCodeArrWithDate', '3': '.forwarder.HistoryCloseResponse', '4': {}},
-    {'1': 'GetStockTSEHistoryTick', '2': '.forwarder.Date', '3': '.forwarder.HistoryTickResponse', '4': {}},
-    {'1': 'GetStockTSEHistoryKbar', '2': '.forwarder.Date', '3': '.forwarder.HistoryKbarResponse', '4': {}},
-    {'1': 'GetStockTSEHistoryClose', '2': '.forwarder.Date', '3': '.forwarder.HistoryCloseResponse', '4': {}},
   ],
 };
 
@@ -190,9 +184,7 @@ const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> HistoryDat
   '.forwarder.HistoryKbarMessage': HistoryKbarMessage$json,
   '.forwarder.HistoryCloseResponse': HistoryCloseResponse$json,
   '.forwarder.HistoryCloseMessage': HistoryCloseMessage$json,
-  '.forwarder.StockNumArrWithDateArr': StockNumArrWithDateArr$json,
   '.forwarder.FutureCodeArrWithDate': FutureCodeArrWithDate$json,
-  '.forwarder.Date': Date$json,
 };
 
 /// Descriptor for `HistoryDataInterface`. Decode as a `google.protobuf.ServiceDescriptorProto`.
@@ -202,16 +194,6 @@ final $typed_data.Uint8List historyDataInterfaceServiceDescriptor = $convert.bas
     'ElcKE0dldFN0b2NrSGlzdG9yeUtiYXISHi5mb3J3YXJkZXIuU3RvY2tOdW1BcnJXaXRoRGF0ZR'
     'oeLmZvcndhcmRlci5IaXN0b3J5S2JhclJlc3BvbnNlIgASWQoUR2V0U3RvY2tIaXN0b3J5Q2xv'
     'c2USHi5mb3J3YXJkZXIuU3RvY2tOdW1BcnJXaXRoRGF0ZRofLmZvcndhcmRlci5IaXN0b3J5Q2'
-    'xvc2VSZXNwb25zZSIAEmUKHUdldFN0b2NrSGlzdG9yeUNsb3NlQnlEYXRlQXJyEiEuZm9yd2Fy'
-    'ZGVyLlN0b2NrTnVtQXJyV2l0aERhdGVBcnIaHy5mb3J3YXJkZXIuSGlzdG9yeUNsb3NlUmVzcG'
-    '9uc2UiABJaChRHZXRGdXR1cmVIaXN0b3J5VGljaxIgLmZvcndhcmRlci5GdXR1cmVDb2RlQXJy'
-    'V2l0aERhdGUaHi5mb3J3YXJkZXIuSGlzdG9yeVRpY2tSZXNwb25zZSIAEloKFEdldEZ1dHVyZU'
-    'hpc3RvcnlLYmFyEiAuZm9yd2FyZGVyLkZ1dHVyZUNvZGVBcnJXaXRoRGF0ZRoeLmZvcndhcmRl'
-    'ci5IaXN0b3J5S2JhclJlc3BvbnNlIgASXAoVR2V0RnV0dXJlSGlzdG9yeUNsb3NlEiAuZm9yd2'
-    'FyZGVyLkZ1dHVyZUNvZGVBcnJXaXRoRGF0ZRofLmZvcndhcmRlci5IaXN0b3J5Q2xvc2VSZXNw'
-    'b25zZSIAEksKFkdldFN0b2NrVFNFSGlzdG9yeVRpY2sSDy5mb3J3YXJkZXIuRGF0ZRoeLmZvcn'
-    'dhcmRlci5IaXN0b3J5VGlja1Jlc3BvbnNlIgASSwoWR2V0U3RvY2tUU0VIaXN0b3J5S2JhchIP'
-    'LmZvcndhcmRlci5EYXRlGh4uZm9yd2FyZGVyLkhpc3RvcnlLYmFyUmVzcG9uc2UiABJNChdHZX'
-    'RTdG9ja1RTRUhpc3RvcnlDbG9zZRIPLmZvcndhcmRlci5EYXRlGh8uZm9yd2FyZGVyLkhpc3Rv'
-    'cnlDbG9zZVJlc3BvbnNlIgA=');
+    'xvc2VSZXNwb25zZSIAEloKFEdldEZ1dHVyZUhpc3RvcnlLYmFyEiAuZm9yd2FyZGVyLkZ1dHVy'
+    'ZUNvZGVBcnJXaXRoRGF0ZRoeLmZvcndhcmRlci5IaXN0b3J5S2JhclJlc3BvbnNlIgA=');
 

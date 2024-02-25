@@ -15,7 +15,7 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../google/protobuf/empty.pb.dart' as $0;
+import '../google/protobuf/empty.pb.dart' as $1;
 
 class BeatMessage extends $pb.GeneratedMessage {
   factory BeatMessage({
@@ -879,25 +879,22 @@ class BasicDataInterfaceApi {
   $pb.RpcClient _client;
   BasicDataInterfaceApi(this._client);
 
-  $async.Future<$0.Empty> createLongConnection($pb.ClientContext? ctx, $0.Empty request) =>
-    _client.invoke<$0.Empty>(ctx, 'BasicDataInterface', 'CreateLongConnection', request, $0.Empty())
+  $async.Future<$1.Empty> createLongConnection($pb.ClientContext? ctx, $1.Empty request) =>
+    _client.invoke<$1.Empty>(ctx, 'BasicDataInterface', 'CreateLongConnection', request, $1.Empty())
   ;
-  $async.Future<$0.Empty> terminate($pb.ClientContext? ctx, $0.Empty request) =>
-    _client.invoke<$0.Empty>(ctx, 'BasicDataInterface', 'Terminate', request, $0.Empty())
-  ;
-  $async.Future<ShioajiUsage> checkUsage($pb.ClientContext? ctx, $0.Empty request) =>
+  $async.Future<ShioajiUsage> checkUsage($pb.ClientContext? ctx, $1.Empty request) =>
     _client.invoke<ShioajiUsage>(ctx, 'BasicDataInterface', 'CheckUsage', request, ShioajiUsage())
   ;
-  $async.Future<$0.Empty> login($pb.ClientContext? ctx, $0.Empty request) =>
-    _client.invoke<$0.Empty>(ctx, 'BasicDataInterface', 'Login', request, $0.Empty())
+  $async.Future<$1.Empty> login($pb.ClientContext? ctx, $1.Empty request) =>
+    _client.invoke<$1.Empty>(ctx, 'BasicDataInterface', 'Login', request, $1.Empty())
   ;
-  $async.Future<StockDetailResponse> getAllStockDetail($pb.ClientContext? ctx, $0.Empty request) =>
+  $async.Future<StockDetailResponse> getAllStockDetail($pb.ClientContext? ctx, $1.Empty request) =>
     _client.invoke<StockDetailResponse>(ctx, 'BasicDataInterface', 'GetAllStockDetail', request, StockDetailResponse())
   ;
-  $async.Future<FutureDetailResponse> getAllFutureDetail($pb.ClientContext? ctx, $0.Empty request) =>
+  $async.Future<FutureDetailResponse> getAllFutureDetail($pb.ClientContext? ctx, $1.Empty request) =>
     _client.invoke<FutureDetailResponse>(ctx, 'BasicDataInterface', 'GetAllFutureDetail', request, FutureDetailResponse())
   ;
-  $async.Future<OptionDetailResponse> getAllOptionDetail($pb.ClientContext? ctx, $0.Empty request) =>
+  $async.Future<OptionDetailResponse> getAllOptionDetail($pb.ClientContext? ctx, $1.Empty request) =>
     _client.invoke<OptionDetailResponse>(ctx, 'BasicDataInterface', 'GetAllOptionDetail', request, OptionDetailResponse())
   ;
 }

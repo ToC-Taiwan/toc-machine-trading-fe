@@ -752,26 +752,8 @@ class HistoryDataInterfaceApi {
   $async.Future<HistoryCloseResponse> getStockHistoryClose($pb.ClientContext? ctx, StockNumArrWithDate request) =>
     _client.invoke<HistoryCloseResponse>(ctx, 'HistoryDataInterface', 'GetStockHistoryClose', request, HistoryCloseResponse())
   ;
-  $async.Future<HistoryCloseResponse> getStockHistoryCloseByDateArr($pb.ClientContext? ctx, StockNumArrWithDateArr request) =>
-    _client.invoke<HistoryCloseResponse>(ctx, 'HistoryDataInterface', 'GetStockHistoryCloseByDateArr', request, HistoryCloseResponse())
-  ;
-  $async.Future<HistoryTickResponse> getFutureHistoryTick($pb.ClientContext? ctx, FutureCodeArrWithDate request) =>
-    _client.invoke<HistoryTickResponse>(ctx, 'HistoryDataInterface', 'GetFutureHistoryTick', request, HistoryTickResponse())
-  ;
   $async.Future<HistoryKbarResponse> getFutureHistoryKbar($pb.ClientContext? ctx, FutureCodeArrWithDate request) =>
     _client.invoke<HistoryKbarResponse>(ctx, 'HistoryDataInterface', 'GetFutureHistoryKbar', request, HistoryKbarResponse())
-  ;
-  $async.Future<HistoryCloseResponse> getFutureHistoryClose($pb.ClientContext? ctx, FutureCodeArrWithDate request) =>
-    _client.invoke<HistoryCloseResponse>(ctx, 'HistoryDataInterface', 'GetFutureHistoryClose', request, HistoryCloseResponse())
-  ;
-  $async.Future<HistoryTickResponse> getStockTSEHistoryTick($pb.ClientContext? ctx, Date request) =>
-    _client.invoke<HistoryTickResponse>(ctx, 'HistoryDataInterface', 'GetStockTSEHistoryTick', request, HistoryTickResponse())
-  ;
-  $async.Future<HistoryKbarResponse> getStockTSEHistoryKbar($pb.ClientContext? ctx, Date request) =>
-    _client.invoke<HistoryKbarResponse>(ctx, 'HistoryDataInterface', 'GetStockTSEHistoryKbar', request, HistoryKbarResponse())
-  ;
-  $async.Future<HistoryCloseResponse> getStockTSEHistoryClose($pb.ClientContext? ctx, Date request) =>
-    _client.invoke<HistoryCloseResponse>(ctx, 'HistoryDataInterface', 'GetStockTSEHistoryClose', request, HistoryCloseResponse())
   ;
 }
 

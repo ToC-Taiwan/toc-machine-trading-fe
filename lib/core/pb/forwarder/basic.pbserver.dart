@@ -15,43 +15,40 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../google/protobuf/empty.pb.dart' as $0;
-import 'basic.pb.dart' as $1;
+import '../google/protobuf/empty.pb.dart' as $1;
+import 'basic.pb.dart' as $4;
 import 'basic.pbjson.dart';
 
 export 'basic.pb.dart';
 
 abstract class BasicDataInterfaceServiceBase extends $pb.GeneratedService {
-  $async.Future<$0.Empty> createLongConnection($pb.ServerContext ctx, $0.Empty request);
-  $async.Future<$0.Empty> terminate($pb.ServerContext ctx, $0.Empty request);
-  $async.Future<$1.ShioajiUsage> checkUsage($pb.ServerContext ctx, $0.Empty request);
-  $async.Future<$0.Empty> login($pb.ServerContext ctx, $0.Empty request);
-  $async.Future<$1.StockDetailResponse> getAllStockDetail($pb.ServerContext ctx, $0.Empty request);
-  $async.Future<$1.FutureDetailResponse> getAllFutureDetail($pb.ServerContext ctx, $0.Empty request);
-  $async.Future<$1.OptionDetailResponse> getAllOptionDetail($pb.ServerContext ctx, $0.Empty request);
+  $async.Future<$1.Empty> createLongConnection($pb.ServerContext ctx, $1.Empty request);
+  $async.Future<$4.ShioajiUsage> checkUsage($pb.ServerContext ctx, $1.Empty request);
+  $async.Future<$1.Empty> login($pb.ServerContext ctx, $1.Empty request);
+  $async.Future<$4.StockDetailResponse> getAllStockDetail($pb.ServerContext ctx, $1.Empty request);
+  $async.Future<$4.FutureDetailResponse> getAllFutureDetail($pb.ServerContext ctx, $1.Empty request);
+  $async.Future<$4.OptionDetailResponse> getAllOptionDetail($pb.ServerContext ctx, $1.Empty request);
 
   $pb.GeneratedMessage createRequest($core.String methodName) {
     switch (methodName) {
-      case 'CreateLongConnection': return $0.Empty();
-      case 'Terminate': return $0.Empty();
-      case 'CheckUsage': return $0.Empty();
-      case 'Login': return $0.Empty();
-      case 'GetAllStockDetail': return $0.Empty();
-      case 'GetAllFutureDetail': return $0.Empty();
-      case 'GetAllOptionDetail': return $0.Empty();
+      case 'CreateLongConnection': return $1.Empty();
+      case 'CheckUsage': return $1.Empty();
+      case 'Login': return $1.Empty();
+      case 'GetAllStockDetail': return $1.Empty();
+      case 'GetAllFutureDetail': return $1.Empty();
+      case 'GetAllOptionDetail': return $1.Empty();
       default: throw $core.ArgumentError('Unknown method: $methodName');
     }
   }
 
   $async.Future<$pb.GeneratedMessage> handleCall($pb.ServerContext ctx, $core.String methodName, $pb.GeneratedMessage request) {
     switch (methodName) {
-      case 'CreateLongConnection': return this.createLongConnection(ctx, request as $0.Empty);
-      case 'Terminate': return this.terminate(ctx, request as $0.Empty);
-      case 'CheckUsage': return this.checkUsage(ctx, request as $0.Empty);
-      case 'Login': return this.login(ctx, request as $0.Empty);
-      case 'GetAllStockDetail': return this.getAllStockDetail(ctx, request as $0.Empty);
-      case 'GetAllFutureDetail': return this.getAllFutureDetail(ctx, request as $0.Empty);
-      case 'GetAllOptionDetail': return this.getAllOptionDetail(ctx, request as $0.Empty);
+      case 'CreateLongConnection': return this.createLongConnection(ctx, request as $1.Empty);
+      case 'CheckUsage': return this.checkUsage(ctx, request as $1.Empty);
+      case 'Login': return this.login(ctx, request as $1.Empty);
+      case 'GetAllStockDetail': return this.getAllStockDetail(ctx, request as $1.Empty);
+      case 'GetAllFutureDetail': return this.getAllFutureDetail(ctx, request as $1.Empty);
+      case 'GetAllOptionDetail': return this.getAllOptionDetail(ctx, request as $1.Empty);
       default: throw $core.ArgumentError('Unknown method: $methodName');
     }
   }

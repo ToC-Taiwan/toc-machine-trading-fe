@@ -178,9 +178,9 @@ class _StockPickerWidgetState extends State<StockPickerWidget> {
   }
 
   Future<void> initialWS() async {
-    String url = backendPickWSURLPrefixV2;
+    String url = backendPickLotWSURLPrefix;
     if (widget.isOdd) {
-      url = backendPickOddsWSURLPrefixV2;
+      url = backendPickOddsWSURLPrefix;
     }
     _channel = IOWebSocketChannel.connect(
       Uri.parse(url),

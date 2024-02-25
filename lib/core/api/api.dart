@@ -24,11 +24,11 @@ const String backendHost = 'tocraw.com';
 
 const String backendURLPrefix = '$protocol://$backendHost/tmt/v1';
 
-const String backendPickWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/stream/ws/pick-stock';
-const String backendPickWSURLPrefixV2 = '$wsProtocol://$backendHost/tmt/v1/stream/ws/v2/pick-stock';
-const String backendPickOddsWSURLPrefixV2 = '$wsProtocol://$backendHost/tmt/v1/stream/ws/v2/pick-stock/odds';
-
-const String backendFutureWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/stream/ws/future';
+const String wsSearchStockTargetURL = '$wsProtocol://$backendHost/tmt/v1/basic/search/stock';
+const String wsSearchFutureTargetURL = '$wsProtocol://$backendHost/tmt/v1/basic/search/future';
+const String backendFutureWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/stream/ws/pick-future';
+const String backendPickLotWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/stream/ws/pick-stock';
+const String backendPickOddsWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/stream/ws/pick-stock/odds';
 const String backendTargetWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/targets/ws';
 const String backendHistoryWSURLPrefix = '$wsProtocol://$backendHost/tmt/v1/history/ws';
 
@@ -222,7 +222,7 @@ abstract class API {
     }
   }
 
-  static Future<List<Stock>> fetchStockDetail(List<String> codeList) async {
+  static Future<List<StockDetail>> fetchStockDetail(List<String> codeList) async {
     if (codeList.isEmpty) {
       throw 'code is empty';
     }
@@ -240,9 +240,9 @@ abstract class API {
       );
       final result = jsonDecode(response.body) as Map<String, dynamic>;
       if (response.statusCode == 200) {
-        final data = <Stock>[];
+        final data = <StockDetail>[];
         for (final i in result["stock_detail"]) {
-          data.add(Stock.fromJson(i as Map<String, dynamic>));
+          data.add(StockDetail.fromJson(i as Map<String, dynamic>));
         }
         if (data.isEmpty) {
           throw 'no data';

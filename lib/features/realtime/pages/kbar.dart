@@ -7,7 +7,7 @@ import 'package:k_chart/k_chart_widget.dart';
 import 'package:k_chart/renderer/index.dart';
 import 'package:k_chart/utils/index.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';
-import 'package:toc_machine_trading_fe/core/pb/app/app.pb.dart' as pb;
+import 'package:toc_machine_trading_fe/core/pb/forwarder/history.pb.dart' as pb;
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
 import 'package:web_socket_channel/io.dart';
 
@@ -112,8 +112,8 @@ class _KbarPageState extends State<KbarPage> {
     await _channel!.ready;
     _channel!.stream.listen(
       (message) {
-        final msg = pb.WSHistoryKbarMessage.fromBuffer(message as List<int>);
-        final kbar = msg.arr;
+        final msg = pb.HistoryKbarResponse.fromBuffer(message as List<int>);
+        final kbar = msg.data;
         for (final item in kbar) {
           datas.insert(
               0,
@@ -123,10 +123,10 @@ class _KbarPageState extends State<KbarPage> {
                 "low": item.low,
                 "close": item.close,
                 "vol": item.volume,
-                "time": DateTime.parse(item.kbarTime).millisecondsSinceEpoch,
+                "time": item.ts.toInt() ~/ 1000 ~/ 1000,
               }));
         }
-        kbarStartDate = DateTime.parse(kbar.last.kbarTime).add(const Duration(days: -1));
+        kbarStartDate = DateTime.fromMicrosecondsSinceEpoch(kbar.last.ts.toInt() ~/ 1000).add(const Duration(days: -1));
         while (dragging) {
           Future.delayed(const Duration(milliseconds: 100));
         }

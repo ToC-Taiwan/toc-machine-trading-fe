@@ -13,8 +13,8 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
-import '../google/protobuf/empty.pbjson.dart' as $0;
-import 'entity.pbjson.dart' as $3;
+import '../google/protobuf/empty.pbjson.dart' as $1;
+import 'entity.pbjson.dart' as $2;
 
 @$core.Deprecated('Use subscribeResponseDescriptor instead')
 const SubscribeResponse$json = {
@@ -46,11 +46,11 @@ const $core.Map<$core.String, $core.dynamic> SubscribeDataInterfaceServiceBase$j
 
 @$core.Deprecated('Use subscribeDataInterfaceServiceDescriptor instead')
 const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> SubscribeDataInterfaceServiceBase$messageJson = {
-  '.forwarder.StockNumArr': $3.StockNumArr$json,
+  '.forwarder.StockNumArr': $2.StockNumArr$json,
   '.forwarder.SubscribeResponse': SubscribeResponse$json,
-  '.forwarder.FutureCodeArr': $3.FutureCodeArr$json,
-  '.google.protobuf.Empty': $0.Empty$json,
-  '.forwarder.ErrorMessage': $3.ErrorMessage$json,
+  '.forwarder.FutureCodeArr': $2.FutureCodeArr$json,
+  '.google.protobuf.Empty': $1.Empty$json,
+  '.forwarder.ErrorMessage': $2.ErrorMessage$json,
 };
 
 /// Descriptor for `SubscribeDataInterface`. Decode as a `google.protobuf.ServiceDescriptorProto`.

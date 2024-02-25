@@ -13,8 +13,7 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
-import '../google/protobuf/empty.pbjson.dart' as $0;
-import 'entity.pbjson.dart' as $3;
+import '../google/protobuf/empty.pbjson.dart' as $1;
 
 @$core.Deprecated('Use futurePositionDescriptor instead')
 const FuturePosition$json = {
@@ -65,6 +64,7 @@ const StockPosition$json = {
     {'1': 'collateral', '3': 11, '4': 1, '5': 5, '10': 'collateral'},
     {'1': 'short_sale_margin', '3': 12, '4': 1, '5': 5, '10': 'shortSaleMargin'},
     {'1': 'interest', '3': 13, '4': 1, '5': 5, '10': 'interest'},
+    {'1': 'detail_arr', '3': 14, '4': 3, '5': 11, '6': '.forwarder.StockPositionDetail', '10': 'detailArr'},
   ],
 };
 
@@ -77,7 +77,8 @@ final $typed_data.Uint8List stockPositionDescriptor = $convert.base64Decode(
     'CSABKAlSBGNvbmQSNAoWbWFyZ2luX3B1cmNoYXNlX2Ftb3VudBgKIAEoBVIUbWFyZ2luUHVyY2'
     'hhc2VBbW91bnQSHgoKY29sbGF0ZXJhbBgLIAEoBVIKY29sbGF0ZXJhbBIqChFzaG9ydF9zYWxl'
     'X21hcmdpbhgMIAEoBVIPc2hvcnRTYWxlTWFyZ2luEhoKCGludGVyZXN0GA0gASgFUghpbnRlcm'
-    'VzdA==');
+    'VzdBI9CgpkZXRhaWxfYXJyGA4gAygLMh4uZm9yd2FyZGVyLlN0b2NrUG9zaXRpb25EZXRhaWxS'
+    'CWRldGFpbEFycg==');
 
 @$core.Deprecated('Use stockPositionArrDescriptor instead')
 const StockPositionArr$json = {
@@ -91,6 +92,31 @@ const StockPositionArr$json = {
 final $typed_data.Uint8List stockPositionArrDescriptor = $convert.base64Decode(
     'ChBTdG9ja1Bvc2l0aW9uQXJyEjsKDHBvc2l0aW9uX2FychgBIAMoCzIYLmZvcndhcmRlci5TdG'
     '9ja1Bvc2l0aW9uUgtwb3NpdGlvbkFycg==');
+
+@$core.Deprecated('Use stockPositionDetailDescriptor instead')
+const StockPositionDetail$json = {
+  '1': 'StockPositionDetail',
+  '2': [
+    {'1': 'date', '3': 1, '4': 1, '5': 9, '10': 'date'},
+    {'1': 'code', '3': 2, '4': 1, '5': 9, '10': 'code'},
+    {'1': 'quantity', '3': 3, '4': 1, '5': 5, '10': 'quantity'},
+    {'1': 'price', '3': 4, '4': 1, '5': 1, '10': 'price'},
+    {'1': 'last_price', '3': 5, '4': 1, '5': 1, '10': 'lastPrice'},
+    {'1': 'dseq', '3': 6, '4': 1, '5': 9, '10': 'dseq'},
+    {'1': 'direction', '3': 7, '4': 1, '5': 9, '10': 'direction'},
+    {'1': 'pnl', '3': 8, '4': 1, '5': 1, '10': 'pnl'},
+    {'1': 'currency', '3': 9, '4': 1, '5': 9, '10': 'currency'},
+    {'1': 'fee', '3': 10, '4': 1, '5': 1, '10': 'fee'},
+  ],
+};
+
+/// Descriptor for `StockPositionDetail`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List stockPositionDetailDescriptor = $convert.base64Decode(
+    'ChNTdG9ja1Bvc2l0aW9uRGV0YWlsEhIKBGRhdGUYASABKAlSBGRhdGUSEgoEY29kZRgCIAEoCV'
+    'IEY29kZRIaCghxdWFudGl0eRgDIAEoBVIIcXVhbnRpdHkSFAoFcHJpY2UYBCABKAFSBXByaWNl'
+    'Eh0KCmxhc3RfcHJpY2UYBSABKAFSCWxhc3RQcmljZRISCgRkc2VxGAYgASgJUgRkc2VxEhwKCW'
+    'RpcmVjdGlvbhgHIAEoCVIJZGlyZWN0aW9uEhAKA3BubBgIIAEoAVIDcG5sEhoKCGN1cnJlbmN5'
+    'GAkgASgJUghjdXJyZW5jeRIQCgNmZWUYCiABKAFSA2ZlZQ==');
 
 @$core.Deprecated('Use stockOrderDetailDescriptor instead')
 const StockOrderDetail$json = {
@@ -186,34 +212,6 @@ const OrderID$json = {
 final $typed_data.Uint8List orderIDDescriptor = $convert.base64Decode(
     'CgdPcmRlcklEEhkKCG9yZGVyX2lkGAEgASgJUgdvcmRlcklkEhoKCHNpbXVsYXRlGAIgASgIUg'
     'hzaW11bGF0ZQ==');
-
-@$core.Deprecated('Use futureOrderIDDescriptor instead')
-const FutureOrderID$json = {
-  '1': 'FutureOrderID',
-  '2': [
-    {'1': 'order_id', '3': 1, '4': 1, '5': 9, '10': 'orderId'},
-    {'1': 'simulate', '3': 2, '4': 1, '5': 8, '10': 'simulate'},
-  ],
-};
-
-/// Descriptor for `FutureOrderID`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List futureOrderIDDescriptor = $convert.base64Decode(
-    'Cg1GdXR1cmVPcmRlcklEEhkKCG9yZGVyX2lkGAEgASgJUgdvcmRlcklkEhoKCHNpbXVsYXRlGA'
-    'IgASgIUghzaW11bGF0ZQ==');
-
-@$core.Deprecated('Use optionOrderIDDescriptor instead')
-const OptionOrderID$json = {
-  '1': 'OptionOrderID',
-  '2': [
-    {'1': 'order_id', '3': 1, '4': 1, '5': 9, '10': 'orderId'},
-    {'1': 'simulate', '3': 2, '4': 1, '5': 8, '10': 'simulate'},
-  ],
-};
-
-/// Descriptor for `OptionOrderID`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List optionOrderIDDescriptor = $convert.base64Decode(
-    'Cg1PcHRpb25PcmRlcklEEhkKCG9yZGVyX2lkGAEgASgJUgdvcmRlcklkEhoKCHNpbXVsYXRlGA'
-    'IgASgIUghzaW11bGF0ZQ==');
 
 @$core.Deprecated('Use marginDescriptor instead')
 const Margin$json = {
@@ -317,24 +315,20 @@ final $typed_data.Uint8List settlementListDescriptor = $convert.base64Decode(
 const $core.Map<$core.String, $core.dynamic> TradeInterfaceServiceBase$json = {
   '1': 'TradeInterface',
   '2': [
+    {'1': 'CancelOrder', '2': '.forwarder.OrderID', '3': '.forwarder.TradeResult', '4': {}},
     {'1': 'BuyStock', '2': '.forwarder.StockOrderDetail', '3': '.forwarder.TradeResult', '4': {}},
     {'1': 'SellStock', '2': '.forwarder.StockOrderDetail', '3': '.forwarder.TradeResult', '4': {}},
     {'1': 'BuyOddStock', '2': '.forwarder.OddStockOrderDetail', '3': '.forwarder.TradeResult', '4': {}},
     {'1': 'SellOddStock', '2': '.forwarder.OddStockOrderDetail', '3': '.forwarder.TradeResult', '4': {}},
     {'1': 'SellFirstStock', '2': '.forwarder.StockOrderDetail', '3': '.forwarder.TradeResult', '4': {}},
-    {'1': 'CancelStock', '2': '.forwarder.OrderID', '3': '.forwarder.TradeResult', '4': {}},
     {'1': 'BuyFuture', '2': '.forwarder.FutureOrderDetail', '3': '.forwarder.TradeResult', '4': {}},
     {'1': 'SellFuture', '2': '.forwarder.FutureOrderDetail', '3': '.forwarder.TradeResult', '4': {}},
     {'1': 'SellFirstFuture', '2': '.forwarder.FutureOrderDetail', '3': '.forwarder.TradeResult', '4': {}},
-    {'1': 'CancelFuture', '2': '.forwarder.FutureOrderID', '3': '.forwarder.TradeResult', '4': {}},
     {'1': 'BuyOption', '2': '.forwarder.OptionOrderDetail', '3': '.forwarder.TradeResult', '4': {}},
     {'1': 'SellOption', '2': '.forwarder.OptionOrderDetail', '3': '.forwarder.TradeResult', '4': {}},
     {'1': 'SellFirstOption', '2': '.forwarder.OptionOrderDetail', '3': '.forwarder.TradeResult', '4': {}},
-    {'1': 'CancelOption', '2': '.forwarder.OptionOrderID', '3': '.forwarder.TradeResult', '4': {}},
     {'1': 'GetLocalOrderStatusArr', '2': '.google.protobuf.Empty', '3': '.google.protobuf.Empty', '4': {}},
     {'1': 'GetSimulateOrderStatusArr', '2': '.google.protobuf.Empty', '3': '.google.protobuf.Empty', '4': {}},
-    {'1': 'GetOrderStatusByID', '2': '.forwarder.OrderID', '3': '.forwarder.TradeResult', '4': {}},
-    {'1': 'GetNonBlockOrderStatusArr', '2': '.google.protobuf.Empty', '3': '.forwarder.ErrorMessage', '4': {}},
     {'1': 'GetFuturePosition', '2': '.google.protobuf.Empty', '3': '.forwarder.FuturePositionArr', '4': {}},
     {'1': 'GetStockPosition', '2': '.google.protobuf.Empty', '3': '.forwarder.StockPositionArr', '4': {}},
     {'1': 'GetSettlement', '2': '.google.protobuf.Empty', '3': '.forwarder.SettlementList', '4': {}},
@@ -345,20 +339,18 @@ const $core.Map<$core.String, $core.dynamic> TradeInterfaceServiceBase$json = {
 
 @$core.Deprecated('Use tradeInterfaceServiceDescriptor instead')
 const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> TradeInterfaceServiceBase$messageJson = {
-  '.forwarder.StockOrderDetail': StockOrderDetail$json,
-  '.forwarder.TradeResult': TradeResult$json,
-  '.forwarder.OddStockOrderDetail': OddStockOrderDetail$json,
   '.forwarder.OrderID': OrderID$json,
+  '.forwarder.TradeResult': TradeResult$json,
+  '.forwarder.StockOrderDetail': StockOrderDetail$json,
+  '.forwarder.OddStockOrderDetail': OddStockOrderDetail$json,
   '.forwarder.FutureOrderDetail': FutureOrderDetail$json,
-  '.forwarder.FutureOrderID': FutureOrderID$json,
   '.forwarder.OptionOrderDetail': OptionOrderDetail$json,
-  '.forwarder.OptionOrderID': OptionOrderID$json,
-  '.google.protobuf.Empty': $0.Empty$json,
-  '.forwarder.ErrorMessage': $3.ErrorMessage$json,
+  '.google.protobuf.Empty': $1.Empty$json,
   '.forwarder.FuturePositionArr': FuturePositionArr$json,
   '.forwarder.FuturePosition': FuturePosition$json,
   '.forwarder.StockPositionArr': StockPositionArr$json,
   '.forwarder.StockPosition': StockPosition$json,
+  '.forwarder.StockPositionDetail': StockPositionDetail$json,
   '.forwarder.SettlementList': SettlementList$json,
   '.forwarder.Settlement': Settlement$json,
   '.forwarder.AccountBalance': AccountBalance$json,
@@ -367,34 +359,29 @@ const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> TradeInter
 
 /// Descriptor for `TradeInterface`. Decode as a `google.protobuf.ServiceDescriptorProto`.
 final $typed_data.Uint8List tradeInterfaceServiceDescriptor = $convert.base64Decode(
-    'Cg5UcmFkZUludGVyZmFjZRJBCghCdXlTdG9jaxIbLmZvcndhcmRlci5TdG9ja09yZGVyRGV0YW'
-    'lsGhYuZm9yd2FyZGVyLlRyYWRlUmVzdWx0IgASQgoJU2VsbFN0b2NrEhsuZm9yd2FyZGVyLlN0'
-    'b2NrT3JkZXJEZXRhaWwaFi5mb3J3YXJkZXIuVHJhZGVSZXN1bHQiABJHCgtCdXlPZGRTdG9jax'
-    'IeLmZvcndhcmRlci5PZGRTdG9ja09yZGVyRGV0YWlsGhYuZm9yd2FyZGVyLlRyYWRlUmVzdWx0'
-    'IgASSAoMU2VsbE9kZFN0b2NrEh4uZm9yd2FyZGVyLk9kZFN0b2NrT3JkZXJEZXRhaWwaFi5mb3'
-    'J3YXJkZXIuVHJhZGVSZXN1bHQiABJHCg5TZWxsRmlyc3RTdG9jaxIbLmZvcndhcmRlci5TdG9j'
-    'a09yZGVyRGV0YWlsGhYuZm9yd2FyZGVyLlRyYWRlUmVzdWx0IgASOwoLQ2FuY2VsU3RvY2sSEi'
-    '5mb3J3YXJkZXIuT3JkZXJJRBoWLmZvcndhcmRlci5UcmFkZVJlc3VsdCIAEkMKCUJ1eUZ1dHVy'
+    'Cg5UcmFkZUludGVyZmFjZRI7CgtDYW5jZWxPcmRlchISLmZvcndhcmRlci5PcmRlcklEGhYuZm'
+    '9yd2FyZGVyLlRyYWRlUmVzdWx0IgASQQoIQnV5U3RvY2sSGy5mb3J3YXJkZXIuU3RvY2tPcmRl'
+    'ckRldGFpbBoWLmZvcndhcmRlci5UcmFkZVJlc3VsdCIAEkIKCVNlbGxTdG9jaxIbLmZvcndhcm'
+    'Rlci5TdG9ja09yZGVyRGV0YWlsGhYuZm9yd2FyZGVyLlRyYWRlUmVzdWx0IgASRwoLQnV5T2Rk'
+    'U3RvY2sSHi5mb3J3YXJkZXIuT2RkU3RvY2tPcmRlckRldGFpbBoWLmZvcndhcmRlci5UcmFkZV'
+    'Jlc3VsdCIAEkgKDFNlbGxPZGRTdG9jaxIeLmZvcndhcmRlci5PZGRTdG9ja09yZGVyRGV0YWls'
+    'GhYuZm9yd2FyZGVyLlRyYWRlUmVzdWx0IgASRwoOU2VsbEZpcnN0U3RvY2sSGy5mb3J3YXJkZX'
+    'IuU3RvY2tPcmRlckRldGFpbBoWLmZvcndhcmRlci5UcmFkZVJlc3VsdCIAEkMKCUJ1eUZ1dHVy'
     'ZRIcLmZvcndhcmRlci5GdXR1cmVPcmRlckRldGFpbBoWLmZvcndhcmRlci5UcmFkZVJlc3VsdC'
     'IAEkQKClNlbGxGdXR1cmUSHC5mb3J3YXJkZXIuRnV0dXJlT3JkZXJEZXRhaWwaFi5mb3J3YXJk'
     'ZXIuVHJhZGVSZXN1bHQiABJJCg9TZWxsRmlyc3RGdXR1cmUSHC5mb3J3YXJkZXIuRnV0dXJlT3'
-    'JkZXJEZXRhaWwaFi5mb3J3YXJkZXIuVHJhZGVSZXN1bHQiABJCCgxDYW5jZWxGdXR1cmUSGC5m'
-    'b3J3YXJkZXIuRnV0dXJlT3JkZXJJRBoWLmZvcndhcmRlci5UcmFkZVJlc3VsdCIAEkMKCUJ1eU'
-    '9wdGlvbhIcLmZvcndhcmRlci5PcHRpb25PcmRlckRldGFpbBoWLmZvcndhcmRlci5UcmFkZVJl'
-    'c3VsdCIAEkQKClNlbGxPcHRpb24SHC5mb3J3YXJkZXIuT3B0aW9uT3JkZXJEZXRhaWwaFi5mb3'
-    'J3YXJkZXIuVHJhZGVSZXN1bHQiABJJCg9TZWxsRmlyc3RPcHRpb24SHC5mb3J3YXJkZXIuT3B0'
-    'aW9uT3JkZXJEZXRhaWwaFi5mb3J3YXJkZXIuVHJhZGVSZXN1bHQiABJCCgxDYW5jZWxPcHRpb2'
-    '4SGC5mb3J3YXJkZXIuT3B0aW9uT3JkZXJJRBoWLmZvcndhcmRlci5UcmFkZVJlc3VsdCIAEkoK'
-    'FkdldExvY2FsT3JkZXJTdGF0dXNBcnISFi5nb29nbGUucHJvdG9idWYuRW1wdHkaFi5nb29nbG'
-    'UucHJvdG9idWYuRW1wdHkiABJNChlHZXRTaW11bGF0ZU9yZGVyU3RhdHVzQXJyEhYuZ29vZ2xl'
-    'LnByb3RvYnVmLkVtcHR5GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5IgASQgoSR2V0T3JkZXJTdG'
-    'F0dXNCeUlEEhIuZm9yd2FyZGVyLk9yZGVySUQaFi5mb3J3YXJkZXIuVHJhZGVSZXN1bHQiABJO'
-    'ChlHZXROb25CbG9ja09yZGVyU3RhdHVzQXJyEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhcuZm'
-    '9yd2FyZGVyLkVycm9yTWVzc2FnZSIAEksKEUdldEZ1dHVyZVBvc2l0aW9uEhYuZ29vZ2xlLnBy'
-    'b3RvYnVmLkVtcHR5GhwuZm9yd2FyZGVyLkZ1dHVyZVBvc2l0aW9uQXJyIgASSQoQR2V0U3RvY2'
-    'tQb3NpdGlvbhIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRobLmZvcndhcmRlci5TdG9ja1Bvc2l0'
-    'aW9uQXJyIgASRAoNR2V0U2V0dGxlbWVudBIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoZLmZvcn'
-    'dhcmRlci5TZXR0bGVtZW50TGlzdCIAEkgKEUdldEFjY291bnRCYWxhbmNlEhYuZ29vZ2xlLnBy'
-    'b3RvYnVmLkVtcHR5GhkuZm9yd2FyZGVyLkFjY291bnRCYWxhbmNlIgASOAoJR2V0TWFyZ2luEh'
-    'YuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhEuZm9yd2FyZGVyLk1hcmdpbiIA');
+    'JkZXJEZXRhaWwaFi5mb3J3YXJkZXIuVHJhZGVSZXN1bHQiABJDCglCdXlPcHRpb24SHC5mb3J3'
+    'YXJkZXIuT3B0aW9uT3JkZXJEZXRhaWwaFi5mb3J3YXJkZXIuVHJhZGVSZXN1bHQiABJECgpTZW'
+    'xsT3B0aW9uEhwuZm9yd2FyZGVyLk9wdGlvbk9yZGVyRGV0YWlsGhYuZm9yd2FyZGVyLlRyYWRl'
+    'UmVzdWx0IgASSQoPU2VsbEZpcnN0T3B0aW9uEhwuZm9yd2FyZGVyLk9wdGlvbk9yZGVyRGV0YW'
+    'lsGhYuZm9yd2FyZGVyLlRyYWRlUmVzdWx0IgASSgoWR2V0TG9jYWxPcmRlclN0YXR1c0FychIW'
+    'Lmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIAEk0KGUdldF'
+    'NpbXVsYXRlT3JkZXJTdGF0dXNBcnISFi5nb29nbGUucHJvdG9idWYuRW1wdHkaFi5nb29nbGUu'
+    'cHJvdG9idWYuRW1wdHkiABJLChFHZXRGdXR1cmVQb3NpdGlvbhIWLmdvb2dsZS5wcm90b2J1Zi'
+    '5FbXB0eRocLmZvcndhcmRlci5GdXR1cmVQb3NpdGlvbkFyciIAEkkKEEdldFN0b2NrUG9zaXRp'
+    'b24SFi5nb29nbGUucHJvdG9idWYuRW1wdHkaGy5mb3J3YXJkZXIuU3RvY2tQb3NpdGlvbkFyci'
+    'IAEkQKDUdldFNldHRsZW1lbnQSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaGS5mb3J3YXJkZXIu'
+    'U2V0dGxlbWVudExpc3QiABJIChFHZXRBY2NvdW50QmFsYW5jZRIWLmdvb2dsZS5wcm90b2J1Zi'
+    '5FbXB0eRoZLmZvcndhcmRlci5BY2NvdW50QmFsYW5jZSIAEjgKCUdldE1hcmdpbhIWLmdvb2ds'
+    'ZS5wcm90b2J1Zi5FbXB0eRoRLmZvcndhcmRlci5NYXJnaW4iAA==');
 

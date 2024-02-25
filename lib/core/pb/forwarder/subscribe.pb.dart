@@ -14,8 +14,8 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../google/protobuf/empty.pb.dart' as $0;
-import 'entity.pb.dart' as $3;
+import '../google/protobuf/empty.pb.dart' as $1;
+import 'entity.pb.dart' as $2;
 
 class SubscribeResponse extends $pb.GeneratedMessage {
   factory SubscribeResponse({
@@ -65,35 +65,35 @@ class SubscribeDataInterfaceApi {
   $pb.RpcClient _client;
   SubscribeDataInterfaceApi(this._client);
 
-  $async.Future<SubscribeResponse> subscribeStockTick($pb.ClientContext? ctx, $3.StockNumArr request) =>
+  $async.Future<SubscribeResponse> subscribeStockTick($pb.ClientContext? ctx, $2.StockNumArr request) =>
     _client.invoke<SubscribeResponse>(ctx, 'SubscribeDataInterface', 'SubscribeStockTick', request, SubscribeResponse())
   ;
-  $async.Future<SubscribeResponse> unSubscribeStockTick($pb.ClientContext? ctx, $3.StockNumArr request) =>
+  $async.Future<SubscribeResponse> unSubscribeStockTick($pb.ClientContext? ctx, $2.StockNumArr request) =>
     _client.invoke<SubscribeResponse>(ctx, 'SubscribeDataInterface', 'UnSubscribeStockTick', request, SubscribeResponse())
   ;
-  $async.Future<SubscribeResponse> subscribeStockBidAsk($pb.ClientContext? ctx, $3.StockNumArr request) =>
+  $async.Future<SubscribeResponse> subscribeStockBidAsk($pb.ClientContext? ctx, $2.StockNumArr request) =>
     _client.invoke<SubscribeResponse>(ctx, 'SubscribeDataInterface', 'SubscribeStockBidAsk', request, SubscribeResponse())
   ;
-  $async.Future<SubscribeResponse> unSubscribeStockBidAsk($pb.ClientContext? ctx, $3.StockNumArr request) =>
+  $async.Future<SubscribeResponse> unSubscribeStockBidAsk($pb.ClientContext? ctx, $2.StockNumArr request) =>
     _client.invoke<SubscribeResponse>(ctx, 'SubscribeDataInterface', 'UnSubscribeStockBidAsk', request, SubscribeResponse())
   ;
-  $async.Future<SubscribeResponse> subscribeFutureTick($pb.ClientContext? ctx, $3.FutureCodeArr request) =>
+  $async.Future<SubscribeResponse> subscribeFutureTick($pb.ClientContext? ctx, $2.FutureCodeArr request) =>
     _client.invoke<SubscribeResponse>(ctx, 'SubscribeDataInterface', 'SubscribeFutureTick', request, SubscribeResponse())
   ;
-  $async.Future<SubscribeResponse> unSubscribeFutureTick($pb.ClientContext? ctx, $3.FutureCodeArr request) =>
+  $async.Future<SubscribeResponse> unSubscribeFutureTick($pb.ClientContext? ctx, $2.FutureCodeArr request) =>
     _client.invoke<SubscribeResponse>(ctx, 'SubscribeDataInterface', 'UnSubscribeFutureTick', request, SubscribeResponse())
   ;
-  $async.Future<SubscribeResponse> subscribeFutureBidAsk($pb.ClientContext? ctx, $3.FutureCodeArr request) =>
+  $async.Future<SubscribeResponse> subscribeFutureBidAsk($pb.ClientContext? ctx, $2.FutureCodeArr request) =>
     _client.invoke<SubscribeResponse>(ctx, 'SubscribeDataInterface', 'SubscribeFutureBidAsk', request, SubscribeResponse())
   ;
-  $async.Future<SubscribeResponse> unSubscribeFutureBidAsk($pb.ClientContext? ctx, $3.FutureCodeArr request) =>
+  $async.Future<SubscribeResponse> unSubscribeFutureBidAsk($pb.ClientContext? ctx, $2.FutureCodeArr request) =>
     _client.invoke<SubscribeResponse>(ctx, 'SubscribeDataInterface', 'UnSubscribeFutureBidAsk', request, SubscribeResponse())
   ;
-  $async.Future<$3.ErrorMessage> unSubscribeAllTick($pb.ClientContext? ctx, $0.Empty request) =>
-    _client.invoke<$3.ErrorMessage>(ctx, 'SubscribeDataInterface', 'UnSubscribeAllTick', request, $3.ErrorMessage())
+  $async.Future<$2.ErrorMessage> unSubscribeAllTick($pb.ClientContext? ctx, $1.Empty request) =>
+    _client.invoke<$2.ErrorMessage>(ctx, 'SubscribeDataInterface', 'UnSubscribeAllTick', request, $2.ErrorMessage())
   ;
-  $async.Future<$3.ErrorMessage> unSubscribeAllBidAsk($pb.ClientContext? ctx, $0.Empty request) =>
-    _client.invoke<$3.ErrorMessage>(ctx, 'SubscribeDataInterface', 'UnSubscribeAllBidAsk', request, $3.ErrorMessage())
+  $async.Future<$2.ErrorMessage> unSubscribeAllBidAsk($pb.ClientContext? ctx, $1.Empty request) =>
+    _client.invoke<$2.ErrorMessage>(ctx, 'SubscribeDataInterface', 'UnSubscribeAllBidAsk', request, $2.ErrorMessage())
   ;
 }
 
