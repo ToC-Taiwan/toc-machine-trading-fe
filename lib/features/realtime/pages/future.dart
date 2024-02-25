@@ -5,10 +5,19 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';
 import 'package:toc_machine_trading_fe/core/pb/app/app.pb.dart' as pb;
+import 'package:toc_machine_trading_fe/core/pb/forwarder/history.pb.dart' as pb;
+import 'package:toc_machine_trading_fe/core/pb/forwarder/mq.pb.dart' as pb;
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/text.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:web_socket_channel/io.dart';
+
+class CustomTick {
+  CustomTick(this.tick);
+
+  pb.FutureRealTimeTickMessage tick;
+  int comboCount = 0;
+}
 
 class FutureRealTimePage extends StatefulWidget {
   const FutureRealTimePage({required this.code, super.key});
@@ -20,12 +29,11 @@ class FutureRealTimePage extends StatefulWidget {
 class _FutureRealTimePageState extends State<FutureRealTimePage> {
   late IOWebSocketChannel? _channel;
 
-  String delieveryDate = '';
   int kbarMaxVolume = 0;
-  pb.WSTradeIndex tradeIndex = pb.WSTradeIndex();
-  List<pb.WSFutureTick> futureTickArr = [];
-  List<pb.WSFutureTick> rateFutureTickArr = [];
-  List<pb.Kbar> kbarArr = [];
+  pb.TradeIndex tradeIndex = pb.TradeIndex();
+  List<CustomTick> futureTickArr = [];
+  List<pb.FutureRealTimeTickMessage> rateFutureTickArr = [];
+  pb.HistoryKbarResponse kbarArr = pb.HistoryKbarResponse();
 
   double tradeRate = 0;
   double outInRatio = 0.0;
@@ -107,7 +115,7 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
                           Expanded(
                             child: Center(
                               child: numberText(
-                                futureTickArr[0].close.abs().toStringAsFixed(0),
+                                futureTickArr[0].tick.close.abs().toStringAsFixed(0),
                                 fontSize: 55,
                                 bold: true,
                               ),
@@ -116,10 +124,10 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
                           Expanded(
                             child: Center(
                               child: numberText(
-                                '${futureTickArr[0].priceChg == 0 ? '' : futureTickArr[0].priceChg > 0 ? '+' : '-'} ${futureTickArr[0].priceChg.abs().toStringAsFixed(0)}',
+                                '${futureTickArr[0].tick.priceChg == 0 ? '' : futureTickArr[0].tick.priceChg > 0 ? '+' : '-'} ${futureTickArr[0].tick.priceChg.abs().toStringAsFixed(0)}',
                                 fontSize: 45,
                                 bold: true,
-                                color: futureTickArr[0].priceChg > 0 ? Colors.redAccent : Colors.greenAccent,
+                                color: futureTickArr[0].tick.priceChg > 0 ? Colors.redAccent : Colors.greenAccent,
                               ),
                             ),
                           ),
@@ -170,14 +178,14 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
                     ),
                   ],
                   series: <CartesianSeries>[
-                    CandleSeries<pb.Kbar, DateTime>(
+                    CandleSeries<pb.HistoryKbarMessage, DateTime>(
                       yAxisName: 'price',
                       showIndicationForSameValues: true,
                       enableSolidCandles: true,
                       bearColor: Colors.green,
                       bullColor: Colors.red,
-                      dataSource: kbarArr,
-                      xValueMapper: (datum, index) => DateTime.parse(datum.kbarTime),
+                      dataSource: kbarArr.data,
+                      xValueMapper: (datum, index) => DateTime.fromMicrosecondsSinceEpoch(datum.ts.toInt() ~/ 1000).add(const Duration(hours: -8)),
                       lowValueMapper: (datum, index) => datum.low,
                       highValueMapper: (datum, index) => datum.high,
                       openValueMapper: (datum, index) => datum.open,
@@ -189,10 +197,10 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
                         ),
                       ],
                     ),
-                    ColumnSeries<pb.Kbar, DateTime>(
+                    ColumnSeries<pb.HistoryKbarMessage, DateTime>(
                       yAxisName: 'volume',
-                      dataSource: kbarArr,
-                      xValueMapper: (datum, index) => DateTime.parse(datum.kbarTime),
+                      dataSource: kbarArr.data,
+                      xValueMapper: (datum, index) => DateTime.fromMicrosecondsSinceEpoch(datum.ts.toInt() ~/ 1000).add(const Duration(hours: -8)),
                       yValueMapper: (datum, index) => datum.volume.toInt(),
                       pointColorMapper: (datum, index) => datum.close > datum.open ? Colors.redAccent : Colors.greenAccent,
                     ),
@@ -212,60 +220,55 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
       pingInterval: const Duration(seconds: 1),
       headers: {
         "Authorization": API.authKey,
+        "Code": widget.code,
       },
     );
     await _channel!.ready;
+    _channel!.sink.add(pb.PickFuture(code: widget.code).writeToBuffer());
     _channel!.stream.listen(
       (message) {
         final msg = pb.WSMessage.fromBuffer(message as List<int>);
-        switch (msg.type) {
-          case pb.WSType.TYPE_FUTURE_TICK:
-            setState(() {
-              if (futureTickArr.isNotEmpty && futureTickArr.first.tickType == msg.futureTick.tickType && futureTickArr.first.close == msg.futureTick.close) {
-                futureTickArr.first.comboCount++;
-                futureTickArr.first.volume += msg.futureTick.volume;
-                futureTickArr.first.tickTime = msg.futureTick.tickTime;
-                return;
-              }
-              futureTickArr.insert(0, msg.futureTick);
-              if (futureTickArr.length > 4) {
-                futureTickArr.removeLast();
-              }
-            });
-            _updateTradeRate(msg.futureTick);
-            return;
-
-          case pb.WSType.TYPE_TRADE_INDEX:
-            setState(() {
-              tradeIndex = msg.tradeIndex;
-            });
-            return;
-
-          case pb.WSType.TYPE_KBAR_ARR:
-            int maxVolume = 0;
-            for (final kbar in msg.historyKbar.arr) {
-              if (kbar.volume > maxVolume) {
-                maxVolume = kbar.volume.toInt();
-              }
+        if (msg.hasFutureTick()) {
+          setState(() {
+            if (futureTickArr.isNotEmpty &&
+                futureTickArr.first.tick.tickType == msg.futureTick.tickType &&
+                futureTickArr.first.tick.close == msg.futureTick.close) {
+              futureTickArr.first.comboCount++;
+              futureTickArr.first.tick.volume += msg.futureTick.volume;
+              futureTickArr.first.tick.dateTime = msg.futureTick.dateTime;
+              return;
             }
-            setState(() {
-              kbarArr = msg.historyKbar.arr;
-              kbarMaxVolume = maxVolume;
-            });
-            return;
-
-          case pb.WSType.TYPE_FUTURE_DETAIL:
-            delieveryDate = msg.futureDetail.deliveryDate;
-            return;
-
-          case pb.WSType.TYPE_ASSIST_STATUS:
-            return;
-          case pb.WSType.TYPE_ERR_MESSAGE:
-            return;
-          case pb.WSType.TYPE_FUTURE_ORDER:
-            return;
-          case pb.WSType.TYPE_FUTURE_POSITION:
-            return;
+            futureTickArr.insert(0, CustomTick(msg.futureTick));
+            if (futureTickArr.length > 4) {
+              futureTickArr.removeLast();
+            }
+          });
+          _updateTradeRate(msg.futureTick);
+        } else if (msg.hasHistoryKbar()) {
+          int maxVolume = 0;
+          for (final kbar in msg.historyKbar.data) {
+            if (kbar.volume > maxVolume) {
+              maxVolume = kbar.volume.toInt();
+            }
+          }
+          setState(() {
+            kbarArr = msg.historyKbar;
+            kbarMaxVolume = maxVolume;
+          });
+        } else if (msg.hasTradeIndex()) {
+          setState(() {
+            tradeIndex = msg.tradeIndex;
+          });
+        } else if (futureTickArr.isEmpty && msg.hasSnapshot()) {
+          setState(() {
+            futureTickArr.insert(
+              0,
+              CustomTick(pb.FutureRealTimeTickMessage(
+                close: msg.snapshot.close,
+                priceChg: msg.snapshot.changePrice,
+              )),
+            );
+          });
         }
       },
       onDone: () {},
@@ -273,7 +276,7 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
     );
   }
 
-  void _updateTradeRate(pb.WSFutureTick tick) {
+  void _updateTradeRate(pb.FutureRealTimeTickMessage tick) {
     rateFutureTickArr.insert(0, tick);
     if (rateFutureTickArr.length == 1) {
       return;
@@ -283,12 +286,12 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
     double rate = 0;
     double duration = 0;
     for (int i = rateFutureTickArr.length - 1; i >= 0; i--) {
-      if (DateTime.now().difference(DateTime.parse(rateFutureTickArr[i].tickTime)).inSeconds > 15) {
+      if (DateTime.now().difference(DateTime.parse(rateFutureTickArr[i].dateTime)).inSeconds > 15) {
         rateFutureTickArr.removeAt(i);
         continue;
       }
       if (duration == 0) {
-        duration = DateTime.parse(rateFutureTickArr.first.tickTime).difference(DateTime.parse(rateFutureTickArr[i].tickTime)).inSeconds.toDouble();
+        duration = DateTime.parse(rateFutureTickArr.first.dateTime).difference(DateTime.parse(rateFutureTickArr[i].dateTime)).inSeconds.toDouble();
         if (duration == 0) {
           return;
         }
@@ -345,7 +348,7 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
     );
   }
 
-  Container _buildTickRow(pb.WSFutureTick tick) {
+  Container _buildTickRow(CustomTick tick) {
     return Container(
       margin: const EdgeInsets.symmetric(
         horizontal: 10,
@@ -353,21 +356,21 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
       ),
       decoration: BoxDecoration(
         border: Border.all(
-          color: tick.tickType == 1 ? Colors.red : Colors.green,
+          color: tick.tick.tickType == 1 ? Colors.red : Colors.green,
           width: tick.comboCount > 0 ? 1.6 : 1.1,
         ),
         borderRadius: BorderRadius.circular(12),
       ),
       child: ListTile(
         leading: numberText(
-          '${tick.volume}',
-          color: tick.tickType == 1 ? Colors.red : Colors.green,
+          '${tick.tick.volume}',
+          color: tick.tick.tickType == 1 ? Colors.red : Colors.green,
           bold: true,
           fontSize: tick.comboCount > 0 ? 24 : 16,
         ),
-        title: numberText(tick.close.toStringAsFixed(0), color: tick.tickType == 1 ? Colors.red : Colors.green, bold: true, fontSize: 18),
+        title: numberText(tick.tick.close.toStringAsFixed(0), color: tick.tick.tickType == 1 ? Colors.red : Colors.green, bold: true, fontSize: 18),
         trailing: numberText(
-          df.formatDate(DateTime.parse(tick.tickTime), [df.HH, ':', df.nn, ':', df.ss]),
+          df.formatDate(DateTime.parse(tick.tick.dateTime), [df.HH, ':', df.nn, ':', df.ss]),
         ),
       ),
     );

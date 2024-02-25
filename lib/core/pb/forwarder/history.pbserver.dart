@@ -15,51 +15,33 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'history.pb.dart' as $2;
+import 'history.pb.dart' as $0;
 import 'history.pbjson.dart';
 
 export 'history.pb.dart';
 
 abstract class HistoryDataInterfaceServiceBase extends $pb.GeneratedService {
-  $async.Future<$2.HistoryTickResponse> getStockHistoryTick($pb.ServerContext ctx, $2.StockNumArrWithDate request);
-  $async.Future<$2.HistoryKbarResponse> getStockHistoryKbar($pb.ServerContext ctx, $2.StockNumArrWithDate request);
-  $async.Future<$2.HistoryCloseResponse> getStockHistoryClose($pb.ServerContext ctx, $2.StockNumArrWithDate request);
-  $async.Future<$2.HistoryCloseResponse> getStockHistoryCloseByDateArr($pb.ServerContext ctx, $2.StockNumArrWithDateArr request);
-  $async.Future<$2.HistoryTickResponse> getFutureHistoryTick($pb.ServerContext ctx, $2.FutureCodeArrWithDate request);
-  $async.Future<$2.HistoryKbarResponse> getFutureHistoryKbar($pb.ServerContext ctx, $2.FutureCodeArrWithDate request);
-  $async.Future<$2.HistoryCloseResponse> getFutureHistoryClose($pb.ServerContext ctx, $2.FutureCodeArrWithDate request);
-  $async.Future<$2.HistoryTickResponse> getStockTSEHistoryTick($pb.ServerContext ctx, $2.Date request);
-  $async.Future<$2.HistoryKbarResponse> getStockTSEHistoryKbar($pb.ServerContext ctx, $2.Date request);
-  $async.Future<$2.HistoryCloseResponse> getStockTSEHistoryClose($pb.ServerContext ctx, $2.Date request);
+  $async.Future<$0.HistoryTickResponse> getStockHistoryTick($pb.ServerContext ctx, $0.StockNumArrWithDate request);
+  $async.Future<$0.HistoryKbarResponse> getStockHistoryKbar($pb.ServerContext ctx, $0.StockNumArrWithDate request);
+  $async.Future<$0.HistoryCloseResponse> getStockHistoryClose($pb.ServerContext ctx, $0.StockNumArrWithDate request);
+  $async.Future<$0.HistoryKbarResponse> getFutureHistoryKbar($pb.ServerContext ctx, $0.FutureCodeArrWithDate request);
 
   $pb.GeneratedMessage createRequest($core.String methodName) {
     switch (methodName) {
-      case 'GetStockHistoryTick': return $2.StockNumArrWithDate();
-      case 'GetStockHistoryKbar': return $2.StockNumArrWithDate();
-      case 'GetStockHistoryClose': return $2.StockNumArrWithDate();
-      case 'GetStockHistoryCloseByDateArr': return $2.StockNumArrWithDateArr();
-      case 'GetFutureHistoryTick': return $2.FutureCodeArrWithDate();
-      case 'GetFutureHistoryKbar': return $2.FutureCodeArrWithDate();
-      case 'GetFutureHistoryClose': return $2.FutureCodeArrWithDate();
-      case 'GetStockTSEHistoryTick': return $2.Date();
-      case 'GetStockTSEHistoryKbar': return $2.Date();
-      case 'GetStockTSEHistoryClose': return $2.Date();
+      case 'GetStockHistoryTick': return $0.StockNumArrWithDate();
+      case 'GetStockHistoryKbar': return $0.StockNumArrWithDate();
+      case 'GetStockHistoryClose': return $0.StockNumArrWithDate();
+      case 'GetFutureHistoryKbar': return $0.FutureCodeArrWithDate();
       default: throw $core.ArgumentError('Unknown method: $methodName');
     }
   }
 
   $async.Future<$pb.GeneratedMessage> handleCall($pb.ServerContext ctx, $core.String methodName, $pb.GeneratedMessage request) {
     switch (methodName) {
-      case 'GetStockHistoryTick': return this.getStockHistoryTick(ctx, request as $2.StockNumArrWithDate);
-      case 'GetStockHistoryKbar': return this.getStockHistoryKbar(ctx, request as $2.StockNumArrWithDate);
-      case 'GetStockHistoryClose': return this.getStockHistoryClose(ctx, request as $2.StockNumArrWithDate);
-      case 'GetStockHistoryCloseByDateArr': return this.getStockHistoryCloseByDateArr(ctx, request as $2.StockNumArrWithDateArr);
-      case 'GetFutureHistoryTick': return this.getFutureHistoryTick(ctx, request as $2.FutureCodeArrWithDate);
-      case 'GetFutureHistoryKbar': return this.getFutureHistoryKbar(ctx, request as $2.FutureCodeArrWithDate);
-      case 'GetFutureHistoryClose': return this.getFutureHistoryClose(ctx, request as $2.FutureCodeArrWithDate);
-      case 'GetStockTSEHistoryTick': return this.getStockTSEHistoryTick(ctx, request as $2.Date);
-      case 'GetStockTSEHistoryKbar': return this.getStockTSEHistoryKbar(ctx, request as $2.Date);
-      case 'GetStockTSEHistoryClose': return this.getStockTSEHistoryClose(ctx, request as $2.Date);
+      case 'GetStockHistoryTick': return this.getStockHistoryTick(ctx, request as $0.StockNumArrWithDate);
+      case 'GetStockHistoryKbar': return this.getStockHistoryKbar(ctx, request as $0.StockNumArrWithDate);
+      case 'GetStockHistoryClose': return this.getStockHistoryClose(ctx, request as $0.StockNumArrWithDate);
+      case 'GetFutureHistoryKbar': return this.getFutureHistoryKbar(ctx, request as $0.FutureCodeArrWithDate);
       default: throw $core.ArgumentError('Unknown method: $methodName');
     }
   }

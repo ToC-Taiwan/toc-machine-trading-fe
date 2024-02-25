@@ -1,5 +1,5 @@
-class Stock {
-  Stock({
+class StockDetail {
+  StockDetail({
     this.number,
     this.name,
     this.exchange,
@@ -8,7 +8,7 @@ class Stock {
     this.lastClose,
   });
 
-  Stock.fromJson(Map<dynamic, dynamic> json) {
+  StockDetail.fromJson(Map<dynamic, dynamic> json) {
     number = json['number'] as String;
     name = json['name'] as String;
     exchange = json['exchange'] as String;

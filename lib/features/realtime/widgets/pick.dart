@@ -32,7 +32,7 @@ class _PickStockWidgetState extends State<PickStockWidget> {
   late Future<List<pb.StockRealTimeTickMessage>?> realTimeData;
 
   Map<String, int> stockOrder = {};
-  Map<String, Stock> stockDetailMap = {};
+  Map<String, StockDetail> stockDetailMap = {};
 
   @override
   void initState() {
@@ -198,9 +198,9 @@ class _PickStockWidgetState extends State<PickStockWidget> {
   }
 
   Future<void> initialWS() async {
-    String url = backendPickWSURLPrefixV2;
+    String url = backendPickLotWSURLPrefix;
     if (widget.isOdd) {
-      url = backendPickOddsWSURLPrefixV2;
+      url = backendPickOddsWSURLPrefix;
     }
     _channel = IOWebSocketChannel.connect(
       Uri.parse(url),
@@ -236,7 +236,7 @@ class _PickStockWidgetState extends State<PickStockWidget> {
       return null;
     }
 
-    List<Stock> stockDetail = await API.fetchStockDetail(dbStock);
+    List<StockDetail> stockDetail = await API.fetchStockDetail(dbStock);
     for (final i in stockDetail) {
       if (i.name!.isEmpty) {
         await PickStockRepo.delete(i.number!);
@@ -263,11 +263,11 @@ class _PickStockWidgetState extends State<PickStockWidget> {
   }
 
   Future<void> addStock(String stockNum) async {
-    List<Stock> dataArr = await API.fetchStockDetail([stockNum]);
+    List<StockDetail> dataArr = await API.fetchStockDetail([stockNum]);
     if (dataArr.isEmpty) {
       throw -1;
     }
-    Stock data = dataArr[0];
+    StockDetail data = dataArr[0];
     if (data.name!.isEmpty) {
       throw -2;
     }

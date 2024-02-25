@@ -13,7 +13,7 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
-import '../google/protobuf/empty.pbjson.dart' as $0;
+import '../google/protobuf/empty.pbjson.dart' as $1;
 
 @$core.Deprecated('Use beatMessageDescriptor instead')
 const BeatMessage$json = {
@@ -171,7 +171,6 @@ const $core.Map<$core.String, $core.dynamic> BasicDataInterfaceServiceBase$json 
   '1': 'BasicDataInterface',
   '2': [
     {'1': 'CreateLongConnection', '2': '.google.protobuf.Empty', '3': '.google.protobuf.Empty', '5': true},
-    {'1': 'Terminate', '2': '.google.protobuf.Empty', '3': '.google.protobuf.Empty'},
     {'1': 'CheckUsage', '2': '.google.protobuf.Empty', '3': '.forwarder.ShioajiUsage', '4': {}},
     {'1': 'Login', '2': '.google.protobuf.Empty', '3': '.google.protobuf.Empty', '4': {}},
     {'1': 'GetAllStockDetail', '2': '.google.protobuf.Empty', '3': '.forwarder.StockDetailResponse', '4': {}},
@@ -182,7 +181,7 @@ const $core.Map<$core.String, $core.dynamic> BasicDataInterfaceServiceBase$json 
 
 @$core.Deprecated('Use basicDataInterfaceServiceDescriptor instead')
 const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> BasicDataInterfaceServiceBase$messageJson = {
-  '.google.protobuf.Empty': $0.Empty$json,
+  '.google.protobuf.Empty': $1.Empty$json,
   '.forwarder.ShioajiUsage': ShioajiUsage$json,
   '.forwarder.StockDetailResponse': StockDetailResponse$json,
   '.forwarder.StockDetailMessage': StockDetailMessage$json,
@@ -195,13 +194,12 @@ const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> BasicDataI
 /// Descriptor for `BasicDataInterface`. Decode as a `google.protobuf.ServiceDescriptorProto`.
 final $typed_data.Uint8List basicDataInterfaceServiceDescriptor = $convert.base64Decode(
     'ChJCYXNpY0RhdGFJbnRlcmZhY2USSAoUQ3JlYXRlTG9uZ0Nvbm5lY3Rpb24SFi5nb29nbGUucH'
-    'JvdG9idWYuRW1wdHkaFi5nb29nbGUucHJvdG9idWYuRW1wdHkoARI7CglUZXJtaW5hdGUSFi5n'
-    'b29nbGUucHJvdG9idWYuRW1wdHkaFi5nb29nbGUucHJvdG9idWYuRW1wdHkSPwoKQ2hlY2tVc2'
-    'FnZRIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoXLmZvcndhcmRlci5TaGlvYWppVXNhZ2UiABI5'
-    'CgVMb2dpbhIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eS'
-    'IAEk0KEUdldEFsbFN0b2NrRGV0YWlsEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Gh4uZm9yd2Fy'
-    'ZGVyLlN0b2NrRGV0YWlsUmVzcG9uc2UiABJPChJHZXRBbGxGdXR1cmVEZXRhaWwSFi5nb29nbG'
-    'UucHJvdG9idWYuRW1wdHkaHy5mb3J3YXJkZXIuRnV0dXJlRGV0YWlsUmVzcG9uc2UiABJPChJH'
-    'ZXRBbGxPcHRpb25EZXRhaWwSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaHy5mb3J3YXJkZXIuT3'
-    'B0aW9uRGV0YWlsUmVzcG9uc2UiAA==');
+    'JvdG9idWYuRW1wdHkaFi5nb29nbGUucHJvdG9idWYuRW1wdHkoARI/CgpDaGVja1VzYWdlEhYu'
+    'Z29vZ2xlLnByb3RvYnVmLkVtcHR5GhcuZm9yd2FyZGVyLlNoaW9hamlVc2FnZSIAEjkKBUxvZ2'
+    'luEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5IgASTQoR'
+    'R2V0QWxsU3RvY2tEZXRhaWwSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaHi5mb3J3YXJkZXIuU3'
+    'RvY2tEZXRhaWxSZXNwb25zZSIAEk8KEkdldEFsbEZ1dHVyZURldGFpbBIWLmdvb2dsZS5wcm90'
+    'b2J1Zi5FbXB0eRofLmZvcndhcmRlci5GdXR1cmVEZXRhaWxSZXNwb25zZSIAEk8KEkdldEFsbE'
+    '9wdGlvbkRldGFpbBIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRofLmZvcndhcmRlci5PcHRpb25E'
+    'ZXRhaWxSZXNwb25zZSIA');
 

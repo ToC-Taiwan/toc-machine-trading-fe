@@ -13,8 +13,8 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
-import '../google/protobuf/empty.pbjson.dart' as $0;
-import 'entity.pbjson.dart' as $3;
+import '../google/protobuf/empty.pbjson.dart' as $1;
+import 'entity.pbjson.dart' as $2;
 
 @$core.Deprecated('Use snapshotResponseDescriptor instead')
 const SnapshotResponse$json = {
@@ -171,8 +171,8 @@ const $core.Map<$core.String, $core.dynamic> RealTimeDataInterfaceServiceBase$js
   '2': [
     {'1': 'GetAllStockSnapshot', '2': '.google.protobuf.Empty', '3': '.forwarder.SnapshotResponse', '4': {}},
     {'1': 'GetStockSnapshotByNumArr', '2': '.forwarder.StockNumArr', '3': '.forwarder.SnapshotResponse', '4': {}},
-    {'1': 'GetStockSnapshotTSE', '2': '.google.protobuf.Empty', '3': '.forwarder.SnapshotMessage', '4': {}},
-    {'1': 'GetStockSnapshotOTC', '2': '.google.protobuf.Empty', '3': '.forwarder.SnapshotMessage', '4': {}},
+    {'1': 'GetStockSnapshotTSE', '2': '.google.protobuf.Empty', '3': '.forwarder.SnapshotResponse', '4': {}},
+    {'1': 'GetStockSnapshotOTC', '2': '.google.protobuf.Empty', '3': '.forwarder.SnapshotResponse', '4': {}},
     {'1': 'GetNasdaq', '2': '.google.protobuf.Empty', '3': '.forwarder.YahooFinancePrice', '4': {}},
     {'1': 'GetNasdaqFuture', '2': '.google.protobuf.Empty', '3': '.forwarder.YahooFinancePrice', '4': {}},
     {'1': 'GetStockVolumeRank', '2': '.forwarder.VolumeRankRequest', '3': '.forwarder.StockVolumeRankResponse', '4': {}},
@@ -182,15 +182,15 @@ const $core.Map<$core.String, $core.dynamic> RealTimeDataInterfaceServiceBase$js
 
 @$core.Deprecated('Use realTimeDataInterfaceServiceDescriptor instead')
 const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> RealTimeDataInterfaceServiceBase$messageJson = {
-  '.google.protobuf.Empty': $0.Empty$json,
+  '.google.protobuf.Empty': $1.Empty$json,
   '.forwarder.SnapshotResponse': SnapshotResponse$json,
   '.forwarder.SnapshotMessage': SnapshotMessage$json,
-  '.forwarder.StockNumArr': $3.StockNumArr$json,
+  '.forwarder.StockNumArr': $2.StockNumArr$json,
   '.forwarder.YahooFinancePrice': YahooFinancePrice$json,
   '.forwarder.VolumeRankRequest': VolumeRankRequest$json,
   '.forwarder.StockVolumeRankResponse': StockVolumeRankResponse$json,
   '.forwarder.StockVolumeRankMessage': StockVolumeRankMessage$json,
-  '.forwarder.FutureCodeArr': $3.FutureCodeArr$json,
+  '.forwarder.FutureCodeArr': $2.FutureCodeArr$json,
 };
 
 /// Descriptor for `RealTimeDataInterface`. Decode as a `google.protobuf.ServiceDescriptorProto`.
@@ -198,13 +198,13 @@ final $typed_data.Uint8List realTimeDataInterfaceServiceDescriptor = $convert.ba
     'ChVSZWFsVGltZURhdGFJbnRlcmZhY2USTAoTR2V0QWxsU3RvY2tTbmFwc2hvdBIWLmdvb2dsZS'
     '5wcm90b2J1Zi5FbXB0eRobLmZvcndhcmRlci5TbmFwc2hvdFJlc3BvbnNlIgASUQoYR2V0U3Rv'
     'Y2tTbmFwc2hvdEJ5TnVtQXJyEhYuZm9yd2FyZGVyLlN0b2NrTnVtQXJyGhsuZm9yd2FyZGVyLl'
-    'NuYXBzaG90UmVzcG9uc2UiABJLChNHZXRTdG9ja1NuYXBzaG90VFNFEhYuZ29vZ2xlLnByb3Rv'
-    'YnVmLkVtcHR5GhouZm9yd2FyZGVyLlNuYXBzaG90TWVzc2FnZSIAEksKE0dldFN0b2NrU25hcH'
-    'Nob3RPVEMSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaGi5mb3J3YXJkZXIuU25hcHNob3RNZXNz'
-    'YWdlIgASQwoJR2V0TmFzZGFxEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhwuZm9yd2FyZGVyLl'
-    'lhaG9vRmluYW5jZVByaWNlIgASSQoPR2V0TmFzZGFxRnV0dXJlEhYuZ29vZ2xlLnByb3RvYnVm'
-    'LkVtcHR5GhwuZm9yd2FyZGVyLllhaG9vRmluYW5jZVByaWNlIgASWAoSR2V0U3RvY2tWb2x1bW'
-    'VSYW5rEhwuZm9yd2FyZGVyLlZvbHVtZVJhbmtSZXF1ZXN0GiIuZm9yd2FyZGVyLlN0b2NrVm9s'
-    'dW1lUmFua1Jlc3BvbnNlIgASVQoaR2V0RnV0dXJlU25hcHNob3RCeUNvZGVBcnISGC5mb3J3YX'
-    'JkZXIuRnV0dXJlQ29kZUFychobLmZvcndhcmRlci5TbmFwc2hvdFJlc3BvbnNlIgA=');
+    'NuYXBzaG90UmVzcG9uc2UiABJMChNHZXRTdG9ja1NuYXBzaG90VFNFEhYuZ29vZ2xlLnByb3Rv'
+    'YnVmLkVtcHR5GhsuZm9yd2FyZGVyLlNuYXBzaG90UmVzcG9uc2UiABJMChNHZXRTdG9ja1NuYX'
+    'BzaG90T1RDEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhsuZm9yd2FyZGVyLlNuYXBzaG90UmVz'
+    'cG9uc2UiABJDCglHZXROYXNkYXESFi5nb29nbGUucHJvdG9idWYuRW1wdHkaHC5mb3J3YXJkZX'
+    'IuWWFob29GaW5hbmNlUHJpY2UiABJJCg9HZXROYXNkYXFGdXR1cmUSFi5nb29nbGUucHJvdG9i'
+    'dWYuRW1wdHkaHC5mb3J3YXJkZXIuWWFob29GaW5hbmNlUHJpY2UiABJYChJHZXRTdG9ja1ZvbH'
+    'VtZVJhbmsSHC5mb3J3YXJkZXIuVm9sdW1lUmFua1JlcXVlc3QaIi5mb3J3YXJkZXIuU3RvY2tW'
+    'b2x1bWVSYW5rUmVzcG9uc2UiABJVChpHZXRGdXR1cmVTbmFwc2hvdEJ5Q29kZUFychIYLmZvcn'
+    'dhcmRlci5GdXR1cmVDb2RlQXJyGhsuZm9yd2FyZGVyLlNuYXBzaG90UmVzcG9uc2UiAA==');
 

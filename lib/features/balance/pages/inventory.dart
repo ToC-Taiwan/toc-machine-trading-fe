@@ -132,7 +132,7 @@ class _InventoryContentState extends State<InventoryContent> with AutomaticKeepA
         for (final i in value!) {
           stockArr.add(i.stockNum!);
         }
-        List<Stock> stockDetail = await API.fetchStockDetail(stockArr);
+        List<StockDetail> stockDetail = await API.fetchStockDetail(stockArr);
         for (final i in stockDetail) {
           if (i.name!.isEmpty) {
             continue;

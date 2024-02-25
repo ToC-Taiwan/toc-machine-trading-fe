@@ -7,8 +7,8 @@ import 'package:toc_machine_trading_fe/core/api/api.dart';
 import 'package:toc_machine_trading_fe/core/pb/forwarder/realtime.pb.dart' as pb;
 import 'package:toc_machine_trading_fe/features/order/pages/category.dart';
 import 'package:toc_machine_trading_fe/features/package_setting/pages/package_setting.dart';
-import 'package:toc_machine_trading_fe/features/realtime/pages/future.dart';
 import 'package:toc_machine_trading_fe/features/realtime/pages/pick_category.dart';
+import 'package:toc_machine_trading_fe/features/realtime/pages/search.dart';
 import 'package:toc_machine_trading_fe/features/realtime/repo/pick_stock.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
 import 'package:web_socket_channel/io.dart';
@@ -110,12 +110,12 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                     context,
                     scrollController,
                     items: [
-                      _buildCustomButtom(AppLocalizations.of(context)!.mxf, Colors.blue[600], Icons.chrome_reader_mode_rounded, onTap: () {
+                      _buildCustomButtom(AppLocalizations.of(context)!.future, Colors.blue[600], Icons.chrome_reader_mode_rounded, onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             maintainState: false,
                             fullscreenDialog: true,
-                            builder: (context) => FutureRealTimePage(code: AppLocalizations.of(context)!.mxf),
+                            builder: (context) => const SearchFuturePage(),
                           ),
                         );
                       }),

@@ -15,8 +15,8 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../google/protobuf/empty.pb.dart' as $0;
-import 'entity.pb.dart' as $3;
+import '../google/protobuf/empty.pb.dart' as $1;
+import 'entity.pb.dart' as $2;
 
 class SnapshotResponse extends $pb.GeneratedMessage {
   factory SnapshotResponse({
@@ -996,28 +996,28 @@ class RealTimeDataInterfaceApi {
   $pb.RpcClient _client;
   RealTimeDataInterfaceApi(this._client);
 
-  $async.Future<SnapshotResponse> getAllStockSnapshot($pb.ClientContext? ctx, $0.Empty request) =>
+  $async.Future<SnapshotResponse> getAllStockSnapshot($pb.ClientContext? ctx, $1.Empty request) =>
     _client.invoke<SnapshotResponse>(ctx, 'RealTimeDataInterface', 'GetAllStockSnapshot', request, SnapshotResponse())
   ;
-  $async.Future<SnapshotResponse> getStockSnapshotByNumArr($pb.ClientContext? ctx, $3.StockNumArr request) =>
+  $async.Future<SnapshotResponse> getStockSnapshotByNumArr($pb.ClientContext? ctx, $2.StockNumArr request) =>
     _client.invoke<SnapshotResponse>(ctx, 'RealTimeDataInterface', 'GetStockSnapshotByNumArr', request, SnapshotResponse())
   ;
-  $async.Future<SnapshotMessage> getStockSnapshotTSE($pb.ClientContext? ctx, $0.Empty request) =>
-    _client.invoke<SnapshotMessage>(ctx, 'RealTimeDataInterface', 'GetStockSnapshotTSE', request, SnapshotMessage())
+  $async.Future<SnapshotResponse> getStockSnapshotTSE($pb.ClientContext? ctx, $1.Empty request) =>
+    _client.invoke<SnapshotResponse>(ctx, 'RealTimeDataInterface', 'GetStockSnapshotTSE', request, SnapshotResponse())
   ;
-  $async.Future<SnapshotMessage> getStockSnapshotOTC($pb.ClientContext? ctx, $0.Empty request) =>
-    _client.invoke<SnapshotMessage>(ctx, 'RealTimeDataInterface', 'GetStockSnapshotOTC', request, SnapshotMessage())
+  $async.Future<SnapshotResponse> getStockSnapshotOTC($pb.ClientContext? ctx, $1.Empty request) =>
+    _client.invoke<SnapshotResponse>(ctx, 'RealTimeDataInterface', 'GetStockSnapshotOTC', request, SnapshotResponse())
   ;
-  $async.Future<YahooFinancePrice> getNasdaq($pb.ClientContext? ctx, $0.Empty request) =>
+  $async.Future<YahooFinancePrice> getNasdaq($pb.ClientContext? ctx, $1.Empty request) =>
     _client.invoke<YahooFinancePrice>(ctx, 'RealTimeDataInterface', 'GetNasdaq', request, YahooFinancePrice())
   ;
-  $async.Future<YahooFinancePrice> getNasdaqFuture($pb.ClientContext? ctx, $0.Empty request) =>
+  $async.Future<YahooFinancePrice> getNasdaqFuture($pb.ClientContext? ctx, $1.Empty request) =>
     _client.invoke<YahooFinancePrice>(ctx, 'RealTimeDataInterface', 'GetNasdaqFuture', request, YahooFinancePrice())
   ;
   $async.Future<StockVolumeRankResponse> getStockVolumeRank($pb.ClientContext? ctx, VolumeRankRequest request) =>
     _client.invoke<StockVolumeRankResponse>(ctx, 'RealTimeDataInterface', 'GetStockVolumeRank', request, StockVolumeRankResponse())
   ;
-  $async.Future<SnapshotResponse> getFutureSnapshotByCodeArr($pb.ClientContext? ctx, $3.FutureCodeArr request) =>
+  $async.Future<SnapshotResponse> getFutureSnapshotByCodeArr($pb.ClientContext? ctx, $2.FutureCodeArr request) =>
     _client.invoke<SnapshotResponse>(ctx, 'RealTimeDataInterface', 'GetFutureSnapshotByCodeArr', request, SnapshotResponse())
   ;
 }
