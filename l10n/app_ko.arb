@@ -145,5 +145,7 @@
   "valid_until": "유효 기간",
   "under_development": "개발 중",
   "reverse": "반대",
-  "place_order": "주문하기"
+  "place_order": "주문하기",
+  "logout": "로그아웃",
+  "are_you_sure_you_want_to_logout": "로그아웃 하시겠습니까?"
 }
