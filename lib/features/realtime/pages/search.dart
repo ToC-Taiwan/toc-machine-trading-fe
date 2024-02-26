@@ -81,6 +81,10 @@ class _SearchFuturePageState extends State<SearchFuturePage> {
                       if (value.isNotEmpty) {
                         _channel!.sink.add(value);
                         SearchCache.setCode(value);
+                      } else {
+                        setState(() {
+                          futureList = [];
+                        });
                       }
                     },
                     decoration: InputDecoration(
@@ -89,7 +93,9 @@ class _SearchFuturePageState extends State<SearchFuturePage> {
                         onPressed: () {
                           _controller.clear();
                           SearchCache.clear();
-                          _channel!.sink.add('');
+                          setState(() {
+                            futureList = [];
+                          });
                         },
                         icon: const Icon(Icons.clear),
                       ),
@@ -152,6 +158,10 @@ class _SearchFuturePageState extends State<SearchFuturePage> {
     _channel!.stream.listen(
       (message) {
         final msg = jsonDecode(message);
+        if (msg['futures'] == null) {
+          return;
+        }
+
         List<FutureDetail> result = [];
         for (var item in msg['futures']) {
           result.add(FutureDetail.fromJson(item));

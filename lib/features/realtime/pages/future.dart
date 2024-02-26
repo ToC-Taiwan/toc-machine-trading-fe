@@ -127,7 +127,11 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
                                 '${futureTickArr[0].tick.priceChg == 0 ? '' : futureTickArr[0].tick.priceChg > 0 ? '+' : '-'} ${futureTickArr[0].tick.priceChg.abs().toStringAsFixed(0)}',
                                 fontSize: 45,
                                 bold: true,
-                                color: futureTickArr[0].tick.priceChg > 0 ? Colors.redAccent : Colors.greenAccent,
+                                color: futureTickArr[0].tick.priceChg == 0
+                                    ? Colors.black
+                                    : futureTickArr[0].tick.priceChg > 0
+                                        ? Colors.redAccent
+                                        : Colors.greenAccent,
                               ),
                             ),
                           ),
@@ -266,6 +270,8 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
               CustomTick(pb.FutureRealTimeTickMessage(
                 close: msg.snapshot.close,
                 priceChg: msg.snapshot.changePrice,
+                dateTime: DateTime.fromMicrosecondsSinceEpoch(msg.snapshot.ts.toInt() ~/ 1000).add(const Duration(hours: -8)).toIso8601String(),
+                volume: msg.snapshot.volume,
               )),
             );
           });
