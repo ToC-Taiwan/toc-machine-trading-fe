@@ -65,6 +65,11 @@ abstract class API {
     _apiToken = token;
   }
 
+  static clearAuthKey() {
+    _storage.delete(key: 'authKey');
+    _apiToken = '';
+  }
+
   static String get authKey {
     return _apiToken;
   }
@@ -87,6 +92,25 @@ abstract class API {
         setAuthKey = result['token'];
       } else {
         throw result['code'] as int;
+      }
+    } on ClientException {
+      throw serverError;
+    }
+  }
+
+  static Future<bool> logout() async {
+    try {
+      final response = await _client.get(
+        Uri.parse('$backendURLPrefix/logout'),
+        headers: {
+          "Authorization": _apiToken,
+        },
+      );
+      if (response.statusCode == 200) {
+        clearAuthKey();
+        return true;
+      } else {
+        return false;
       }
     } on ClientException {
       throw serverError;

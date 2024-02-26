@@ -145,5 +145,7 @@
   "valid_until": "有效期限",
   "under_development": "開發中",
   "reverse": "反向",
-  "place_order": "下單"
+  "place_order": "下單",
+  "logout": "登出",
+  "are_you_sure_you_want_to_logout": "確定要登出嗎？"
 }

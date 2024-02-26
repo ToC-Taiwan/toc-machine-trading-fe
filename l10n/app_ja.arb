@@ -145,5 +145,7 @@
   "valid_until": "有効期限",
   "under_development": "開発中",
   "reverse": "逆",
-  "place_order": "注文"
+  "place_order": "注文",
+  "logout": "ログアウト",
+  "are_you_sure_you_want_to_logout": "ログアウトしますか？"
 }

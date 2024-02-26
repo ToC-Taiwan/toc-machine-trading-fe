@@ -10,6 +10,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';
 import 'package:toc_machine_trading_fe/core/fcm/fcm.dart';
 import 'package:toc_machine_trading_fe/core/locale/locale.dart';
+import 'package:toc_machine_trading_fe/features/login/pages/login.dart';
 import 'package:toc_machine_trading_fe/features/login/repo/repo.dart';
 import 'package:toc_machine_trading_fe/features/universal/entity/store.dart';
 import 'package:toc_machine_trading_fe/features/universal/entity/user.dart';
@@ -304,6 +305,49 @@ class _SettingsPageState extends State<SettingsPage> {
                 leading: const Icon(Icons.settings_accessibility_outlined),
                 title: Text(AppLocalizations.of(context)!.about_me),
                 onTap: _launchUrl,
+              ),
+              ListTile(
+                leading: const Icon(Icons.logout),
+                title: Text(AppLocalizations.of(context)!.logout),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text(
+                        AppLocalizations.of(context)!.logout,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      content: Text(AppLocalizations.of(context)!.are_you_sure_you_want_to_logout),
+                      actions: <Widget>[
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            AppLocalizations.of(context)!.cancel,
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            await API.logout().then((value) {
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                LoginPage.routeName,
+                                (route) => false,
+                                arguments: !value,
+                              );
+                            });
+                          },
+                          child: Text(
+                            AppLocalizations.of(context)!.logout,
+                            style: const TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
             ],
           ),
