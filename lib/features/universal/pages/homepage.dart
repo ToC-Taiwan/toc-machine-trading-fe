@@ -40,7 +40,9 @@ class _HomePageState extends State<HomePage> {
   void refreshTokenAndNotification() {
     if (DateTime.now().difference(_lastFreshTime).inSeconds > 300) {
       API.refreshToken().catchError((_) {
-        Navigator.pushNamedAndRemoveUntil(context, LoginPage.routeName, (route) => false, arguments: true);
+        Navigator.pushNamedAndRemoveUntil(
+            context, LoginPage.routeName, (route) => false,
+            arguments: true);
       });
       _lastFreshTime = DateTime.now();
     }
@@ -52,7 +54,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _showNotification(RemoteMessage msg) async {
-    if (!FCM.allowPush || msg.notification == null || currentPageIndex == 3) {
+    if (!FCM.allowPush) {
       return;
     }
 

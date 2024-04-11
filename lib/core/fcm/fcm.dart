@@ -197,6 +197,14 @@ abstract class FCM {
   }
 
   static Future<void> insertNotification(RemoteMessage msg) async {
+    if (msg.notification == null) {
+      return;
+    }
+
+    if (msg.notification!.title!.isEmpty || msg.notification!.body!.isEmpty) {
+      return;
+    }
+
     await _db!.insert(
       'notification',
       {
