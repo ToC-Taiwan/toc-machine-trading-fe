@@ -75,12 +75,6 @@ class _CommissionCategoryPageState extends State<CommissionCategoryPage> with Ti
             tabs: <Widget>[
               Tab(
                 child: Text(
-                  AppLocalizations.of(context)!.package,
-                  style: Theme.of(context).textTheme.titleMedium!,
-                ),
-              ),
-              Tab(
-                child: Text(
                   AppLocalizations.of(context)!.stock,
                   style: Theme.of(context).textTheme.titleMedium!,
                 ),
@@ -88,6 +82,12 @@ class _CommissionCategoryPageState extends State<CommissionCategoryPage> with Ti
               Tab(
                 child: Text(
                   AppLocalizations.of(context)!.future,
+                  style: Theme.of(context).textTheme.titleMedium!,
+                ),
+              ),
+              Tab(
+                child: Text(
+                  AppLocalizations.of(context)!.package,
                   style: Theme.of(context).textTheme.titleMedium!,
                 ),
               ),
