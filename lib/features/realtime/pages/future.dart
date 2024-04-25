@@ -85,7 +85,8 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
                         percent: outInRatio,
                         center: numberText('${tradeRate.toStringAsFixed(1)}/s'),
                         progressColor: Colors.redAccent,
-                        backgroundColor: outInRatio == 0 ? Colors.grey : Colors.greenAccent,
+                        backgroundColor:
+                            outInRatio == 0 ? Colors.grey : Colors.greenAccent,
                       ),
                     ),
                     Expanded(
@@ -95,10 +96,14 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            _buildIndex('NASDAQ', tradeIndex.nasdaq.priceChg, tradeIndex.nasdaq.breakCount.toInt()),
-                            _buildIndex('NF', tradeIndex.nf.priceChg, tradeIndex.nf.breakCount.toInt()),
-                            _buildIndex('TSE', tradeIndex.tse.priceChg, tradeIndex.tse.breakCount.toInt()),
-                            _buildIndex('OTC', tradeIndex.otc.priceChg, tradeIndex.otc.breakCount.toInt()),
+                            _buildIndex('NASDAQ', tradeIndex.nasdaq.priceChg,
+                                tradeIndex.nasdaq.breakCount.toInt()),
+                            _buildIndex('NF', tradeIndex.nf.priceChg,
+                                tradeIndex.nf.breakCount.toInt()),
+                            _buildIndex('TSE', tradeIndex.tse.priceChg,
+                                tradeIndex.tse.breakCount.toInt()),
+                            _buildIndex('OTC', tradeIndex.otc.priceChg,
+                                tradeIndex.otc.breakCount.toInt()),
                           ],
                         ),
                       ),
@@ -115,7 +120,11 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
                           Expanded(
                             child: Center(
                               child: numberText(
-                                futureTickArr[0].tick.close.abs().toStringAsFixed(0),
+                                futureTickArr[0]
+                                    .tick
+                                    .close
+                                    .abs()
+                                    .toStringAsFixed(0),
                                 fontSize: 55,
                                 bold: true,
                               ),
@@ -152,9 +161,18 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
                       )
                     : Column(
                         children: [
-                          Expanded(child: futureTickArr.length >= 2 ? _buildTickRow(futureTickArr[1]) : Container()),
-                          Expanded(child: futureTickArr.length >= 3 ? _buildTickRow(futureTickArr[2]) : Container()),
-                          Expanded(child: futureTickArr.length >= 4 ? _buildTickRow(futureTickArr[3]) : Container()),
+                          Expanded(
+                              child: futureTickArr.length >= 2
+                                  ? _buildTickRow(futureTickArr[1])
+                                  : Container()),
+                          Expanded(
+                              child: futureTickArr.length >= 3
+                                  ? _buildTickRow(futureTickArr[2])
+                                  : Container()),
+                          Expanded(
+                              child: futureTickArr.length >= 4
+                                  ? _buildTickRow(futureTickArr[3])
+                                  : Container()),
                         ],
                       ),
               ),
@@ -189,7 +207,10 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
                       bearColor: Colors.green,
                       bullColor: Colors.red,
                       dataSource: kbarArr.data,
-                      xValueMapper: (datum, index) => DateTime.fromMicrosecondsSinceEpoch(datum.ts.toInt() ~/ 1000).add(const Duration(hours: -8)),
+                      xValueMapper: (datum, index) =>
+                          DateTime.fromMicrosecondsSinceEpoch(
+                                  datum.ts.toInt() ~/ 1000)
+                              .add(const Duration(hours: -8)),
                       lowValueMapper: (datum, index) => datum.low,
                       highValueMapper: (datum, index) => datum.high,
                       openValueMapper: (datum, index) => datum.open,
@@ -204,9 +225,15 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
                     ColumnSeries<pb.HistoryKbarMessage, DateTime>(
                       yAxisName: 'volume',
                       dataSource: kbarArr.data,
-                      xValueMapper: (datum, index) => DateTime.fromMicrosecondsSinceEpoch(datum.ts.toInt() ~/ 1000).add(const Duration(hours: -8)),
+                      xValueMapper: (datum, index) =>
+                          DateTime.fromMicrosecondsSinceEpoch(
+                                  datum.ts.toInt() ~/ 1000)
+                              .add(const Duration(hours: -8)),
                       yValueMapper: (datum, index) => datum.volume.toInt(),
-                      pointColorMapper: (datum, index) => datum.close > datum.open ? Colors.redAccent : Colors.greenAccent,
+                      pointColorMapper: (datum, index) =>
+                          datum.close > datum.open
+                              ? Colors.redAccent
+                              : Colors.greenAccent,
                     ),
                   ],
                 ),
@@ -220,11 +247,10 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
 
   Future<void> initialWS() async {
     _channel = IOWebSocketChannel.connect(
-      Uri.parse(backendFutureWSURLPrefix),
+      Uri.parse("$backendFutureWSURLPrefix/${widget.code}"),
       pingInterval: const Duration(seconds: 1),
       headers: {
         "Authorization": API.authKey,
-        "Code": widget.code,
       },
     );
     await _channel!.ready;
@@ -270,7 +296,10 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
               CustomTick(pb.FutureRealTimeTickMessage(
                 close: msg.snapshot.close,
                 priceChg: msg.snapshot.changePrice,
-                dateTime: DateTime.fromMicrosecondsSinceEpoch(msg.snapshot.ts.toInt() ~/ 1000).add(const Duration(hours: -8)).toIso8601String(),
+                dateTime: DateTime.fromMicrosecondsSinceEpoch(
+                        msg.snapshot.ts.toInt() ~/ 1000)
+                    .add(const Duration(hours: -8))
+                    .toIso8601String(),
                 volume: msg.snapshot.volume,
               )),
             );
@@ -292,12 +321,18 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
     double rate = 0;
     double duration = 0;
     for (int i = rateFutureTickArr.length - 1; i >= 0; i--) {
-      if (DateTime.now().difference(DateTime.parse(rateFutureTickArr[i].dateTime)).inSeconds > 15) {
+      if (DateTime.now()
+              .difference(DateTime.parse(rateFutureTickArr[i].dateTime))
+              .inSeconds >
+          15) {
         rateFutureTickArr.removeAt(i);
         continue;
       }
       if (duration == 0) {
-        duration = DateTime.parse(rateFutureTickArr.first.dateTime).difference(DateTime.parse(rateFutureTickArr[i].dateTime)).inSeconds.toDouble();
+        duration = DateTime.parse(rateFutureTickArr.first.dateTime)
+            .difference(DateTime.parse(rateFutureTickArr[i].dateTime))
+            .inSeconds
+            .toDouble();
         if (duration == 0) {
           return;
         }
@@ -321,7 +356,8 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
       children: [
         Expanded(
           flex: 2,
-          child: numberText(name, color: Theme.of(context).colorScheme.secondary),
+          child:
+              numberText(name, color: Theme.of(context).colorScheme.secondary),
         ),
         Expanded(
           flex: 3,
@@ -374,9 +410,13 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
           bold: true,
           fontSize: tick.comboCount > 0 ? 24 : 16,
         ),
-        title: numberText(tick.tick.close.toStringAsFixed(0), color: tick.tick.tickType == 1 ? Colors.red : Colors.green, bold: true, fontSize: 18),
+        title: numberText(tick.tick.close.toStringAsFixed(0),
+            color: tick.tick.tickType == 1 ? Colors.red : Colors.green,
+            bold: true,
+            fontSize: 18),
         trailing: numberText(
-          df.formatDate(DateTime.parse(tick.tick.dateTime), [df.HH, ':', df.nn, ':', df.ss]),
+          df.formatDate(DateTime.parse(tick.tick.dateTime),
+              [df.HH, ':', df.nn, ':', df.ss]),
         ),
       ),
     );
