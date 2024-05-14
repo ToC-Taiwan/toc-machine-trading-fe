@@ -1,7 +1,7 @@
 name: toc_machine_trading_fe
 description: "Status of trade agent, let user query analyzed stocks."
 publish_to: "none"
-version: 4.2.60+40120
+version: 4.2.61+40121
 
 environment:
   sdk: ">=3.2.5 <4.0.0"
@@ -43,11 +43,11 @@ dependencies:
   table_calendar: ^3.0.9
   url_launcher: ^6.2.4
   wakelock: ^0.6.2
-  web_socket_channel: ^2.4.0
+  web_socket_channel: ^3.0.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
-  flutter_lints: ^3.0.1
+  flutter_lints: ^4.0.0
   flutter_native_splash: ^2.3.9
   flutter_test:
     sdk: flutter
