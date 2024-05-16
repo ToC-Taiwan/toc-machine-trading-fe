@@ -158,10 +158,13 @@ class _SearchFuturePageState extends State<SearchFuturePage> {
       },
     );
     await _channel!.ready;
-    if (SearchCache.getCode().isNotEmpty) {
-      _controller.text = SearchCache.getCode();
-      _channel!.sink.add(SearchCache.getCode());
+    String code = SearchCache.getCode();
+    if (code.isEmpty) {
+      code = "MXF";
+      SearchCache.setCode(code);
     }
+    _controller.text = code;
+    _channel!.sink.add(SearchCache.getCode());
     _channel!.stream.listen(
       (message) {
         final msg = jsonDecode(message);
