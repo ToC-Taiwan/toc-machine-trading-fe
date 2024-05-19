@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:syncfusion_flutter_treemap/treemap.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';
-import 'package:toc_machine_trading_fe/core/pb/forwarder/realtime.pb.dart' as pb;
+import 'package:toc_trade_protobuf/forwarder/realtime.pb.dart' as pb;
 import 'package:toc_machine_trading_fe/features/order/pages/category.dart';
 import 'package:toc_machine_trading_fe/features/package_setting/pages/package_setting.dart';
 import 'package:toc_machine_trading_fe/features/realtime/pages/pick_category.dart';
@@ -76,7 +76,8 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                           autoPlay: false,
                         ),
                         itemCount: imageSliders.length,
-                        itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
+                        itemBuilder: (BuildContext context, int itemIndex,
+                            int pageViewIndex) {
                           return _buildTreeMap(imageSliders[itemIndex]);
                         },
                       ),
@@ -92,7 +93,8 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
             builder: (context, scrollController) {
               return LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
-                  final double minHeight = MediaQuery.of(context).size.height * 0.1;
+                  final double minHeight =
+                      MediaQuery.of(context).size.height * 0.1;
                   if (constraints.maxHeight < minHeight) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       setState(() {
@@ -110,7 +112,10 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                     context,
                     scrollController,
                     items: [
-                      _buildCustomButtom(AppLocalizations.of(context)!.future, Colors.blue[600], Icons.chrome_reader_mode_rounded, onTap: () {
+                      _buildCustomButtom(
+                          AppLocalizations.of(context)!.future,
+                          Colors.blue[600],
+                          Icons.chrome_reader_mode_rounded, onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             maintainState: false,
@@ -119,7 +124,10 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                           ),
                         );
                       }),
-                      _buildCustomButtom(AppLocalizations.of(context)!.pick_stock, Colors.red[600], Icons.playlist_add_check_circle, onTap: () {
+                      _buildCustomButtom(
+                          AppLocalizations.of(context)!.pick_stock,
+                          Colors.red[600],
+                          Icons.playlist_add_check_circle, onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             maintainState: false,
@@ -128,7 +136,10 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                           ),
                         );
                       }),
-                      _buildCustomButtom(AppLocalizations.of(context)!.package, Colors.yellow[600], Icons.add_home_work_outlined, onTap: () {
+                      _buildCustomButtom(
+                          AppLocalizations.of(context)!.package,
+                          Colors.yellow[600],
+                          Icons.add_home_work_outlined, onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             maintainState: false,
@@ -137,12 +148,16 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
                           ),
                         );
                       }),
-                      _buildCustomButtom(AppLocalizations.of(context)!.commission, Colors.green[600], Icons.shopping_cart, onTap: () {
+                      _buildCustomButtom(
+                          AppLocalizations.of(context)!.commission,
+                          Colors.green[600],
+                          Icons.shopping_cart, onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             maintainState: false,
                             fullscreenDialog: false,
-                            builder: (context) => const CommissionCategoryPage(),
+                            builder: (context) =>
+                                const CommissionCategoryPage(),
                           ),
                         );
                       }),
@@ -160,9 +175,12 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
   Widget _buildTreeMap(List<pb.StockVolumeRankMessage> data) {
     return SfTreemap(
       colorMappers: [
-        const TreemapColorMapper.range(from: -9999, to: -0.01, color: Colors.greenAccent),
-        TreemapColorMapper.range(from: 0, to: 0, color: Theme.of(context).colorScheme.primary),
-        const TreemapColorMapper.range(from: 0.01, to: 9999, color: Colors.redAccent),
+        const TreemapColorMapper.range(
+            from: -9999, to: -0.01, color: Colors.greenAccent),
+        TreemapColorMapper.range(
+            from: 0, to: 0, color: Theme.of(context).colorScheme.primary),
+        const TreemapColorMapper.range(
+            from: 0.01, to: 9999, color: Colors.redAccent),
       ],
       dataCount: data.length,
       weightValueMapper: (int index) {
@@ -244,7 +262,8 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
           changed = true;
         } else {
           for (var i = 0; i < _data.length; i++) {
-            if (_data[i].code != msg.data[i].code || _data[i].totalAmount != msg.data[i].totalAmount) {
+            if (_data[i].code != msg.data[i].code ||
+                _data[i].totalAmount != msg.data[i].totalAmount) {
               changed = true;
               break;
             }
@@ -274,7 +293,8 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
     );
   }
 
-  Widget _buildCustomButtom(String label, Color? color, IconData icon, {void Function()? onTap}) {
+  Widget _buildCustomButtom(String label, Color? color, IconData icon,
+      {void Function()? onTap}) {
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -307,7 +327,9 @@ class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
     );
   }
 
-  Container _buildListViewSheet(BuildContext context, ScrollController scrollController, {List<Widget>? items}) {
+  Container _buildListViewSheet(
+      BuildContext context, ScrollController scrollController,
+      {List<Widget>? items}) {
     IconData icon = Icons.keyboard_double_arrow_up_sharp;
     if (items != null && items.isNotEmpty) {
       icon = Icons.keyboard_double_arrow_down_rounded;

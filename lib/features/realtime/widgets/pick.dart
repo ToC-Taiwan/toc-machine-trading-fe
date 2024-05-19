@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';
-import 'package:toc_machine_trading_fe/core/pb/app/app.pb.dart' as pb;
-import 'package:toc_machine_trading_fe/core/pb/forwarder/mq.pb.dart' as pb;
+import 'package:toc_trade_protobuf/app/app.pb.dart' as pb;
+import 'package:toc_trade_protobuf/forwarder/mq.pb.dart' as pb;
 import 'package:toc_machine_trading_fe/features/realtime/entity/pick_operation.dart';
 import 'package:toc_machine_trading_fe/features/realtime/entity/snapshot.dart';
 import 'package:toc_machine_trading_fe/features/realtime/entity/stock.dart';
@@ -61,7 +61,10 @@ class _PickStockWidgetState extends State<PickStockWidget> {
             SnackBar(
               content: Text(
                 errMsg,
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.red),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(color: Colors.red),
               ),
               duration: const Duration(seconds: 2),
             ),
@@ -108,7 +111,8 @@ class _PickStockWidgetState extends State<PickStockWidget> {
                   extentRatio: 0.25,
                   children: [
                     SlidableAction(
-                      onPressed: (BuildContext ctx) => removeStock(snapshot.data![index].code),
+                      onPressed: (BuildContext ctx) =>
+                          removeStock(snapshot.data![index].code),
                       backgroundColor: Colors.redAccent,
                       foregroundColor: Colors.white,
                       icon: Icons.delete,
@@ -123,7 +127,8 @@ class _PickStockWidgetState extends State<PickStockWidget> {
                           fullscreenDialog: true,
                           builder: (context) => KbarPage(
                             code: snapshot.data![index].code,
-                            name: stockDetailMap[snapshot.data![index].code]!.name!,
+                            name: stockDetailMap[snapshot.data![index].code]!
+                                .name!,
                           ),
                         ),
                       );
@@ -138,7 +143,9 @@ class _PickStockWidgetState extends State<PickStockWidget> {
                       snapshot.data![index].chgType.toInt(),
                     ),
                     subtitle: numberText(
-                      Utils.commaNumber(snapshot.data![index].totalVolume == 0 ? '-' : snapshot.data![index].totalVolume.toString()),
+                      Utils.commaNumber(snapshot.data![index].totalVolume == 0
+                          ? '-'
+                          : snapshot.data![index].totalVolume.toString()),
                       color: Colors.grey,
                     ),
                     trailing: SizedBox(
@@ -161,10 +168,17 @@ class _PickStockWidgetState extends State<PickStockWidget> {
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: snapshot.data![index].priceChg == 0
-                                  ? const Icon(Icons.remove, color: Colors.black, size: 20)
+                                  ? const Icon(Icons.remove,
+                                      color: Colors.black, size: 20)
                                   : snapshot.data![index].priceChg > 0
-                                      ? const Icon(Icons.keyboard_arrow_up_sharp, color: Colors.red, size: 20)
-                                      : const Icon(Icons.keyboard_arrow_down_sharp, color: Colors.green, size: 20),
+                                      ? const Icon(
+                                          Icons.keyboard_arrow_up_sharp,
+                                          color: Colors.red,
+                                          size: 20)
+                                      : const Icon(
+                                          Icons.keyboard_arrow_down_sharp,
+                                          color: Colors.green,
+                                          size: 20),
                             ),
                           ),
                           Expanded(
@@ -212,7 +226,8 @@ class _PickStockWidgetState extends State<PickStockWidget> {
     await _channel!.ready;
     _channel!.stream.listen(
       (message) {
-        final msg = pb.StockRealTimeTickMessage.fromBuffer(message as List<int>);
+        final msg =
+            pb.StockRealTimeTickMessage.fromBuffer(message as List<int>);
         realTimeData.then((value) {
           if (value == null) {
             return;
@@ -283,7 +298,9 @@ class _PickStockWidgetState extends State<PickStockWidget> {
   Future<void> removeStock(String stockNum) async {
     await PickStockRepo.delete(stockNum);
     stockOrder.remove(stockNum);
-    _channel!.sink.add(pb.PickRealMap(pickMap: {stockNum: pb.PickListType.TYPE_REMOVE}).writeToBuffer());
+    _channel!.sink.add(
+        pb.PickRealMap(pickMap: {stockNum: pb.PickListType.TYPE_REMOVE})
+            .writeToBuffer());
     setState(() {
       realTimeData = fillStockList();
     });

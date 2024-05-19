@@ -834,6 +834,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.0"
+  toc_trade_protobuf:
+    dependency: "direct main"
+    description:
+      name: toc_trade_protobuf
+      sha256: "39b3ddd0a3a0132806821a830d655f889a0a3e0a1b9f3217b2172ac5b9152286"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.7"
   typed_data:
     dependency: transitive
     description:

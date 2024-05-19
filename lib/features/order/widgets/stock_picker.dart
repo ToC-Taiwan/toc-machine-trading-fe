@@ -3,16 +3,17 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';
-import 'package:toc_machine_trading_fe/core/pb/app/app.pb.dart' as pb;
-import 'package:toc_machine_trading_fe/core/pb/forwarder/mq.pb.dart' as pb;
+import 'package:toc_trade_protobuf/forwarder/mq.pb.dart' as pb;
 import 'package:toc_machine_trading_fe/features/order/entity/order.dart';
 import 'package:toc_machine_trading_fe/features/order/widgets/stock_picker_category.dart';
 import 'package:toc_machine_trading_fe/features/realtime/entity/snapshot.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/text.dart';
+import 'package:toc_trade_protobuf/app/app.pb.dart' as pb;
 import 'package:web_socket_channel/io.dart';
 
 class StockPickerWidget extends StatefulWidget {
-  const StockPickerWidget({required this.orderStreamController, required this.isOdd, super.key});
+  const StockPickerWidget(
+      {required this.orderStreamController, required this.isOdd, super.key});
   final StreamController<Order> orderStreamController;
   final bool isOdd;
 
@@ -54,7 +55,8 @@ class _StockPickerWidgetState extends State<StockPickerWidget> {
                   isScrollControlled: true,
                   showDragHandle: true,
                   context: context,
-                  builder: (context) => PickerCategoryWidget(onConfirm: checkCode),
+                  builder: (context) =>
+                      PickerCategoryWidget(onConfirm: checkCode),
                 );
               },
               child: _snapShot == null
@@ -80,7 +82,10 @@ class _StockPickerWidgetState extends State<StockPickerWidget> {
                               ),
                               Text(
                                 _snapShot!.stockName!,
-                                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium!
+                                    .copyWith(
                                       fontWeight: FontWeight.bold,
                                     ),
                               ),
@@ -99,21 +104,35 @@ class _StockPickerWidgetState extends State<StockPickerWidget> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(
-                                    _snapShot!.priceChg! > 0 ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                                    color: _snapShot!.priceChg! > 0 ? Colors.red : Colors.green,
+                                    _snapShot!.priceChg! > 0
+                                        ? Icons.arrow_drop_up
+                                        : Icons.arrow_drop_down,
+                                    color: _snapShot!.priceChg! > 0
+                                        ? Colors.red
+                                        : Colors.green,
                                   ),
                                   Text(
                                     _snapShot!.priceChg!.toString(),
-                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge!
+                                        .copyWith(
                                           fontWeight: FontWeight.bold,
-                                          color: _snapShot!.priceChg! > 0 ? Colors.red : Colors.green,
+                                          color: _snapShot!.priceChg! > 0
+                                              ? Colors.red
+                                              : Colors.green,
                                         ),
                                   ),
                                   Text(
                                     " (${_snapShot!.pctChg!.toStringAsFixed(2)}%)",
-                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge!
+                                        .copyWith(
                                           fontWeight: FontWeight.bold,
-                                          color: _snapShot!.priceChg! > 0 ? Colors.red : Colors.green,
+                                          color: _snapShot!.priceChg! > 0
+                                              ? Colors.red
+                                              : Colors.green,
                                         ),
                                   ),
                                 ],
@@ -140,7 +159,8 @@ class _StockPickerWidgetState extends State<StockPickerWidget> {
   }
 
   Future<void> checkCode(String code) async {
-    Map<String, SnapShot> snapshots = await API.fetchSnapshots([code]).catchError(
+    Map<String, SnapShot> snapshots =
+        await API.fetchSnapshots([code]).catchError(
       (_) {
         return Future<Map<String, SnapShot>>.value({});
       },
@@ -192,7 +212,8 @@ class _StockPickerWidgetState extends State<StockPickerWidget> {
     await _channel!.ready;
     _channel!.stream.listen(
       (message) {
-        final msg = pb.StockRealTimeTickMessage.fromBuffer(message as List<int>);
+        final msg =
+            pb.StockRealTimeTickMessage.fromBuffer(message as List<int>);
         setState(() {
           _snapShot = _snapshotFromPB(msg);
         });
@@ -243,9 +264,11 @@ class _StockPickerWidgetState extends State<StockPickerWidget> {
   List<num> getAvailablePrice(SnapShot data) {
     num zeroPoint;
     if (data.priceChg! > 0) {
-      zeroPoint = num.parse((data.close! - data.priceChg!.abs()).toStringAsFixed(2));
+      zeroPoint =
+          num.parse((data.close! - data.priceChg!.abs()).toStringAsFixed(2));
     } else {
-      zeroPoint = num.parse((data.close! + data.priceChg!.abs()).toStringAsFixed(2));
+      zeroPoint =
+          num.parse((data.close! + data.priceChg!.abs()).toStringAsFixed(2));
     }
 
     num maxPrice = num.parse((zeroPoint * 1.1).toStringAsFixed(2));
@@ -259,7 +282,8 @@ class _StockPickerWidgetState extends State<StockPickerWidget> {
       if (maxPrice < cloneZeroPoint) {
         break;
       }
-      availablePrice.add(num.parse(cloneZeroPoint.toStringAsFixed(getDigit(cloneZeroPoint))));
+      availablePrice.add(
+          num.parse(cloneZeroPoint.toStringAsFixed(getDigit(cloneZeroPoint))));
     }
 
     cloneZeroPoint = zeroPoint;
@@ -269,7 +293,8 @@ class _StockPickerWidgetState extends State<StockPickerWidget> {
       if (minPrice > cloneZeroPoint) {
         break;
       }
-      availablePrice.insert(0, num.parse(cloneZeroPoint.toStringAsFixed(getDigit(cloneZeroPoint))));
+      availablePrice.insert(0,
+          num.parse(cloneZeroPoint.toStringAsFixed(getDigit(cloneZeroPoint))));
     }
     return availablePrice;
   }
