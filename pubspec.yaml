@@ -41,7 +41,7 @@ dependencies:
   syncfusion_flutter_charts: ^25.1.39+1
   syncfusion_flutter_treemap: ^25.1.39+1
   table_calendar: ^3.0.9
-  toc_trade_protobuf: ^0.1.7
+  toc_trade_protobuf: ^0.1.10
   url_launcher: ^6.2.4
   wakelock: ^0.6.2
   web_socket_channel: ^3.0.0
