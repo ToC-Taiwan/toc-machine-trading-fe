@@ -1,7 +1,7 @@
 name: toc_machine_trading_fe
 description: "Status of trade agent, let user query analyzed stocks."
 publish_to: "none"
-version: 4.2.67+40128
+version: 4.2.68+40129
 
 environment:
   sdk: ">=3.4.0 <4.0.0"
@@ -12,7 +12,7 @@ dependencies:
   cronet_http: ^1.0.0
   cupertino_http: ^1.2.0
   date_format: ^2.0.7
-  email_validator: ^2.1.16
+  email_validator: ^3.0.0
   firebase_core: ^2.24.2
   firebase_messaging: ^14.7.10
   fixnum: ^1.1.0
@@ -38,8 +38,8 @@ dependencies:
   pull_to_refresh: ^2.0.0
   scrollable_positioned_list: ^0.3.8
   sqflite: ^2.3.0
-  syncfusion_flutter_charts: ^25.1.39+1
-  syncfusion_flutter_treemap: ^25.1.39+1
+  syncfusion_flutter_charts: ^26.1.42
+  syncfusion_flutter_treemap: ^26.1.42
   table_calendar: ^3.0.9
   toc_trade_protobuf: ^0.1.10
   url_launcher: ^6.2.4
