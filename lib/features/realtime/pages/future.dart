@@ -4,11 +4,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';
+import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
+import 'package:toc_machine_trading_fe/features/universal/widgets/text.dart';
 import 'package:toc_trade_protobuf/app/app.pb.dart' as pb;
 import 'package:toc_trade_protobuf/forwarder/history.pb.dart' as pb;
 import 'package:toc_trade_protobuf/forwarder/mq.pb.dart' as pb;
-import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
-import 'package:toc_machine_trading_fe/features/universal/widgets/text.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:web_socket_channel/io.dart';
 
