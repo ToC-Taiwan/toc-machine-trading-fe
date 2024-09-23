@@ -9,7 +9,7 @@ import 'package:toc_machine_trading_fe/features/universal/widgets/text.dart';
 import 'package:toc_trade_protobuf/app/app.pb.dart' as pb;
 import 'package:toc_trade_protobuf/forwarder/history.pb.dart' as pb;
 import 'package:toc_trade_protobuf/forwarder/mq.pb.dart' as pb;
-import 'package:wakelock/wakelock.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:web_socket_channel/io.dart';
 
 class CustomTick {
@@ -41,14 +41,14 @@ class _FutureRealTimePageState extends State<FutureRealTimePage> {
   @override
   void initState() {
     super.initState();
-    Wakelock.enable();
+    WakelockPlus.enable();
     initialWS();
   }
 
   @override
   void dispose() {
     _channel!.sink.close();
-    Wakelock.disable();
+    WakelockPlus.disable();
     super.dispose();
   }
 

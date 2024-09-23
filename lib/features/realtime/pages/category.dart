@@ -4,13 +4,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:syncfusion_flutter_treemap/treemap.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';
-import 'package:toc_trade_protobuf/forwarder/realtime.pb.dart' as pb;
 import 'package:toc_machine_trading_fe/features/order/pages/category.dart';
 import 'package:toc_machine_trading_fe/features/package_setting/pages/package_setting.dart';
 import 'package:toc_machine_trading_fe/features/realtime/pages/pick_category.dart';
 import 'package:toc_machine_trading_fe/features/realtime/pages/search.dart';
 import 'package:toc_machine_trading_fe/features/realtime/repo/pick_stock.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
+import 'package:toc_trade_protobuf/forwarder/realtime.pb.dart' as pb;
 import 'package:web_socket_channel/io.dart';
 
 class RealTimeCategoryPage extends StatefulWidget {
@@ -21,7 +21,7 @@ class RealTimeCategoryPage extends StatefulWidget {
 }
 
 class _RealTimeCategoryPageState extends State<RealTimeCategoryPage> {
-  final CarouselController _controller = CarouselController();
+  final CarouselSliderController _controller = CarouselSliderController();
   late IOWebSocketChannel? _channel;
 
   List<List<pb.StockVolumeRankMessage>> imageSliders = [];
