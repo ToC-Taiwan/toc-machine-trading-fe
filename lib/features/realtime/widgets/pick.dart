@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';
-import 'package:toc_trade_protobuf/app/app.pb.dart' as pb;
-import 'package:toc_trade_protobuf/forwarder/mq.pb.dart' as pb;
 import 'package:toc_machine_trading_fe/features/realtime/entity/pick_operation.dart';
 import 'package:toc_machine_trading_fe/features/realtime/entity/snapshot.dart';
 import 'package:toc_machine_trading_fe/features/realtime/entity/stock.dart';
@@ -14,7 +12,9 @@ import 'package:toc_machine_trading_fe/features/realtime/pages/kbar.dart';
 import 'package:toc_machine_trading_fe/features/realtime/repo/pick_stock.dart';
 import 'package:toc_machine_trading_fe/features/universal/utils/utils.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/text.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:toc_trade_protobuf/app/app.pb.dart' as pb;
+import 'package:toc_trade_protobuf/forwarder/mq.pb.dart' as pb;
+import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:web_socket_channel/io.dart';
 
 class PickStockWidget extends StatefulWidget {
@@ -74,7 +74,7 @@ class _PickStockWidgetState extends State<PickStockWidget> {
         removeAllStock();
       }
     });
-    Wakelock.enable();
+    WakelockPlus.enable();
     realTimeData = fillStockList();
     initialWS();
   }
@@ -89,7 +89,7 @@ class _PickStockWidgetState extends State<PickStockWidget> {
   @override
   void dispose() {
     _channel!.sink.close();
-    Wakelock.disable();
+    WakelockPlus.disable();
     super.dispose();
   }
 
