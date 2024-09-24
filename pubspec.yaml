@@ -1,7 +1,7 @@
 name: toc_machine_trading_fe
 description: "Status of trade agent, let user query analyzed stocks."
 publish_to: "none"
-version: 4.2.69+40130
+version: 4.2.70+40131
 
 environment:
   sdk: ">=3.4.0 <4.0.0"

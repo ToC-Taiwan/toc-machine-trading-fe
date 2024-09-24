@@ -43,32 +43,35 @@ class _PickStockWidgetState extends State<PickStockWidget> {
       }
       if (event.operationType == OperationType.add && event.addStock != null) {
         addStock(event.addStock!).catchError((e) {
-          String errMsg = '';
-          switch (e as int) {
-            case -1:
-              errMsg = AppLocalizations.of(context)!.not_found;
-              break;
-            case -2:
-              errMsg = AppLocalizations.of(context)!.not_found;
-              break;
-            case -3:
-              errMsg = AppLocalizations.of(context)!.stock_already_exists;
-              break;
-            default:
-              errMsg = AppLocalizations.of(context)!.not_found;
-          }
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                errMsg,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(color: Colors.red),
+          if (context.mounted) {
+            BuildContext ctx = context;
+            String errMsg = '';
+            switch (e as int) {
+              case -1:
+                errMsg = AppLocalizations.of(ctx)!.not_found;
+                break;
+              case -2:
+                errMsg = AppLocalizations.of(ctx)!.not_found;
+                break;
+              case -3:
+                errMsg = AppLocalizations.of(ctx)!.stock_already_exists;
+                break;
+              default:
+                errMsg = AppLocalizations.of(ctx)!.not_found;
+            }
+            ScaffoldMessenger.of(ctx).showSnackBar(
+              SnackBar(
+                content: Text(
+                  errMsg,
+                  style: Theme.of(ctx)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(color: Colors.red),
+                ),
+                duration: const Duration(seconds: 2),
               ),
-              duration: const Duration(seconds: 2),
-            ),
-          );
+            );
+          }
         });
       } else if (event.operationType == OperationType.removeAll) {
         removeAllStock();

@@ -57,28 +57,37 @@ class _NewsPageState extends State<NewsPage> {
                   onTap: snapshot.data![index].url == ''
                       ? null
                       : () {
-                          launchUrl(Uri.parse(snapshot.data![index].url!)).then((value) {
-                            if (!value) {
+                          launchUrl(Uri.parse(snapshot.data![index].url!))
+                              .then((value) {
+                            if (!value && context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
                                     AppLocalizations.of(context)!.unknown_error,
-                                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.red),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(color: Colors.red),
                                   ),
                                   duration: const Duration(seconds: 2),
                                 ),
                               );
                             }
                           }).catchError((e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  e.toString(),
-                                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.red),
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    e.toString(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(color: Colors.red),
+                                  ),
+                                  duration: const Duration(seconds: 2),
                                 ),
-                                duration: const Duration(seconds: 2),
-                              ),
-                            );
+                              );
+                            }
                           });
                         },
                 );
