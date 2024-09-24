@@ -103,51 +103,55 @@ class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
                     }
                     orderDetail!.action = _action;
                     sendOrder(orderDetail!).then((_) {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: Text(
-                            AppLocalizations.of(context)!.success,
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                          actions: <Widget>[
-                            ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  _action = OrderAction.none;
-                                });
-                                Navigator.pop(context);
-                              },
-                              child: Text(
-                                AppLocalizations.of(context)!.ok,
-                                style: const TextStyle(color: Colors.black),
-                              ),
+                      if (context.mounted) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text(
+                              AppLocalizations.of(context)!.success,
+                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
-                          ],
-                        ),
-                      );
+                            actions: <Widget>[
+                              ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _action = OrderAction.none;
+                                  });
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  AppLocalizations.of(context)!.ok,
+                                  style: const TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
                     }).catchError((e) {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: Text(
-                            AppLocalizations.of(context)!.error,
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                          content: Text(ErrorCode.toMsg(context, e)),
-                          actions: <Widget>[
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text(
-                                AppLocalizations.of(context)!.ok,
-                                style: const TextStyle(color: Colors.black),
-                              ),
+                      if (context.mounted) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text(
+                              AppLocalizations.of(context)!.error,
+                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
-                          ],
-                        ),
-                      );
+                            content: Text(ErrorCode.toMsg(context, e)),
+                            actions: <Widget>[
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  AppLocalizations.of(context)!.ok,
+                                  style: const TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
                     });
                   },
                   child: Text(

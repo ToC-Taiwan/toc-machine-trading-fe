@@ -28,7 +28,8 @@ class CommissionCategoryPage extends StatefulWidget {
   State<CommissionCategoryPage> createState() => _CommissionCategoryPageState();
 }
 
-class _CommissionCategoryPageState extends State<CommissionCategoryPage> with TickerProviderStateMixin {
+class _CommissionCategoryPageState extends State<CommissionCategoryPage>
+    with TickerProviderStateMixin {
   late final TabController _tabController;
 
   @override
@@ -57,7 +58,7 @@ class _CommissionCategoryPageState extends State<CommissionCategoryPage> with Ti
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      onPopInvoked: (_) {
+      onPopInvokedWithResult: (_, __) {
         CommissionCategoryCache.clear();
       },
       child: Scaffold(

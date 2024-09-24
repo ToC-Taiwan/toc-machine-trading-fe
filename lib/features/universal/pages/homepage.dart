@@ -40,9 +40,12 @@ class _HomePageState extends State<HomePage> {
   void refreshTokenAndNotification() {
     if (DateTime.now().difference(_lastFreshTime).inSeconds > 300) {
       API.refreshToken().catchError((_) {
-        Navigator.pushNamedAndRemoveUntil(
-            context, LoginPage.routeName, (route) => false,
-            arguments: true);
+        if (context.mounted) {
+          BuildContext ctx = context;
+          Navigator.pushNamedAndRemoveUntil(
+              ctx, LoginPage.routeName, (route) => false,
+              arguments: true);
+        }
       });
       _lastFreshTime = DateTime.now();
     }

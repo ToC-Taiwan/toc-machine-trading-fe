@@ -814,26 +814,26 @@ packages:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_charts
-      sha256: cdc207291ad0caf34cb9e20caa8938ff65f67a413b3a86a14d3a7b341a772100
+      sha256: "68eac622c9ad73618ddddbb5b8185792f590258e7400cf1f606c97f892c4a724"
       url: "https://pub.dev"
     source: hosted
-    version: "27.1.48"
+    version: "27.1.50"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: "4347f4d2f5d89461df2c53e6fbf53aef38c7f05ed79b0760d935fb1ec836213b"
+      sha256: efbc44bdef33bf8f469c5ac7830df9631972721e157021db14bd78cdb1047fe1
       url: "https://pub.dev"
     source: hosted
-    version: "27.1.48"
+    version: "27.1.50"
   syncfusion_flutter_treemap:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_treemap
-      sha256: "614c0bffcd48f45f7b97f670384e41a527732d5278f9f6e64fbdc492f8d191a5"
+      sha256: f4ba414ebf3ffa42d0abbfd41f87564d74095c722e5bd3acd0c1ec2fb08bc747
       url: "https://pub.dev"
     source: hosted
-    version: "27.1.48"
+    version: "27.1.50"
   synchronized:
     dependency: transitive
     description:
@@ -926,10 +926,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_macos
-      sha256: "9a1a42d5d2d95400c795b2914c36fdcb525870c752569438e4ebb09a2b5d90de"
+      sha256: "769549c999acdb42b8bcfa7c43d72bf79a382ca7441ab18a808e101149daf672"
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.0"
+    version: "3.2.1"
   url_launcher_platform_interface:
     dependency: transitive
     description:

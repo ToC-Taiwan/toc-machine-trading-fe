@@ -60,7 +60,7 @@ class _SearchFuturePageState extends State<SearchFuturePage> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      onPopInvoked: (_) {
+      onPopInvokedWithResult: (_, __) {
         SearchCache.clear();
       },
       child: GestureDetector(
