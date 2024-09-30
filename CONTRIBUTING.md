@@ -56,3 +56,8 @@ git push -u origin --tags
 ```sh
 find . -type f  | git check-ignore --stdin
 ```
+
+```sh
+flutter build ipa
+flutter build appbundle --debug
+```

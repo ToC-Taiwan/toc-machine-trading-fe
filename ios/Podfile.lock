@@ -1,19 +1,19 @@
 PODS:
   - cupertino_http (0.0.1):
     - Flutter
-  - Firebase/CoreOnly (11.0.0):
-    - FirebaseCore (= 11.0.0)
-  - Firebase/Messaging (11.0.0):
+  - Firebase/CoreOnly (11.2.0):
+    - FirebaseCore (= 11.2.0)
+  - Firebase/Messaging (11.2.0):
     - Firebase/CoreOnly
-    - FirebaseMessaging (~> 11.0.0)
-  - firebase_core (3.5.0):
-    - Firebase/CoreOnly (= 11.0.0)
+    - FirebaseMessaging (~> 11.2.0)
+  - firebase_core (3.6.0):
+    - Firebase/CoreOnly (= 11.2.0)
     - Flutter
-  - firebase_messaging (15.1.2):
-    - Firebase/Messaging (= 11.0.0)
+  - firebase_messaging (15.1.3):
+    - Firebase/Messaging (= 11.2.0)
     - firebase_core
     - Flutter
-  - FirebaseCore (11.0.0):
+  - FirebaseCore (11.2.0):
     - FirebaseCoreInternal (~> 11.0)
     - GoogleUtilities/Environment (~> 8.0)
     - GoogleUtilities/Logger (~> 8.0)
@@ -24,7 +24,7 @@ PODS:
     - GoogleUtilities/Environment (~> 8.0)
     - GoogleUtilities/UserDefaults (~> 8.0)
     - PromisesObjC (~> 2.4)
-  - FirebaseMessaging (11.0.0):
+  - FirebaseMessaging (11.2.0):
     - FirebaseCore (~> 11.0)
     - FirebaseInstallations (~> 11.0)
     - GoogleDataTransport (~> 10.0)
@@ -169,13 +169,13 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   cupertino_http: 1a3a0f163c1b26e7f1a293b33d476e0fde7a64ec
-  Firebase: 9f574c08c2396885b5e7e100ed4293d956218af9
-  firebase_core: 2ec6b789859c7c24766344ec71fdf78639402d56
-  firebase_messaging: a18e1e02b2e8e69097c8173e0c851be223b21c50
-  FirebaseCore: 3cf438f431f18c12cdf2aaf64434648b63f7e383
+  Firebase: 98e6bf5278170668a7983e12971a66b2cd57fc8c
+  firebase_core: 2bedc3136ec7c7b8561c6123ed0239387b53f2af
+  firebase_messaging: 15d114e1a41fc31e4fbabcd48d765a19eec94a38
+  FirebaseCore: a282032ae9295c795714ded2ec9c522fc237f8da
   FirebaseCoreInternal: 0c569513412da9f3b31bd0b340013bbee8f295c5
   FirebaseInstallations: 771177d89d6c451dc6e50085ec82e2fc77ed0a4a
-  FirebaseMessaging: d2d1d9c62c46dd2db49a952f7deb5b16ad2c9742
+  FirebaseMessaging: c9ec7b90c399c7a6100297e9d16f8a27fc7f7152
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
   flutter_native_splash: edf599c81f74d093a4daf8e17bd7a018854bc778
