@@ -47,7 +47,8 @@ abstract class API {
 
   static Client httpClient() {
     if (Platform.isIOS) {
-      final config = URLSessionConfiguration.ephemeralSessionConfiguration()..cache = URLCache.withCapacity(memoryCapacity: 32 * 1024 * 1024);
+      final config = URLSessionConfiguration.ephemeralSessionConfiguration()
+        ..cache = URLCache.withCapacity(memoryCapacity: 32 * 1024 * 1024);
       return CupertinoClient.fromSessionConfiguration(config);
     }
     if (Platform.isAndroid) {

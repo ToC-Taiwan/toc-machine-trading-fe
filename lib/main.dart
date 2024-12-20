@@ -78,8 +78,7 @@ class MainApp extends StatelessWidget {
           supportedLocales: AppLocalizations.supportedLocales,
           locale: snapshot.data,
           routes: {
-            LoginPage.routeName: (context) =>
-                LoginPage(screenHeight: MediaQuery.of(context).size.height),
+            LoginPage.routeName: (context) => LoginPage(screenHeight: MediaQuery.of(context).size.height),
             HomePage.routeName: (context) => const HomePage(),
           },
           initialRoute: alreadyLogin ? HomePage.routeName : LoginPage.routeName,

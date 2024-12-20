@@ -57,10 +57,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   void initState() {
-    final Stream<List<PurchaseDetails>> purchaseUpdated =
-        _inAppPurchase.purchaseStream;
-    _subscription =
-        purchaseUpdated.listen((List<PurchaseDetails> purchaseDetailsList) {
+    final Stream<List<PurchaseDetails>> purchaseUpdated = _inAppPurchase.purchaseStream;
+    _subscription = purchaseUpdated.listen((List<PurchaseDetails> purchaseDetailsList) {
       _listenToPurchaseUpdated(purchaseDetailsList);
     }, onDone: () {
       _subscription.cancel();
@@ -78,8 +76,7 @@ class _SettingsPageState extends State<SettingsPage> {
   void dispose() {
     if (Platform.isIOS) {
       final InAppPurchaseStoreKitPlatformAddition iosPlatformAddition =
-          _inAppPurchase
-              .getPlatformAddition<InAppPurchaseStoreKitPlatformAddition>();
+          _inAppPurchase.getPlatformAddition<InAppPurchaseStoreKitPlatformAddition>();
       iosPlatformAddition.setDelegate(null);
     }
     _subscription.cancel();
@@ -151,10 +148,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             padding: const EdgeInsets.only(right: 8),
                             child: Text(
                               '${AppLocalizations.of(context)!.loading}...',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
+                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
                             ),
@@ -166,10 +160,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           title: Text(AppLocalizations.of(context)!.username),
                           trailing: Text(
                             userInfo!.username!,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
+                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
                           ),
@@ -178,10 +169,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           title: Text(AppLocalizations.of(context)!.email),
                           trailing: Text(
                             userInfo!.email!,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
+                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
                           ),
@@ -222,12 +210,10 @@ class _SettingsPageState extends State<SettingsPage> {
                               });
                             });
                           },
-                    title:
-                        Text(AppLocalizations.of(context)!.allow_notification),
+                    title: Text(AppLocalizations.of(context)!.allow_notification),
                     subtitle: _pushNotificationPermamentlyDenied
                         ? Text(
-                            AppLocalizations.of(context)!
-                                .please_go_to_settings_to_allow_notification,
+                            AppLocalizations.of(context)!.please_go_to_settings_to_allow_notification,
                           )
                         : null,
                   )
@@ -276,8 +262,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ListTile(
                           title: Text(
                             _queryProductError!,
-                            style: TextStyle(
-                                color: ThemeData.light().colorScheme.error),
+                            style: TextStyle(color: ThemeData.light().colorScheme.error),
                           ),
                         )
                       ]
@@ -288,10 +273,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 padding: const EdgeInsets.only(right: 8),
                                 child: Text(
                                   '${AppLocalizations.of(context)!.loading}...',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                                         fontWeight: FontWeight.bold,
                                       ),
                                 ),
@@ -303,10 +285,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ListTile(
                                   title: Text(
                                     AppLocalizations.of(context)!.not_available,
-                                    style: TextStyle(
-                                        color: ThemeData.light()
-                                            .colorScheme
-                                            .error),
+                                    style: TextStyle(color: ThemeData.light().colorScheme.error),
                                   ),
                                 )
                               ]
@@ -339,8 +318,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         AppLocalizations.of(context)!.logout,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
-                      content: Text(AppLocalizations.of(context)!
-                          .are_you_sure_you_want_to_logout),
+                      content: Text(AppLocalizations.of(context)!.are_you_sure_you_want_to_logout),
                       actions: <Widget>[
                         ElevatedButton(
                           onPressed: () {
@@ -405,8 +383,7 @@ class _SettingsPageState extends State<SettingsPage> {
             AppLocalizations.of(context)!.error,
             style: TextStyle(color: ThemeData.light().colorScheme.error),
           ),
-          subtitle: Text(
-              '[${_notFoundIds.join(", ")}] ${AppLocalizations.of(context)!.not_found}'),
+          subtitle: Text('[${_notFoundIds.join(", ")}] ${AppLocalizations.of(context)!.not_found}'),
         ),
       );
       return productList;
@@ -430,8 +407,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       purchaseParam = PurchaseParam(
                         productDetails: productDetails,
                       );
-                      _inAppPurchase.buyNonConsumable(
-                          purchaseParam: purchaseParam);
+                      _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
                     },
               child: _removeAds
                   ? const Text('✓')
@@ -495,13 +471,11 @@ class _SettingsPageState extends State<SettingsPage> {
 
     if (Platform.isIOS) {
       final InAppPurchaseStoreKitPlatformAddition iosPlatformAddition =
-          _inAppPurchase
-              .getPlatformAddition<InAppPurchaseStoreKitPlatformAddition>();
+          _inAppPurchase.getPlatformAddition<InAppPurchaseStoreKitPlatformAddition>();
       await iosPlatformAddition.setDelegate(PaymentQueueDelegate());
     }
 
-    final ProductDetailsResponse productDetailResponse =
-        await _inAppPurchase.queryProductDetails(_productIds.toSet());
+    final ProductDetailsResponse productDetailResponse = await _inAppPurchase.queryProductDetails(_productIds.toSet());
     if (productDetailResponse.error != null) {
       setState(() {
         _queryProductError = productDetailResponse.error!.message;
@@ -552,8 +526,7 @@ class _SettingsPageState extends State<SettingsPage> {
     });
   }
 
-  Future<void> _listenToPurchaseUpdated(
-      List<PurchaseDetails> purchaseDetailsList) async {
+  Future<void> _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) async {
     for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
       if (purchaseDetails.status == PurchaseStatus.pending) {
         showPendingUI();

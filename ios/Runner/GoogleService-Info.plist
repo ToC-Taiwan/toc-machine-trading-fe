@@ -6,6 +6,8 @@
 	<string>517489539432-edegvea4146m0ct5ct79h77kru4k9gir.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.517489539432-edegvea4146m0ct5ct79h77kru4k9gir</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>517489539432-4561vhsm0nctsc44v0hnaa9uvsogteja.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDApy0FXg8es0yBcyotw3LYy_JaHVARJSM</string>
 	<key>GCM_SENDER_ID</key>
@@ -30,6 +32,8 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:517489539432:ios:c7c9889764202e4a86bedd</string>
+	<key>DATABASE_URL</key>
+	<string>https://trade-agent-87e47-default-rtdb.asia-southeast1.firebasedatabase.app</string>
 	<key>ADMOB_APP_ID</key>
 	<string>ca-app-pub-1617900048851450~5212154454</string>
 </dict>

@@ -13,12 +13,10 @@ class PickStockCategoryPage extends StatefulWidget {
   State<PickStockCategoryPage> createState() => _PickStockCategoryPageState();
 }
 
-class _PickStockCategoryPageState extends State<PickStockCategoryPage>
-    with TickerProviderStateMixin {
+class _PickStockCategoryPageState extends State<PickStockCategoryPage> with TickerProviderStateMixin {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final TextEditingController textFieldController = TextEditingController();
-  final StreamController<PickStockModifiyBody> _streamController =
-      StreamController<PickStockModifiyBody>.broadcast();
+  final StreamController<PickStockModifiyBody> _streamController = StreamController<PickStockModifiyBody>.broadcast();
 
   late final TabController _tabController;
 
@@ -74,8 +72,7 @@ class _PickStockCategoryPageState extends State<PickStockCategoryPage>
                       AppLocalizations.of(context)!.delete_all_pick_stock,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
-                    content: Text(AppLocalizations.of(context)!
-                        .delete_all_pick_stock_confirm),
+                    content: Text(AppLocalizations.of(context)!.delete_all_pick_stock_confirm),
                     actions: <Widget>[
                       ElevatedButton(
                         child: Text(
@@ -120,19 +117,16 @@ class _PickStockCategoryPageState extends State<PickStockCategoryPage>
                         enableSuggestions: false,
                         autocorrect: false,
                         decoration: InputDecoration(
-                          hintText:
-                              '${AppLocalizations.of(context)!.stock_number}(2330, 2618...)',
+                          hintText: '${AppLocalizations.of(context)!.stock_number}(2330, 2618...)',
                         ),
                         keyboardType: TextInputType.number,
                         autofocus: true,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .input_must_not_empty;
+                            return AppLocalizations.of(context)!.input_must_not_empty;
                           }
                           if (value.contains(' ')) {
-                            return AppLocalizations.of(context)!
-                                .cannot_contain_space;
+                            return AppLocalizations.of(context)!.cannot_contain_space;
                           }
                           return null;
                         },

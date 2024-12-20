@@ -28,8 +28,7 @@ class CommissionCategoryPage extends StatefulWidget {
   State<CommissionCategoryPage> createState() => _CommissionCategoryPageState();
 }
 
-class _CommissionCategoryPageState extends State<CommissionCategoryPage>
-    with TickerProviderStateMixin {
+class _CommissionCategoryPageState extends State<CommissionCategoryPage> with TickerProviderStateMixin {
   late final TabController _tabController;
 
   @override

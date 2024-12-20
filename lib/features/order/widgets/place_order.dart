@@ -17,8 +17,7 @@ class PlaceOrderWidget extends StatefulWidget {
 }
 
 class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
-  final StreamController<Order> _orderStreamController =
-      StreamController<Order>.broadcast();
+  final StreamController<Order> _orderStreamController = StreamController<Order>.broadcast();
 
   OrderAction _action = OrderAction.none;
   Order? orderDetail;
@@ -56,8 +55,7 @@ class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
             ),
             Expanded(
               flex: 5,
-              child: OrderOptionWidget(
-                  orderStreamController: _orderStreamController),
+              child: OrderOptionWidget(orderStreamController: _orderStreamController),
             ),
             Expanded(
               flex: 2,
@@ -67,8 +65,7 @@ class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
                     child: Column(
                       children: [
                         Expanded(child: _buildActionButton(OrderAction.buy)),
-                        Expanded(
-                            child: _buildActionButton(OrderAction.sellFirst)),
+                        Expanded(child: _buildActionButton(OrderAction.sellFirst)),
                       ],
                     ),
                   ),
@@ -76,8 +73,7 @@ class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
                     child: Column(
                       children: [
                         Expanded(child: _buildActionButton(OrderAction.sell)),
-                        Expanded(
-                            child: _buildActionButton(OrderAction.buyLater)),
+                        Expanded(child: _buildActionButton(OrderAction.buyLater)),
                       ],
                     ),
                   ),
@@ -89,10 +85,9 @@ class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        (orderDetail != null && _action != OrderAction.none)
-                            ? Theme.of(context).colorScheme.secondary
-                            : Theme.of(context).colorScheme.surface,
+                    backgroundColor: (orderDetail != null && _action != OrderAction.none)
+                        ? Theme.of(context).colorScheme.secondary
+                        : Theme.of(context).colorScheme.surface,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -158,10 +153,7 @@ class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
                     AppLocalizations.of(context)!.place_order,
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: (orderDetail != null &&
-                                  _action != OrderAction.none)
-                              ? Colors.white
-                              : Colors.grey,
+                          color: (orderDetail != null && _action != OrderAction.none) ? Colors.white : Colors.grey,
                         ),
                   ),
                 ),
@@ -215,8 +207,7 @@ class _PlaceOrderWidgetState extends State<PlaceOrderWidget> {
             ),
             onPressed: orderDetail == null
                 ? null
-                : (action == OrderAction.sellFirst ||
-                        action == OrderAction.buyLater)
+                : (action == OrderAction.sellFirst || action == OrderAction.buyLater)
                     ? null
                     : () {
                         setState(() {

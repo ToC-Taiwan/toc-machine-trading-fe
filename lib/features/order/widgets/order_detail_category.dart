@@ -82,7 +82,9 @@ class _OrderOptionWidgetState extends State<OrderOptionWidget> with TickerProvid
                     IconButton(
                       icon: Icon(
                         Icons.backup_table_outlined,
-                        color: _selectedIndex != 0 ? Colors.grey.withOpacity(0.5) : Theme.of(context).colorScheme.primary,
+                        color: _selectedIndex != 0
+                            ? Theme.of(context).colorScheme.secondary
+                            : Theme.of(context).colorScheme.primary,
                       ),
                       onPressed: () {
                         setState(() {
@@ -97,7 +99,7 @@ class _OrderOptionWidgetState extends State<OrderOptionWidget> with TickerProvid
                         isLabelVisible: currentInv != null && currentInv!.position!.isNotEmpty,
                         child: Icon(
                           Icons.history_edu_sharp,
-                          color: _selectedIndex != 1 ? Colors.grey.withOpacity(0.5) : Theme.of(context).colorScheme.primary,
+                          color: _selectedIndex != 1 ? Colors.grey[500] : Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       onPressed: () {

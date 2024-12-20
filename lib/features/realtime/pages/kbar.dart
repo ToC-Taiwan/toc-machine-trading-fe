@@ -7,8 +7,8 @@ import 'package:k_chart/k_chart_widget.dart';
 import 'package:k_chart/renderer/index.dart';
 import 'package:k_chart/utils/index.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';
-import 'package:toc_trade_protobuf/forwarder/history.pb.dart' as pb;
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
+import 'package:toc_trade_protobuf/forwarder/history.pb.dart' as pb;
 import 'package:web_socket_channel/io.dart';
 
 const Color backgroundColor = Colors.white;
@@ -126,9 +126,7 @@ class _KbarPageState extends State<KbarPage> {
                 "time": item.ts.toInt() ~/ 1000 ~/ 1000,
               }));
         }
-        kbarStartDate =
-            DateTime.fromMicrosecondsSinceEpoch(kbar.last.ts.toInt() ~/ 1000)
-                .add(const Duration(days: -1));
+        kbarStartDate = DateTime.fromMicrosecondsSinceEpoch(kbar.last.ts.toInt() ~/ 1000).add(const Duration(days: -1));
         while (dragging) {
           Future.delayed(const Duration(milliseconds: 100));
         }

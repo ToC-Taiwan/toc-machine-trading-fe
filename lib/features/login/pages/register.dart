@@ -17,8 +17,7 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage>
-    with SingleTickerProviderStateMixin {
+class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderStateMixin {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   late StreamSubscription<bool> _keyboardSubscription;
@@ -39,13 +38,9 @@ class _RegisterPageState extends State<RegisterPage>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-        duration: const Duration(milliseconds: 200), vsync: this);
-    _animation = Tween<double>(
-            begin: widget.screenHeight * 0.15, end: widget.screenHeight * 0.05)
-        .animate(_controller);
-    _keyboardSubscription =
-        KeyboardVisibilityController().onChange.listen((bool visible) {
+    _controller = AnimationController(duration: const Duration(milliseconds: 200), vsync: this);
+    _animation = Tween<double>(begin: widget.screenHeight * 0.15, end: widget.screenHeight * 0.05).animate(_controller);
+    _keyboardSubscription = KeyboardVisibilityController().onChange.listen((bool visible) {
       setState(() {
         if (visible) {
           _controller.forward();
@@ -63,8 +58,7 @@ class _RegisterPageState extends State<RegisterPage>
     super.dispose();
   }
 
-  EdgeInsetsGeometry inputMargin =
-      const EdgeInsets.only(left: 30, right: 30, bottom: 10);
+  EdgeInsetsGeometry inputMargin = const EdgeInsets.only(left: 30, right: 30, bottom: 10);
 
   @override
   Widget build(BuildContext context) {
@@ -122,25 +116,20 @@ class _RegisterPageState extends State<RegisterPage>
                                 autocorrect: false,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return AppLocalizations.of(context)!
-                                        .email_cannot_be_empty;
+                                    return AppLocalizations.of(context)!.email_cannot_be_empty;
                                   }
                                   if (value.contains(' ')) {
-                                    return AppLocalizations.of(context)!
-                                        .cannot_contain_space;
+                                    return AppLocalizations.of(context)!.cannot_contain_space;
                                   }
                                   if (!EmailValidator.validate(value)) {
-                                    return AppLocalizations.of(context)!
-                                        .email_is_invalid;
+                                    return AppLocalizations.of(context)!.email_is_invalid;
                                   }
                                   email = value;
                                   return null;
                                 },
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 decoration: InputDecoration(
-                                  hintText: AppLocalizations.of(context)!
-                                      .email_address,
+                                  hintText: AppLocalizations.of(context)!.email_address,
                                   border: InputBorder.none,
                                   contentPadding: const EdgeInsets.all(10),
                                 ),
@@ -153,32 +142,25 @@ class _RegisterPageState extends State<RegisterPage>
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: TextFormField(
-                                autofillHints: const [
-                                  AutofillHints.newUsername
-                                ],
+                                autofillHints: const [AutofillHints.newUsername],
                                 enableSuggestions: false,
                                 autocorrect: false,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return AppLocalizations.of(context)!
-                                        .username_cannot_be_empty;
+                                    return AppLocalizations.of(context)!.username_cannot_be_empty;
                                   }
                                   if (value.contains(' ')) {
-                                    return AppLocalizations.of(context)!
-                                        .cannot_contain_space;
+                                    return AppLocalizations.of(context)!.cannot_contain_space;
                                   }
                                   if (value.length < 8) {
-                                    return AppLocalizations.of(context)!
-                                        .username_minimum_length_is_8;
+                                    return AppLocalizations.of(context)!.username_minimum_length_is_8;
                                   }
                                   username = value;
                                   return null;
                                 },
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 decoration: InputDecoration(
-                                  hintText:
-                                      AppLocalizations.of(context)!.username,
+                                  hintText: AppLocalizations.of(context)!.username,
                                   border: InputBorder.none,
                                   contentPadding: const EdgeInsets.all(10),
                                 ),
@@ -191,33 +173,26 @@ class _RegisterPageState extends State<RegisterPage>
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: TextFormField(
-                                autofillHints: const [
-                                  AutofillHints.newPassword
-                                ],
+                                autofillHints: const [AutofillHints.newPassword],
                                 enableSuggestions: false,
                                 autocorrect: false,
                                 obscureText: passwordIsObscure,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return AppLocalizations.of(context)!
-                                        .password_cannot_be_empty;
+                                    return AppLocalizations.of(context)!.password_cannot_be_empty;
                                   }
                                   if (value.contains(' ')) {
-                                    return AppLocalizations.of(context)!
-                                        .cannot_contain_space;
+                                    return AppLocalizations.of(context)!.cannot_contain_space;
                                   }
                                   if (value.length < 8) {
-                                    return AppLocalizations.of(context)!
-                                        .password_minimum_length_is_8;
+                                    return AppLocalizations.of(context)!.password_minimum_length_is_8;
                                   }
                                   password = value;
                                   return null;
                                 },
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 decoration: InputDecoration(
-                                  hintText:
-                                      AppLocalizations.of(context)!.password,
+                                  hintText: AppLocalizations.of(context)!.password,
                                   border: InputBorder.none,
                                   contentPadding: const EdgeInsets.all(10),
                                   suffixIcon: IconButton(
@@ -240,36 +215,29 @@ class _RegisterPageState extends State<RegisterPage>
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: TextFormField(
-                                autofillHints: const [
-                                  AutofillHints.newPassword
-                                ],
+                                autofillHints: const [AutofillHints.newPassword],
                                 enableSuggestions: false,
                                 autocorrect: false,
                                 obscureText: confirmPasswordIsObscure,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return AppLocalizations.of(context)!
-                                        .confirm_password_cannot_be_empty;
+                                    return AppLocalizations.of(context)!.confirm_password_cannot_be_empty;
                                   }
                                   if (value != password) {
-                                    return AppLocalizations.of(context)!
-                                        .confirm_password_is_not_same_as_password;
+                                    return AppLocalizations.of(context)!.confirm_password_is_not_same_as_password;
                                   }
                                   confirmPassword = value;
                                   return null;
                                 },
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 decoration: InputDecoration(
-                                  hintText: AppLocalizations.of(context)!
-                                      .confirm_password,
+                                  hintText: AppLocalizations.of(context)!.confirm_password,
                                   border: InputBorder.none,
                                   contentPadding: const EdgeInsets.all(10),
                                   suffixIcon: IconButton(
                                     onPressed: () {
                                       setState(() {
-                                        confirmPasswordIsObscure =
-                                            !confirmPasswordIsObscure;
+                                        confirmPasswordIsObscure = !confirmPasswordIsObscure;
                                       });
                                     },
                                     icon: confirmPasswordIsObscure
@@ -281,8 +249,7 @@ class _RegisterPageState extends State<RegisterPage>
                             ),
                             Container(
                               width: 115,
-                              margin: const EdgeInsets.only(
-                                  right: 10, left: 5, bottom: 10),
+                              margin: const EdgeInsets.only(right: 10, left: 5, bottom: 10),
                               decoration: BoxDecoration(
                                 color: Theme.of(context).colorScheme.secondary,
                                 borderRadius: BorderRadius.circular(10),
@@ -291,8 +258,7 @@ class _RegisterPageState extends State<RegisterPage>
                                 onPressed: registerd
                                     ? null
                                     : () {
-                                        if (!_formkey.currentState!
-                                            .validate()) {
+                                        if (!_formkey.currentState!.validate()) {
                                           return;
                                         }
                                         setState(() {
@@ -304,8 +270,7 @@ class _RegisterPageState extends State<RegisterPage>
                                               (_) => showRegisterResultBanner(),
                                             )
                                             .catchError(
-                                              (e) => showRegisterResultBanner(
-                                                  errCode: e),
+                                              (e) => showRegisterResultBanner(errCode: e),
                                             );
                                         setState(() {
                                           registering = false;
@@ -318,14 +283,10 @@ class _RegisterPageState extends State<RegisterPage>
                                       )
                                     : Text(
                                         registerd
-                                            ? AppLocalizations.of(context)!
-                                                .success
-                                            : AppLocalizations.of(context)!
-                                                .register,
+                                            ? AppLocalizations.of(context)!.success
+                                            : AppLocalizations.of(context)!.register,
                                         style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
+                                            fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                                       ),
                               ),
                             )
@@ -352,9 +313,7 @@ class _RegisterPageState extends State<RegisterPage>
     ScaffoldMessenger.of(context).showMaterialBanner(
       MaterialBanner(
         content: Text(
-          success
-              ? AppLocalizations.of(context)!.register_success
-              : ErrorCode.toMsg(context, errCode),
+          success ? AppLocalizations.of(context)!.register_success : ErrorCode.toMsg(context, errCode),
           style: const TextStyle(
             color: Colors.black,
           ),

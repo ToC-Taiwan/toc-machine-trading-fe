@@ -42,9 +42,7 @@ class _HomePageState extends State<HomePage> {
       API.refreshToken().catchError((_) {
         if (context.mounted) {
           BuildContext ctx = context;
-          Navigator.pushNamedAndRemoveUntil(
-              ctx, LoginPage.routeName, (route) => false,
-              arguments: true);
+          Navigator.pushNamedAndRemoveUntil(ctx, LoginPage.routeName, (route) => false, arguments: true);
         }
       });
       _lastFreshTime = DateTime.now();

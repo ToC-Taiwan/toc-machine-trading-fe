@@ -68,7 +68,15 @@ class StockBalance {
   num? total;
   String? tradeDay;
 
-  StockBalance({this.id, this.tradeCount, this.forward, this.reverse, this.originalBalance, this.discount, this.total, this.tradeDay});
+  StockBalance(
+      {this.id,
+      this.tradeCount,
+      this.forward,
+      this.reverse,
+      this.originalBalance,
+      this.discount,
+      this.total,
+      this.tradeDay});
 
   StockBalance.fromJson(Map<String, dynamic> json) {
     id = json['id'];

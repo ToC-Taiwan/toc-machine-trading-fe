@@ -22,8 +22,7 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage>
-    with SingleTickerProviderStateMixin {
+class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   late StreamSubscription<bool> _keyboardSubscription;
@@ -49,13 +48,9 @@ class _LoginPageState extends State<LoginPage>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-        duration: const Duration(milliseconds: 200), vsync: this);
-    _animation = Tween<double>(
-            begin: widget.screenHeight * 0.5, end: widget.screenHeight * 0.25)
-        .animate(_controller);
-    _keyboardSubscription =
-        KeyboardVisibilityController().onChange.listen((bool visible) {
+    _controller = AnimationController(duration: const Duration(milliseconds: 200), vsync: this);
+    _animation = Tween<double>(begin: widget.screenHeight * 0.5, end: widget.screenHeight * 0.25).animate(_controller);
+    _keyboardSubscription = KeyboardVisibilityController().onChange.listen((bool visible) {
       setState(() {
         if (visible) {
           _controller.forward();
@@ -99,8 +94,7 @@ class _LoginPageState extends State<LoginPage>
             body: (args != null && args is bool && args && !reloginCheck)
                 ? AlertDialog(
                     title: Text(AppLocalizations.of(context)!.warning),
-                    content:
-                        Text(AppLocalizations.of(context)!.please_login_again),
+                    content: Text(AppLocalizations.of(context)!.please_login_again),
                     actions: [
                       ElevatedButton(
                         onPressed: () {
@@ -129,86 +123,68 @@ class _LoginPageState extends State<LoginPage>
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 30, right: 30, bottom: 10),
+                                    margin: const EdgeInsets.only(left: 30, right: 30, bottom: 10),
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: TextFormField(
-                                      autofillHints: const [
-                                        AutofillHints.username
-                                      ],
+                                      autofillHints: const [AutofillHints.username],
                                       enableSuggestions: false,
                                       autocorrect: false,
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
-                                          return AppLocalizations.of(context)!
-                                              .username_cannot_be_empty;
+                                          return AppLocalizations.of(context)!.username_cannot_be_empty;
                                         }
                                         if (value.contains(' ')) {
-                                          return AppLocalizations.of(context)!
-                                              .cannot_contain_space;
+                                          return AppLocalizations.of(context)!.cannot_contain_space;
                                         }
                                         username = value;
                                         return null;
                                       },
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
+                                      autovalidateMode: AutovalidateMode.onUserInteraction,
                                       decoration: InputDecoration(
-                                        hintText: AppLocalizations.of(context)!
-                                            .username,
+                                        hintText: AppLocalizations.of(context)!.username,
                                         border: InputBorder.none,
-                                        contentPadding:
-                                            const EdgeInsets.all(10),
+                                        contentPadding: const EdgeInsets.all(10),
                                       ),
                                     ),
                                   ),
                                   Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 30, right: 30, bottom: 10),
+                                    margin: const EdgeInsets.only(left: 30, right: 30, bottom: 10),
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: TextFormField(
-                                      autofillHints: const [
-                                        AutofillHints.password
-                                      ],
+                                      autofillHints: const [AutofillHints.password],
                                       enableSuggestions: false,
                                       autocorrect: false,
                                       obscureText: passwordIsObscure,
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
-                                          return AppLocalizations.of(context)!
-                                              .password_cannot_be_empty;
+                                          return AppLocalizations.of(context)!.password_cannot_be_empty;
                                         }
                                         if (value.contains(' ')) {
-                                          return AppLocalizations.of(context)!
-                                              .cannot_contain_space;
+                                          return AppLocalizations.of(context)!.cannot_contain_space;
                                         }
                                         password = value;
                                         return null;
                                       },
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
+                                      autovalidateMode: AutovalidateMode.onUserInteraction,
                                       decoration: InputDecoration(
-                                        hintText: AppLocalizations.of(context)!
-                                            .password,
+                                        hintText: AppLocalizations.of(context)!.password,
                                         border: InputBorder.none,
-                                        contentPadding:
-                                            const EdgeInsets.all(10),
+                                        contentPadding: const EdgeInsets.all(10),
                                         suffixIcon: IconButton(
                                           onPressed: () {
                                             setState(() {
-                                              passwordIsObscure =
-                                                  !passwordIsObscure;
+                                              passwordIsObscure = !passwordIsObscure;
                                             });
                                           },
                                           icon: passwordIsObscure
                                               ? const Icon(Icons.visibility)
-                                              : const Icon(
-                                                  Icons.visibility_off),
+                                              : const Icon(Icons.visibility_off),
                                         ),
                                       ),
                                     ),
@@ -218,42 +194,30 @@ class _LoginPageState extends State<LoginPage>
                                     children: [
                                       Container(
                                         width: 115,
-                                        margin: const EdgeInsets.only(
-                                            left: 10, right: 5, bottom: 10),
+                                        margin: const EdgeInsets.only(left: 10, right: 5, bottom: 10),
                                         decoration: BoxDecoration(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondary,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                          color: Theme.of(context).colorScheme.secondary,
+                                          borderRadius: BorderRadius.circular(10),
                                         ),
                                         child: TextButton(
                                           onPressed: logining
                                               ? null
                                               : () {
-                                                  if (!_formkey.currentState!
-                                                      .validate()) {
+                                                  if (!_formkey.currentState!.validate()) {
                                                     return;
                                                   }
                                                   setState(() {
                                                     logining = true;
                                                   });
-                                                  FocusScopeNode currentFocus =
-                                                      FocusScope.of(context);
+                                                  FocusScopeNode currentFocus = FocusScope.of(context);
                                                   currentFocus.unfocus();
-                                                  API
-                                                      .login(username, password)
-                                                      .then(
+                                                  API.login(username, password).then(
                                                     (_) async {
-                                                      await FCM
-                                                          .initialize()
-                                                          .then((_) {
+                                                      await FCM.initialize().then((_) {
                                                         if (context.mounted) {
-                                                          Navigator.of(context)
-                                                              .pushAndRemoveUntil(
+                                                          Navigator.of(context).pushAndRemoveUntil(
                                                             MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  const HomePage(),
+                                                              builder: (context) => const HomePage(),
                                                             ),
                                                             (route) => false,
                                                           );
@@ -265,16 +229,11 @@ class _LoginPageState extends State<LoginPage>
                                                       logining = false;
                                                     });
                                                     if (context.mounted) {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
+                                                      ScaffoldMessenger.of(context).showSnackBar(
                                                         SnackBar(
                                                           content: Text(
-                                                            ErrorCode.toMsg(
-                                                                context,
-                                                                e as int),
-                                                            style:
-                                                                const TextStyle(
+                                                            ErrorCode.toMsg(context, e as int),
+                                                            style: const TextStyle(
                                                               color: Colors.red,
                                                             ),
                                                           ),
@@ -289,26 +248,18 @@ class _LoginPageState extends State<LoginPage>
                                                   size: 20,
                                                 )
                                               : Text(
-                                                  AppLocalizations.of(context)!
-                                                      .login,
+                                                  AppLocalizations.of(context)!.login,
                                                   style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.white),
+                                                      fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                                                 ),
                                         ),
                                       ),
                                       Container(
                                         width: 115,
-                                        margin: const EdgeInsets.only(
-                                            right: 10, left: 5, bottom: 10),
+                                        margin: const EdgeInsets.only(right: 10, left: 5, bottom: 10),
                                         decoration: BoxDecoration(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondary,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                          color: Theme.of(context).colorScheme.secondary,
+                                          borderRadius: BorderRadius.circular(10),
                                         ),
                                         child: TextButton(
                                           onPressed: logining
@@ -318,9 +269,7 @@ class _LoginPageState extends State<LoginPage>
                                                     MaterialPageRoute(
                                                       fullscreenDialog: true,
                                                       builder: (context) =>
-                                                          RegisterPage(
-                                                              screenHeight: widget
-                                                                  .screenHeight),
+                                                          RegisterPage(screenHeight: widget.screenHeight),
                                                     ),
                                                   );
                                                 },
@@ -330,13 +279,9 @@ class _LoginPageState extends State<LoginPage>
                                                   size: 20,
                                                 )
                                               : Text(
-                                                  AppLocalizations.of(context)!
-                                                      .register,
+                                                  AppLocalizations.of(context)!.register,
                                                   style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.white),
+                                                      fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                                                 ),
                                         ),
                                       ),
@@ -359,9 +304,7 @@ class _LoginPageState extends State<LoginPage>
                 children: [
                   Center(
                     child: Text(
-                      version.isEmpty
-                          ? ''
-                          : '${AppLocalizations.of(context)!.version}: $version',
+                      version.isEmpty ? '' : '${AppLocalizations.of(context)!.version}: $version',
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,

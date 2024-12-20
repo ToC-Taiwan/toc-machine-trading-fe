@@ -12,8 +12,7 @@ class BalanceCategoryPage extends StatefulWidget {
   State<BalanceCategoryPage> createState() => _BalanceCategoryPageState();
 }
 
-class _BalanceCategoryPageState extends State<BalanceCategoryPage>
-    with TickerProviderStateMixin {
+class _BalanceCategoryPageState extends State<BalanceCategoryPage> with TickerProviderStateMixin {
   late final TabController _tabController;
 
   int _selectedIndex = 0;
@@ -75,7 +74,7 @@ class _BalanceCategoryPageState extends State<BalanceCategoryPage>
         style: ButtonStyle(
           side: WidgetStateProperty.all(
             BorderSide(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+              color: Colors.transparent,
             ),
           ),
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,

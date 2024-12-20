@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "517489539432",
+    "firebase_url": "https://trade-agent-87e47-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "trade-agent-87e47",
     "storage_bucket": "trade-agent-87e47.appspot.com"
   },
@@ -14,7 +15,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "517489539432-7cu1ij4johr2mi35aq5d380qn0psjkvo.apps.googleusercontent.com",
+          "client_id": "517489539432-4561vhsm0nctsc44v0hnaa9uvsogteja.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tocandraw.trade_agent_v2",
+            "certificate_hash": "e08b841d8ab14babc7b3f620a168dea9a342f052"
+          }
+        },
+        {
+          "client_id": "517489539432-ttvge3lia9aup88l9ave0ud0g3pep1a3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

@@ -21,7 +21,8 @@ class _BalanceContentState extends State<BalanceContent> {
   static final kLastDay = DateTime(kToday.year + 1, kToday.month, kToday.day);
 
   ValueNotifier<List<CalendarBalance>> _selectedEvents = ValueNotifier<List<CalendarBalance>>([]);
-  LinkedHashMap<DateTime, List<CalendarBalance>> kBalances = LinkedHashMap<DateTime, List<CalendarBalance>>(equals: isSameDay, hashCode: getHashCode);
+  LinkedHashMap<DateTime, List<CalendarBalance>> kBalances =
+      LinkedHashMap<DateTime, List<CalendarBalance>>(equals: isSameDay, hashCode: getHashCode);
 
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
