@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:toc_machine_trading_fe/l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:syncfusion_flutter_treemap/treemap.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';

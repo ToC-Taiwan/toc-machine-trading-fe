@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:toc_machine_trading_fe/l10n/app_localizations.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:toc_machine_trading_fe/core/fcm/fcm.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';

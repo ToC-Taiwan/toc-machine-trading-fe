@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
@@ -16,6 +15,7 @@ import 'package:toc_machine_trading_fe/features/universal/entity/store.dart';
 import 'package:toc_machine_trading_fe/features/universal/entity/user.dart';
 import 'package:toc_machine_trading_fe/features/universal/repo/settings.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';
+import 'package:toc_machine_trading_fe/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const String _removeADProductId = 'com.tocandraw.removeAd';
@@ -44,10 +44,10 @@ class _SettingsPageState extends State<SettingsPage> {
 
   String? _queryProductError;
 
-  ExpansionTileController? controllerA = ExpansionTileController();
-  ExpansionTileController? controllerB = ExpansionTileController();
-  ExpansionTileController? controllerC = ExpansionTileController();
-  ExpansionTileController? controllerD = ExpansionTileController();
+  ExpansibleController? controllerA = ExpansibleController();
+  ExpansibleController? controllerB = ExpansibleController();
+  ExpansibleController? controllerC = ExpansibleController();
+  ExpansibleController? controllerD = ExpansibleController();
 
   bool _pushNotification = false;
   bool _pushNotificationPermamentlyDenied = false;

@@ -44,3 +44,10 @@ flutter pub add \
 
 flutter pub upgrade
 flutter pub upgrade --major-versions
+
+scripts/prebuild.sh
+scripts/firebase.sh
+scripts/icon_splash.sh
+scripts/intl.sh
+
+

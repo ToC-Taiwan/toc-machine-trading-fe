@@ -1,6 +1,6 @@
 import 'package:date_format/date_format.dart' as df;
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:toc_machine_trading_fe/l10n/app_localizations.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:toc_machine_trading_fe/core/api/api.dart';

@@ -3,3 +3,5 @@ template-arb-file: app_en.arb
 output-localization-file: app_localizations.dart
 preferred-supported-locales: ["en", "ja", "ko", "zh_CN", "zh_TW"]
 untranslated-messages-file: l10n/need_translate.txt
+synthetic-package: false
+output-dir: lib/l10n

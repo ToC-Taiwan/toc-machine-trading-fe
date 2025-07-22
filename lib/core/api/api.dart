@@ -66,7 +66,7 @@ abstract class API {
     _apiToken = token;
   }
 
-  static clearAuthKey() {
+  static void clearAuthKey() {
     _storage.delete(key: 'authKey');
     _apiToken = '';
   }

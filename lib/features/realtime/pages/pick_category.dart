@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:toc_machine_trading_fe/l10n/app_localizations.dart';
 import 'package:toc_machine_trading_fe/features/realtime/entity/pick_operation.dart';
 import 'package:toc_machine_trading_fe/features/realtime/widgets/pick.dart';
 import 'package:toc_machine_trading_fe/features/universal/widgets/app_bar.dart';

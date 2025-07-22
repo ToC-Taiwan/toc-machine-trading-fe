@@ -9,30 +9,31 @@ on:
 permissions: read-all
 
 jobs:
-  fastlane-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          java-version: 21
-          distribution: "temurin"
+      # - name: Set up Java
+      #   uses: actions/setup-java@v4
+      #   with:
+      #     java-version: 21
+      #     distribution: "temurin"
 
       - name: Clone Flutter repository with stable channel
         uses: subosito/flutter-action@v2
         with:
           channel: stable
+          flutter-version: 3.32.7
       - run: flutter doctor -v
 
       - name: Checkout code
         uses: actions/checkout@v4
       - run: |
-          ./scripts/flutter_clean.sh
+          ./scripts/prebuild.sh
 
       - name: Setup Fastlane
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.3.6"
+          ruby-version: "3.3"
           bundler-cache: true
           working-directory: android
 

@@ -45,7 +45,7 @@ app.*.map.json
 /android/app/release
 
 .vscode
-version.dart
+lib/features/login/repo/version.dart
 l10n/need_translate.txt
 Gemfile.lock
 .VSCodeCounter
